@@ -50,7 +50,7 @@ public class LevelFileReader {
 					System.out.println(ERROR);
 					return null;
 				}
-				for (int j = 0; j < tileX  == false; j++) {
+				for (int j = 0; j < tileX; j++) {
 					tileGrid[j][i] = createTile(tiles[j]);
 					if (tileGrid[j][i] == null) {
 						System.out.println(ERROR);
