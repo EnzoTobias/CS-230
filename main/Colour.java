@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * Colours viable to be used in tiles
+ *
+ */
 public enum Colour {
 	RED,
 	GREEN,

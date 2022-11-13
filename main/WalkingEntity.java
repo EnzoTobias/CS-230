@@ -1,4 +1,6 @@
-
+/**Represents any entity that walks on tiles
+ * @author Enzo Tobias 2117781
+ */
 public abstract class WalkingEntity {
 	private int score;
 

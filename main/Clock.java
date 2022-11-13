@@ -1,4 +1,3 @@
-
 public class Clock {
 	private long time;
 

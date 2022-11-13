@@ -1,4 +1,6 @@
-
+/**Represents a collectable item (e.g. ruby,cent etc).
+ * @author Enzo Tobias 2117781
+ */
 public class Collectable extends Item {
 	private CollectableType type;
 	

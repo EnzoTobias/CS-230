@@ -1,6 +1,8 @@
 import java.util.Timer;
 import java.util.TimerTask;
-
+/**Represents the bomb item.
+ * @author Enzo Tobias 2117781
+ */
 public class Bomb extends Item {
 	//stage 4 = not activated
 	private final int EXPLOSION_STAGES = 4;

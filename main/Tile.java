@@ -1,4 +1,6 @@
-
+/**Represents one tile
+ * @author Enzo Tobias 2117781
+ */
 public class Tile {
 	private Colour[] colours;
 	private int x;

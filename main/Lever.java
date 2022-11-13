@@ -1,4 +1,3 @@
-
 public class Lever extends Item {
 	private Colour colour;
 	

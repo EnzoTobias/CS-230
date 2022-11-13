@@ -1,4 +1,6 @@
-
+/**
+ * Type of collectable and its value.
+ */
 public enum CollectableType {
 	CENT(1),
 	DOLLAR(10),
