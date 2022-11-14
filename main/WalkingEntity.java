@@ -3,6 +3,7 @@
  */
 public abstract class WalkingEntity {
 	private int score;
+	private Direction direction;
 
 	public int getScore() {
 		return score;
@@ -12,5 +13,15 @@ public abstract class WalkingEntity {
 		this.score = score;
 	}
 	
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+	
 	public abstract void die();
+
+	
 }
