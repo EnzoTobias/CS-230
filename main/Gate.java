@@ -1,6 +1,6 @@
 public class Gate extends Item {
 	private Colour colour;
-	
+
 	public Gate() {
 		// TODO Auto-generated constructor stub
 	}

@@ -2,10 +2,7 @@
  * Type of collectable and its value.
  */
 public enum CollectableType {
-	CENT(1),
-	DOLLAR(10),
-	RUBY(50),
-	DIAMOND(100);
+	CENT(1), DOLLAR(10), RUBY(50), DIAMOND(100);
 
 	private int value;
 
@@ -16,5 +13,5 @@ public enum CollectableType {
 	public int getValue() {
 		return value;
 	}
-	
+
 }

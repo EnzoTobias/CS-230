@@ -1,13 +1,15 @@
-/**Represents a collectable item (e.g. ruby,cent etc).
+/**
+ * Represents a collectable item (e.g. ruby,cent etc).
+ * 
  * @author Enzo Tobias 2117781
  */
 public class Collectable extends Item {
 	private CollectableType type;
-	
+
 	public Collectable(CollectableType type) {
 		this.type = type;
 	}
-	
+
 	public CollectableType getCollectableType() {
 		return type;
 	}
@@ -17,5 +19,5 @@ public class Collectable extends Item {
 		entity.setScore(entity.getScore() + type.getValue());
 		this.deleteSelf(tile);
 	}
-	
+
 }

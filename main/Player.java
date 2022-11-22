@@ -2,7 +2,7 @@
 public class Player extends WalkingEntity {
 	@Override
 	public void die() {
-		//to do
+		// to do
 	};
 
 }

@@ -269,7 +269,7 @@ public class LevelFileReader {
 	public static String gridToString(Tile[][] tileGrid) {
 		String output = "";
 		for (int j = 0; j < tileGrid[0].length; j++) {
-			for (int i = 0; i < tileGrid.length ; i++) {
+			for (int i = 0; i < tileGrid.length; i++) {
 				Tile tileToHandle = tileGrid[i][j];
 				for (Colour col : tileToHandle.getColours()) {
 					switch (col) {

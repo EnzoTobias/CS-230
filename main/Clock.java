@@ -8,7 +8,7 @@ public class Clock extends Item {
 	@Override
 	void itemEffect(Tile tile, WalkingEntity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

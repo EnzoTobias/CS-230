@@ -1,6 +1,6 @@
 public class Lever extends Item {
 	private Colour colour;
-	
+
 	public Lever() {
 		// TODO Auto-generated constructor stub
 	}

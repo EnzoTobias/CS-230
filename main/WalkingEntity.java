@@ -1,4 +1,6 @@
-/**Represents any entity that walks on tiles
+/**
+ * Represents any entity that walks on tiles
+ * 
  * @author Enzo Tobias 2117781
  */
 public abstract class WalkingEntity {
@@ -12,7 +14,7 @@ public abstract class WalkingEntity {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
 	public Direction getDirection() {
 		return direction;
 	}
@@ -20,8 +22,7 @@ public abstract class WalkingEntity {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	
+
 	public abstract void die();
 
-	
 }
