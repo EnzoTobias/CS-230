@@ -4,8 +4,12 @@
 public class Collectable extends Item {
 	private CollectableType type;
 	
-	public Collectable(CollectableType value) {
+	public Collectable(CollectableType type) {
 		this.type = type;
+	}
+	
+	public CollectableType getCollectableType() {
+		return type;
 	}
 
 	@Override
