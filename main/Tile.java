@@ -38,6 +38,10 @@ public class Tile {
 	public LevelControl getLevel() {
 		return level;
 	}
+	
+	public void setLevel(LevelControl level) {
+		this.level = level;
+	}
 
 	public WalkingEntity getContainedEntity() {
 		return containedEntity;

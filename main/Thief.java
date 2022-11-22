@@ -1,4 +1,6 @@
 
 public abstract class Thief extends WalkingEntity {
-	public abstract void die();
+	public void die(Tile tile) {
+		tile.setContainedEntity(null);
+	};
 }

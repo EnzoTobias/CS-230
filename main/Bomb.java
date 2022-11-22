@@ -8,7 +8,7 @@ import java.util.TimerTask;
 public class Bomb extends Item {
 	// stage 4 = not activated
 	private final int EXPLOSION_STAGES = 4;
-	private final long BOMB_DELAY = 10L;
+	private final long BOMB_DELAY = 0L;
 	private int currentStage = EXPLOSION_STAGES;
 
 	public Bomb() {
@@ -41,14 +41,14 @@ public class Bomb extends Item {
 		Tile[][] tileGrid;
 		tileGrid = tile.getLevel().getTileGrid();
 
-		for (int i = tile.getX(); i <= tileGrid.length; i++) {
+		for (int i = tile.getX(); i < tileGrid.length; i++) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
 		for (int i = tile.getX(); i >= 0; i--) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
 
-		for (int i = tile.getY(); i <= tileGrid[0].length; i++) {
+		for (int i = tile.getY(); i < tileGrid[0].length; i++) {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
 		for (int i = tile.getY(); i >= 0; i--) {

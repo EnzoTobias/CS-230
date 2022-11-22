@@ -347,7 +347,7 @@ public class LevelFileReader {
 							output += ",";
 							output += colToString(((Lever) item).getColour());
 						} else if (item instanceof Bomb) {
-							output += "L";
+							output += "B";
 						} else if (item instanceof Door) {
 							output += "DR";
 						}
