@@ -15,10 +15,11 @@ public class Bomb extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
-	private Timer timer = new Timer();
+	private Timer timer;
 
 	@Override
 	void itemEffect(Tile tile, WalkingEntity entity) {
+		timer = new Timer();
 		nextStage(tile);
 	}
 
@@ -34,7 +35,6 @@ public class Bomb extends Item {
 			}
 		};
 		timer.schedule(task, BOMB_DELAY);
-
 	}
 
 	private void explode(Tile tile) {
@@ -54,6 +54,7 @@ public class Bomb extends Item {
 		for (int i = tile.getY(); i >= 0; i--) {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
+		timer.cancel();
 	}
 
 	private void bombDestroy(Tile tile) {
