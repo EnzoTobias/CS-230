@@ -1,14 +1,12 @@
-public class Lever extends Item {
+
+public class FloorFollowingThief extends Thief {
+	
 	private Colour colour;
 	
-	public Lever() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
+	public void die() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	public Colour getColour() {

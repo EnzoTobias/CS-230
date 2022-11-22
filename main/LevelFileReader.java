@@ -104,9 +104,169 @@ public class LevelFileReader {
 			}
 			
 		}
+		int expectedDefSize = 0;
 		Tile tile = new Tile(colours);
+		if (info.contains("(") && info.contains(")")) {
+			String tileContent = info.substring(info.indexOf("(") + 1, info.lastIndexOf(")"));
+			String[] contentDefinitions = tileContent.split(",");
+			switch (contentDefinitions[0]) {
+				case "P":
+					if (getDirection(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					Player p = new Player();
+					p.setDirection(getDirection(contentDefinitions[1]));
+					tile.setContainedEntity(p);
+					expectedDefSize = 2;
+					break;
+				case "ST":
+					if (getDirection(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					SmartThief s = new SmartThief();
+					s.setDirection(getDirection(contentDefinitions[1]));
+					tile.setContainedEntity(s);
+					expectedDefSize = 2;
+					break;
+				case "FA":
+					if (getDirection(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					FlyingAssassin f = new FlyingAssassin();
+					f.setDirection(getDirection(contentDefinitions[1]));
+					tile.setContainedEntity(f);
+					expectedDefSize = 2;
+					break;
+				case "FT":
+					if (getDirection(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					if (getColour(contentDefinitions[2]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					FloorFollowingThief ff = new FloorFollowingThief();
+					ff.setDirection(getDirection(contentDefinitions[1]));
+					ff.setColour(getColour(contentDefinitions[2]));
+					tile.setContainedEntity(ff);
+					expectedDefSize = 3;
+					break;
+				case "C":
+					Collectable c = new Collectable(CollectableType.CENT);
+					tile.setContainedItem(c);
+					expectedDefSize = 1;
+					break;
+				case "S":
+					Collectable dollar = new Collectable(CollectableType.DOLLAR);
+					tile.setContainedItem(dollar);
+					expectedDefSize = 1;
+					break;
+				case "R":
+					Collectable r = new Collectable(CollectableType.RUBY);
+					tile.setContainedItem(r);
+					expectedDefSize = 1;
+					break;
+				case "D":
+					Collectable d = new Collectable(CollectableType.DIAMOND);
+					tile.setContainedItem(d);
+					expectedDefSize = 1;
+					break;
+				case "CL":
+					Clock cl = new Clock();
+					tile.setContainedItem(cl);
+					expectedDefSize = 1;
+					break;
+				case "G":
+					if (getColour(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					Gate g = new Gate();
+					g.setColour(getColour(contentDefinitions[1]));
+					tile.setContainedItem(g);
+					expectedDefSize = 2;
+					break;
+				case "L":
+					if (getColour(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return null;
+					}
+					Lever lv = new Lever();
+					lv.setColour(getColour(contentDefinitions[1]));
+					tile.setContainedItem(lv);
+					expectedDefSize = 2;
+					break;
+				case "B":
+					Bomb b = new Bomb();
+					tile.setContainedItem(b);
+					expectedDefSize = 1;
+					break;
+				case "DR":
+					Door dr = new Door();
+					tile.setContainedItem(dr);
+					expectedDefSize = 1;
+					break;
+				default:
+					System.out.println(ERROR);
+					return null;
+			}
+			if (contentDefinitions.length != expectedDefSize) {
+				System.out.println(ERROR);
+				return null;
+			}
+		} else {
+			if (chars.length > 4) {
+				System.out.println(ERROR);
+				return null;
+			}
+		}
+		
+
+
+
+			
+
 		
 		return tile;
+	}
+	
+	private static Colour getColour(String colour) {
+		switch(colour) {
+			case "R":
+				return Colour.RED;
+			case "G":
+				return Colour.GREEN;
+			case "B":
+				return Colour.BLUE;
+			case "Y":
+				return Colour.YELLOW;
+			case "C":
+				return Colour.CYAN;
+			case "M":
+				return Colour.MAGENTA;
+			default:
+				return null;
+				
+		}
+	}
+	
+	private static Direction getDirection(String direction) {
+		switch(direction) {
+			case "U":
+				return Direction.Up;
+			case "D":
+				return Direction.Down;
+			case "L":
+				return Direction.Left;
+			case "R":
+				return Direction.Right;
+			default:
+				return null;
+		}
 	}
 	
 	

@@ -41,7 +41,7 @@ public class Tile {
 		return containedEntity;
 	}
 	
-	public void setContainedEntity() {
+	public void setContainedEntity(WalkingEntity containedEntity) {
 		this.containedEntity = containedEntity;
 	}
 	
