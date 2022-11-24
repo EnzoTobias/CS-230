@@ -245,7 +245,7 @@ public class LevelFileReader {
 				return null;
 			}
 		}
-		tile.setLevel(control);
+		tile.setLevelControl(control);
 		return tile;
 	}
 

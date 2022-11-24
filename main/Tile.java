@@ -43,11 +43,11 @@ public class Tile {
 		this.containedItem = containedItem;
 	}
 
-	public LevelControl getLevel() {
+	public LevelControl getLevelControl() {
 		return level;
 	}
 	
-	public void setLevel(LevelControl level) {
+	public void setLevelControl(LevelControl level) {
 		this.level = level;
 	}
 

@@ -76,6 +76,14 @@ public class LevelControl {
 
 		return false;
 	}
+	
+	public void flyingMove(int x, int y, WalkingEntity entity) {
+		Tile previousTile = this.findTileByEntity(entity);
+		if (level.safeGetTile(x, y) != null) {
+			previousTile.setContainedEntity(null);
+			level.safeGetTile(x, y).setContainedEntity(entity);
+		}
+	}
 
 	public Player getPlayer() {
 		return player;

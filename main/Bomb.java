@@ -43,7 +43,7 @@ public class Bomb extends Item {
 
 	public void explode(Tile tile) {
 		Tile[][] tileGrid;
-		tileGrid = tile.getLevel().getTileGrid();
+		tileGrid = tile.getLevelControl().getTileGrid();
 		tile.setContainedItem(null);
 
 		for (int i = tile.getX()+1; i < tileGrid.length; i++) {
