@@ -15,21 +15,23 @@ public class LevelFileReader {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Level createFromFile(String path) {
+	public static Level createFromFile(String path, LevelControl control) {
 		try {
 			File f = new File(path);
 			Scanner in = new Scanner(f);
-			return processLines(in);
+			return processLines(in, control);
 		} catch (FileNotFoundException E) {
 			System.out.println(NO_FILE_ERROR);
 			return null;
 		}
 	}
 
-	private static Level processLines(Scanner in) {
+	private static Level processLines(Scanner in, LevelControl control) {
 		Tile[][] tileGrid;
 		int tileX = 0;
 		int tileY = 0;
+		int currentX = 0;
+		int currentY = 0;
 		String line = null;
 		int initialTime;
 		try {
@@ -55,12 +57,16 @@ public class LevelFileReader {
 				return null;
 			}
 			for (int j = 0; j < tileX; j++) {
-				tileGrid[j][i] = createTile(tiles[j]);
+				tileGrid[j][i] = createTile(tiles[j], control, currentX,
+						currentY);
 				if (tileGrid[j][i] == null) {
 					System.out.println(ERROR);
 					return null;
 				}
+				currentX += 1;
 			}
+			currentX = 0;
+			currentY += 1;
 		}
 		try {
 			initialTime = Integer.parseInt(in.nextLine());
@@ -76,7 +82,8 @@ public class LevelFileReader {
 
 	}
 
-	private static Tile createTile(String info) {
+	private static Tile createTile(String info, LevelControl control, int x,
+			int y) {
 		char chars[] = info.toCharArray();
 		Colour[] colours = new Colour[4];
 		if (chars.length < 4) {
@@ -111,6 +118,8 @@ public class LevelFileReader {
 		}
 		int expectedDefSize = 0;
 		Tile tile = new Tile(colours);
+		tile.setX(x);
+		tile.setY(y);
 		if (info.contains("(") && info.contains(")")) {
 			String tileContent = info.substring(info.indexOf("(") + 1,
 					info.lastIndexOf(")"));
@@ -122,8 +131,10 @@ public class LevelFileReader {
 						return null;
 					}
 					Player p = new Player();
+					p.setLevelControl(control);
 					p.setDirection(getDirection(contentDefinitions[1]));
 					tile.setContainedEntity(p);
+					control.setPlayer(p);
 					expectedDefSize = 2;
 					break;
 				case "ST" :
@@ -133,6 +144,7 @@ public class LevelFileReader {
 					}
 					SmartThief s = new SmartThief();
 					s.setDirection(getDirection(contentDefinitions[1]));
+					s.setLevelControl(control);
 					tile.setContainedEntity(s);
 					expectedDefSize = 2;
 					break;
@@ -142,6 +154,7 @@ public class LevelFileReader {
 						return null;
 					}
 					FlyingAssassin f = new FlyingAssassin();
+					f.setLevelControl(control);
 					f.setDirection(getDirection(contentDefinitions[1]));
 					tile.setContainedEntity(f);
 					expectedDefSize = 2;
@@ -158,6 +171,7 @@ public class LevelFileReader {
 					FloorFollowingThief ff = new FloorFollowingThief();
 					ff.setDirection(getDirection(contentDefinitions[1]));
 					ff.setColour(getColour(contentDefinitions[2]));
+					ff.setLevelControl(control);
 					tile.setContainedEntity(ff);
 					expectedDefSize = 3;
 					break;
@@ -231,7 +245,7 @@ public class LevelFileReader {
 				return null;
 			}
 		}
-
+		tile.setLevel(control);
 		return tile;
 	}
 
@@ -270,8 +284,9 @@ public class LevelFileReader {
 		}
 	}
 
-	public static String gridToString(Tile[][] tileGrid) {
+	public static String levelToString(Level level) {
 		String output = "";
+		Tile[][] tileGrid = level.getTileGrid();
 		for (int j = 0; j < tileGrid[0].length; j++) {
 			for (int i = 0; i < tileGrid.length; i++) {
 				Tile tileToHandle = tileGrid[i][j];
@@ -362,7 +377,7 @@ public class LevelFileReader {
 			}
 			output += System.lineSeparator();
 		}
-
+		output = output.substring(0, output.length() - 1);
 		return output;
 	}
 

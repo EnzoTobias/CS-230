@@ -11,6 +11,14 @@ public class Tile {
 	private WalkingEntity containedEntity;
 	private LevelControl level;
 
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
 	public Tile(Colour[] colours) {
 		this.colours = colours;
 	}
@@ -63,5 +71,15 @@ public class Tile {
 			return false;
 		}
 		return true;
+	}
+	
+	public boolean isTileBlocked() {
+		if (this.hasItem() && this.getContainedItem() instanceof Gate) {
+			return true;
+		}
+		if (this.hasEntity())  {
+			return true;
+		}
+		return false;
 	}
 }

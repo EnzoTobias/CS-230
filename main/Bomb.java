@@ -1,3 +1,4 @@
+import java.util.ResourceBundle.Control;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
@@ -8,7 +9,7 @@ import java.util.TimerTask;
 public class Bomb extends Item {
 	// stage 4 = not activated
 	private final int EXPLOSION_STAGES = 4;
-	private final long BOMB_DELAY = 0L;
+	private final long BOMB_DELAY = 1000L;
 	private int currentStage = EXPLOSION_STAGES;
 
 	public Bomb() {
@@ -21,44 +22,53 @@ public class Bomb extends Item {
 	void itemEffect(Tile tile, WalkingEntity entity) {
 		timer = new Timer();
 		nextStage(tile);
+		
 	}
 
 	private void nextStage(Tile tile) {
-		currentStage -= 1;
-		if (currentStage == 0 && tile.hasItem()) {
-			explode(tile);
-		}
-
 		TimerTask task = new TimerTask() {
 			public void run() {
 				nextStage(tile);
 			}
 		};
-		timer.schedule(task, BOMB_DELAY);
+		currentStage -= 1;
+		if (currentStage == 0 && tile.hasItem()) {
+			explode(tile);
+			timer.cancel();
+		} else {
+			timer.schedule(task, BOMB_DELAY);
+		}
+
 	}
 
-	private void explode(Tile tile) {
+	public void explode(Tile tile) {
 		Tile[][] tileGrid;
 		tileGrid = tile.getLevel().getTileGrid();
+		tile.setContainedItem(null);
 
-		for (int i = tile.getX(); i < tileGrid.length; i++) {
+		for (int i = tile.getX()+1; i < tileGrid.length; i++) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
-		for (int i = tile.getX(); i >= 0; i--) {
+		for (int i = tile.getX()-1; i >= 0; i--) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
 
-		for (int i = tile.getY(); i < tileGrid[0].length; i++) {
+		for (int i = tile.getY()+1; i < tileGrid[0].length; i++) {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
-		for (int i = tile.getY(); i >= 0; i--) {
+		for (int i = tile.getY()-1; i >= 0; i--) {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
-		timer.cancel();
+	
 	}
 
 	private void bombDestroy(Tile tile) {
-		if (tile.hasItem()) {
+		if (tile.hasItem() && tile.getContainedItem() instanceof Bomb) {
+			((Bomb)tile.getContainedItem()).explode(tile);
+		}
+		
+		if (tile.hasItem() && !((tile.getContainedItem() instanceof Door)
+				|| (tile.getContainedItem() instanceof Gate))) {
 			tile.getContainedItem().deleteSelf(tile);
 		}
 		if (tile.hasEntity()) {

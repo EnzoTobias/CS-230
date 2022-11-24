@@ -2,10 +2,12 @@
 public class TestingMain {
 
 	public static void main(String args[]) {
-		Level loltester = LevelFileReader
-				.createFromFile("D:/Documents/leveldef.txt");
-		System.out.println(LevelFileReader.gridToString(loltester.getTileGrid()));
-		
+		LevelControl control = new LevelControl();
+		 control.setLevel(LevelFileReader.createFromFile("D:/Documents/leveldef.txt",control));
+		System.out.println(LevelFileReader.levelToString(control.getLevel()));
+		control.getPlayer().testingMoveUp();
+		System.out.println(LevelFileReader.levelToString(control.getLevel()));
+
 		
 
 	}

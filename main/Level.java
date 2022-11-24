@@ -14,4 +14,13 @@ public class Level {
 	public void setInitialTime(int initialTime) {
 		this.initialTime = initialTime;
 	}
+	
+	public Tile safeGetTile(int x, int y) {
+		try {
+			return tileGrid[x][y];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			
+		}
+		return null;
+	}
 }
