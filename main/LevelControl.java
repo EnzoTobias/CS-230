@@ -4,13 +4,13 @@
  * @author Enzo Tobias 2117781
  */
 public class LevelControl {
-	private Tile[][] tileGrid;
+	private Level level;
 
-	public LevelControl(Tile[][] tileGrid) {
-		this.tileGrid = tileGrid;
+	public LevelControl(Level level) {
+		this.level = level;
 	}
 
 	public Tile[][] getTileGrid() {
-		return tileGrid;
+		return level.getTileGrid();
 	}
 }

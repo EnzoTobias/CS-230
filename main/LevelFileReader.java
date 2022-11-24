@@ -15,7 +15,7 @@ public class LevelFileReader {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Tile[][] createFromFile(String path) {
+	public static Level createFromFile(String path) {
 		try {
 			File f = new File(path);
 			Scanner in = new Scanner(f);
@@ -26,11 +26,12 @@ public class LevelFileReader {
 		}
 	}
 
-	private static Tile[][] processLines(Scanner in) {
+	private static Level processLines(Scanner in) {
 		Tile[][] tileGrid;
 		int tileX = 0;
 		int tileY = 0;
 		String line = null;
+		int initialTime;
 		try {
 			line = in.nextLine();
 			String[] size = line.split("x");
@@ -62,13 +63,16 @@ public class LevelFileReader {
 			}
 		}
 		try {
-			Integer.parseInt(in.nextLine());
+			initialTime = Integer.parseInt(in.nextLine());
 		} catch (NumberFormatException | NoSuchElementException E) {
 			System.out.println(ERROR);
 			return null;
 		}
 		in.close();
-		return tileGrid;
+		Level level = new Level();
+		level.setTileGrid(tileGrid);
+		level.setInitialTime(initialTime);
+		return level;
 
 	}
 
