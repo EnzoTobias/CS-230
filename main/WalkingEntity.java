@@ -10,6 +10,10 @@ public abstract class WalkingEntity {
 	private Direction direction;
 	private LevelControl control;
 
+
+	public abstract boolean nextMove(Tile tile);
+	
+	
 	public WalkingEntity() {
 		lastID += 1;
 		this.ID = lastID;

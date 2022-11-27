@@ -17,4 +17,10 @@ public class FloorFollowingThief extends Thief {
 		this.colour = colour;
 	}
 
+	@Override
+	public boolean nextMove(Tile tile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

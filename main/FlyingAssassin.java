@@ -7,4 +7,10 @@ public class FlyingAssassin extends WalkingEntity {
 
 	}
 
+	@Override
+	public boolean nextMove(Tile tile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

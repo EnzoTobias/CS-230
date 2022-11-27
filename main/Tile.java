@@ -77,6 +77,10 @@ public class Tile {
 		if (this.hasItem() && this.getContainedItem() instanceof Gate) {
 			return true;
 		}
+		
+		if (this.hasItem() && this.getContainedItem() instanceof Bomb) {
+			return true;
+		}
 		if (this.hasEntity())  {
 			return true;
 		}
