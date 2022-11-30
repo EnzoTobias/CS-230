@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 public class SmartThief extends Thief {
 	private final int ERROR_RETURN = -1;
-	public int shortestPathLength(Tile nextTile, int steps,
-			ArrayList<Tile> visitedTiles) {
+	private int shortestPathLength(Tile nextTile, ArrayList<Tile> visitedTiles) {
 		if (visitedTiles.contains(nextTile)) {
 			return ERROR_RETURN;
 		}
@@ -28,22 +27,22 @@ public class SmartThief extends Thief {
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.LEFT, nextTile),
-				steps + 1, visitedTiles);
+				visitedTiles);
 		toReturn = currentReturn;
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.RIGHT, nextTile),
-				steps + 1, visitedTiles);
+				visitedTiles);
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.UP, nextTile),
-				steps + 1, visitedTiles);
+				visitedTiles);
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.DOWN, nextTile),
-				steps + 1, visitedTiles);
+				visitedTiles);
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		if (toReturn == ERROR_RETURN) {
@@ -75,7 +74,7 @@ public class SmartThief extends Thief {
 			currentReturn = shortestPathLength(
 					this.getLevelControl().nextValidTile(direction,
 							control.findTileByEntity(this)),
-					0, new ArrayList<Tile>());
+					new ArrayList<Tile>());
 			shortest = chooseToReturn(shortest, currentReturn);
 			if (currentReturn == shortest) {
 				this.setDirection(direction);
