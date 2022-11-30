@@ -16,9 +16,9 @@ public class Bomb extends Item {
 	 * 
 	 * @param tile
 	 *            The tile that the Bomb instance is on, where to initiate the
-	 *            explosion
+	 *            explosion.
 	 * @param entity
-	 *            The entity that triggered the Bomb instance
+	 *            The entity that triggered the Bomb instance.
 	 */
 	@Override
 	public void itemEffect(Tile tile, WalkingEntity entity) {
@@ -30,7 +30,9 @@ public class Bomb extends Item {
 	 * Schedules the next stage as a new task and calls the explosion when it
 	 * reaches the last stage.
 	 * 
-	 * @param tile The tile that the Bomb instance is on, where to initiate the explosion 
+	 * @param tile
+	 *            The tile that the Bomb instance is on, where to initiate the
+	 *            explosion.
 	 */
 	private void nextStage(Tile tile) {
 		TimerTask task = new TimerTask() {
@@ -48,8 +50,12 @@ public class Bomb extends Item {
 
 	}
 	/**
-	 * Activates the Bomb instance's explosion, affecting tiles appropriately in every direction.
-	 * @param tile The tile that the Bomb instance is on, where to initiate the explosion 
+	 * Activates the Bomb instance's explosion, affecting tiles appropriately in
+	 * every direction.
+	 * 
+	 * @param tile
+	 *            The tile that the Bomb instance is on, where to initiate the
+	 *            explosion.
 	 */
 	public void explode(Tile tile) {
 		Tile[][] tileGrid;
@@ -73,7 +79,10 @@ public class Bomb extends Item {
 	}
 	/**
 	 * Applies the appropriate behaviour on tiles affected by the explosion.
-	 * @param tile The tile that the Bomb instance is on, where to initiate the explosion
+	 * 
+	 * @param tile
+	 *            The tile that the Bomb instance is on, where to initiate the
+	 *            explosion.
 	 */
 	private void bombDestroy(Tile tile) {
 		if (tile.hasItem() && tile.getContainedItem() instanceof Bomb) {

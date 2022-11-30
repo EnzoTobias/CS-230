@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 
 /**
- * Represents a level running in the game and centralises behaviours
+ * Centralises behaviours around the manipulation of the level and movement.
+ * Provides utilities to Tile and Entity classes which are used for their
+ * respective behaviours.
  * 
  * @author Enzo Tobias 2117781
  */
@@ -12,16 +14,27 @@ public class LevelControl {
 	public Level getLevel() {
 		return level;
 	}
-	
+	/**
+	 * Sets a level class to be handled by this LevelControl instance.
+	 * 
+	 * @param level
+	 *            The level to be set.
+	 */
 	public void setLevel(Level level) {
 		this.level = level;
 	}
-
+	/**
+	 * Returns the tilegrid of this instance's level instance for ease of
+	 * access.
+	 * 
+	 * @return This instance's level instance tilegrid.
+	 */
 	public Tile[][] getTileGrid() {
 		return level.getTileGrid();
 	}
-	
-	
+	/**
+	 * One round of movement for all the entities.
+	 */
 	public void oneMovementRound() {
 		this.listEntities();
 		for (WalkingEntity entity : entityList) {
@@ -29,8 +42,11 @@ public class LevelControl {
 		}
 		System.out.println(LevelFileReader.levelToString(this.getLevel()));
 	}
-	
-	
+	/**
+	 * Locates and returns the tile that the given entity is currently on.
+	 * @param entity The entity being looked for.
+	 * @return The tile which the entity is on.
+	 */
 	public Tile findTileByEntity(WalkingEntity entity) {
 		Tile[][] tileGrid = level.getTileGrid();
 		for (int i = 0; i < tileGrid.length; i++) {
@@ -44,7 +60,10 @@ public class LevelControl {
 		}
 		return null;
 	}
-
+	/**
+	 * Checks the tilegrid to see if all loot has been collected.
+	 * @return A boolean value denoting if all loot has been collected.
+	 */
 	public boolean isAllLootCollected() {
 		Tile[][] tileGrid = this.getTileGrid();
 		for (int i = 0; i < tileGrid.length; i++) {
@@ -57,7 +76,12 @@ public class LevelControl {
 		}
 		return true;
 	}
-
+	/**
+	 * Returns the next valid tile that an entity can move to in a given direction.
+	 * @param direction The direction which the entity is attempting to move in.
+	 * @param tile The tile which the entity is currently on.
+	 * @return The first tile (if not null) which the entity can move to in the given direction.
+	 */
 	public Tile nextValidTile(Direction direction, Tile tile) {
 		Tile[][] tileGrid = this.getTileGrid();
 		switch (direction) {
@@ -106,11 +130,18 @@ public class LevelControl {
 				}
 
 		}
-		
 
 		return null;
 	}
-
+	/**
+	 * Initiates movement of an entity into a tile.
+	 * Triggers any appropriate item effects or other behaviours on movement.
+	 * Will only move if the move is valid.
+	 * @param x The x coordinate of the tile to move to.
+	 * @param y The Y coordinate of the tile to move to.
+	 * @param entity The entity attempting the move.
+	 * @return Boolean value denoting if the move succeeded.
+	 */
 	public boolean moveToTile(int x, int y, WalkingEntity entity) {
 		Tile previousTile = this.findTileByEntity(entity);
 		Tile tileToMove = level.safeGetTile(x, y);
@@ -134,7 +165,13 @@ public class LevelControl {
 		}
 		return true;
 	}
-
+	/**
+	 * Checks if a movement of an entity is valid.
+	 * @param x The x coordinate of the tile to check for move validity.
+	 * @param y The Y coordinate of the tile to check for move validity.
+	 * @param entity The entity attempting the move.
+	 * @return Boolean value denoting if the move is valid.
+	 */
 	public boolean canMoveToTile(int x, int y, WalkingEntity entity) {
 		Tile previousTile = this.findTileByEntity(entity);
 		Tile tileToMove = level.safeGetTile(x, y);
@@ -156,7 +193,13 @@ public class LevelControl {
 
 		return false;
 	}
-
+	/**
+	 * Checks if two tiles have at least one matching colour.
+	 * @param x The x coordinate of the tile to check for colour match.
+	 * @param y The Y coordinate of the tile to check for colour match.
+	 * @param currentTile The tile being checked against.
+	 * @return Boolean value denoting if there is a colour match.
+	 */
 	public boolean tileColourCheck(int x, int y, Tile currentTile) {
 		Tile tileToMove = level.safeGetTile(x, y);
 		if (level.safeGetTile(x, y) == null) {
@@ -173,14 +216,24 @@ public class LevelControl {
 
 		return false;
 	}
-
+	/**
+	 * Movement and appropriate effects for flying assassin.
+	 * Destroys entities on the tile being moved to.
+	 * No checks of colour or obstruction are made.
+	 * Items are not activated.
+	 * @param x The x coordinate of the tile to move to.
+	 * @param y The Y coordinate of the tile to move to.
+	 * @param entity The entity attempting the move.
+	 * @return Boolean value denoting if the move succeeded.
+	 */
 	public boolean flyingMove(int x, int y, WalkingEntity entity) {
 		Tile previousTile = this.findTileByEntity(entity);
-		
-		if(level.safeGetTile(x, y) != null && level.safeGetTile(x, y).hasEntity()) {
+
+		if (level.safeGetTile(x, y) != null
+				&& level.safeGetTile(x, y).hasEntity()) {
 			level.safeGetTile(x, y).getContainedEntity().die();
 		}
-		
+
 		if (level.safeGetTile(x, y) != null) {
 			previousTile.setContainedEntity(null);
 			level.safeGetTile(x, y).setContainedEntity(entity);
@@ -188,7 +241,9 @@ public class LevelControl {
 		}
 		return false;
 	}
-	
+	/**
+	 * Updates the entityList ArrayList in this instance with every entity in the grid.
+	 */
 	private void listEntities() {
 		entityList = new ArrayList<WalkingEntity>();
 		Tile[][] tileGrid = this.getTileGrid();
@@ -200,11 +255,18 @@ public class LevelControl {
 			}
 		}
 	}
-
+	/**
+	 * Returns a reference to the player entity in the tilegrid.
+	 * There should only be one player in any level.
+	 * @return The player returned.
+	 */
 	public Player getPlayer() {
 		return player;
 	}
-
+	/**
+	 * Sets the player for the level.
+	 * @param player Player to be set.
+	 */
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
