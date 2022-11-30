@@ -176,6 +176,11 @@ public class LevelControl {
 
 	public boolean flyingMove(int x, int y, WalkingEntity entity) {
 		Tile previousTile = this.findTileByEntity(entity);
+		
+		if(level.safeGetTile(x, y) != null && level.safeGetTile(x, y).hasEntity()) {
+			level.safeGetTile(x, y).getContainedEntity().die();
+		}
+		
 		if (level.safeGetTile(x, y) != null) {
 			previousTile.setContainedEntity(null);
 			level.safeGetTile(x, y).setContainedEntity(entity);

@@ -17,9 +17,8 @@ public class FloorFollowingThief extends Thief {
 		this.colour = colour;
 	}
 
-	private Tile movementLogic() {
+	private Tile movementLogic(Tile currentTile) {
 		Tile[][] tileGrid = this.getLevelControl().getTileGrid();
-		Tile currentTile = this.getLevelControl().findTileByEntity(this);
 		LevelControl control = this.getLevelControl();
 		Direction leftAbsolute = relativeDirection(this.getDirection(),
 				Direction.LEFT);
@@ -34,24 +33,31 @@ public class FloorFollowingThief extends Thief {
 		Tile tileToUp = tileInDirection(currentTile, upAbsolute);
 		Tile tileToDown = tileInDirection(currentTile, downAbsolute);
 
-		if (control.canMoveToTile(tileToLeft.getX(), tileToLeft.getY(), this)) {
+		if (tileToLeft != null && control.canMoveToTile(tileToLeft.getX(),
+				tileToLeft.getY(), this)) {
+			this.setDirection(leftAbsolute);
 			return tileToLeft;
 		}
-		if (control.canMoveToTile(tileToUp.getX(), tileToUp.getY(), this)) {
+		if (tileToUp != null && control.canMoveToTile(tileToUp.getX(),
+				tileToUp.getY(), this)) {
+			this.setDirection(upAbsolute);
 			return tileToUp;
 		}
-		if (control.canMoveToTile(tileToRight.getX(), tileToRight.getY(), this)) {
+		if (tileToRight != null && control.canMoveToTile(tileToRight.getX(),
+				tileToRight.getY(), this)) {
+			this.setDirection(rightAbsolute);
 			return tileToRight;
 		}
-		if (control.canMoveToTile(tileToDown.getX(), tileToDown.getY(), this)) {
+		if (tileToDown != null && control.canMoveToTile(tileToDown.getX(),
+				tileToDown.getY(), this)) {
+			this.setDirection(downAbsolute);
 			return tileToDown;
 		}
-		
+
 		return currentTile;
 	}
 
 	private Tile tileInDirection(Tile tile, Direction direction) {
-		Tile[][] tileGrid = this.getLevelControl().getTileGrid();
 		Level level = this.getLevelControl().getLevel();
 		switch (direction) {
 			case UP :
@@ -98,10 +104,10 @@ public class FloorFollowingThief extends Thief {
 			Direction tempDown = down;
 			Direction tempLeft = left;
 
-			up = tempLeft;
-			right = tempUp;
-			down = tempRight;
-			left = tempDown;
+			up = tempRight;
+			right = tempDown;
+			down = tempLeft;
+			left = tempUp;
 		}
 
 		switch (direction) {
@@ -119,7 +125,11 @@ public class FloorFollowingThief extends Thief {
 	}
 	@Override
 	public boolean nextMove(Tile tile) {
-		// TODO Auto-generated method stub
+		Tile nextTile = movementLogic(tile);
+		if (this.getLevelControl().moveToTile(nextTile.getX(), nextTile.getY(),
+				this)) {
+			return true;
+		}
 		return false;
 	}
 
