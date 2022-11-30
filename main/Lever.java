@@ -6,7 +6,7 @@ public class Lever extends Item {
 	}
 
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
+	public void itemEffect(Tile tile, WalkingEntity entity) {
 		// TODO Auto-generated method stub
 
 	}
