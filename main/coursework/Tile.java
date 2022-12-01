@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Represents one tile
  * 

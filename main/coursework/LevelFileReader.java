@@ -1,3 +1,4 @@
+package coursework;
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Scanner;

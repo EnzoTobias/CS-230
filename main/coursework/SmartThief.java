@@ -1,3 +1,4 @@
+package coursework;
 import java.util.ArrayList;
 
 public class SmartThief extends Thief {

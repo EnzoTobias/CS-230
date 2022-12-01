@@ -1,3 +1,4 @@
+package coursework;
 public class Door extends Item {
 
 	public Door() {

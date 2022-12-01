@@ -1,3 +1,4 @@
+package coursework;
 
 public class Level {
 	private Tile[][] tileGrid;

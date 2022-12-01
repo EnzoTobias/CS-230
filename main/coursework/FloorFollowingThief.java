@@ -1,3 +1,4 @@
+package coursework;
 
 public class FloorFollowingThief extends Thief {
 

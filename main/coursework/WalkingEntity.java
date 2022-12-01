@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Represents any entity that walks on tiles
  * 

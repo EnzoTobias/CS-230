@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Represents the clock item which adds time to the level when activated by the player.
  * @author Enzo Tobias 2117781
