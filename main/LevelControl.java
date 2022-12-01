@@ -1,4 +1,10 @@
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.JFrame;
+
 
 /**
  * Centralises behaviours around the manipulation of the level and movement.
@@ -7,17 +13,34 @@ import java.util.ArrayList;
  * 
  * @author Enzo Tobias 2117781
  */
-public class LevelControl {
-	public long getTimeLeft() {
-		return timeLeft;
-	}
-	public void setTimeLeft(long timeLeft) {
-		this.timeLeft = timeLeft;
-	}
+public class LevelControl  {
+	private final long ONE_TIME_UNIT = 1000l;
 	private Level level;
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
-	public long timeLeft;
+	public int timeLeft;
+	private Timer timer = new Timer();
+	private boolean isGameOver = false;
+
+	
+	public LevelControl() {
+		JFrame frame = new JFrame();
+		frame.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_W) {
+					System.out.println("W");
+				}
+			}
+		});
+		frame.setVisible(true);
+	}
+	
+	public int getTimeLeft() {
+		return timeLeft;
+	}
+	public void setTimeLeft(int timeLeft) {
+		this.timeLeft = timeLeft;
+	}
 	public Level getLevel() {
 		return level;
 	}
@@ -45,14 +68,31 @@ public class LevelControl {
 	 */
 	public void oneMovementRound() {
 		this.listEntities();
+		System.out.println(LevelFileReader.levelToString(this.getLevel()));
 		for (WalkingEntity entity : entityList) {
 			entity.nextMove(this.findTileByEntity(entity));
 		}
-		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+	}
+
+	public void timeProgression() {
+		if (!this.isGameOver) {
+			this.timeLeft -=  1;
+			this.oneMovementRound();
+			TimerTask task = new TimerTask() {
+				public void run() {
+					timeProgression();
+				}
+			};
+			timer.schedule(task, ONE_TIME_UNIT);
+		} else {
+			timer.cancel();
+		}
 	}
 	/**
 	 * Locates and returns the tile that the given entity is currently on.
-	 * @param entity The entity being looked for.
+	 * 
+	 * @param entity
+	 *            The entity being looked for.
 	 * @return The tile which the entity is on.
 	 */
 	public Tile findTileByEntity(WalkingEntity entity) {
@@ -70,6 +110,7 @@ public class LevelControl {
 	}
 	/**
 	 * Checks the tilegrid to see if all loot or levers have been collected.
+	 * 
 	 * @return A boolean value denoting if all loot has been collected.
 	 */
 	public boolean isAllLootCollected() {
@@ -77,7 +118,8 @@ public class LevelControl {
 		for (int i = 0; i < tileGrid.length; i++) {
 			for (int j = 0; j < tileGrid[0].length; j++) {
 				if (tileGrid[i][j].hasItem() && (tileGrid[i][j]
-						.getContainedItem() instanceof Collectable || tileGrid[i][j]
+						.getContainedItem() instanceof Collectable
+						|| tileGrid[i][j]
 								.getContainedItem() instanceof Lever)) {
 					return false;
 				}
@@ -85,19 +127,29 @@ public class LevelControl {
 		}
 		return true;
 	}
-	
+
 	public void playerWin() {
-		
+		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+
+		System.out.println("you win gg");
+		this.isGameOver= true;
 	}
-	
+
 	public void playerLose() {
-		
+		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+		System.out.println("you snooze you lose");
+		this.isGameOver= true;
 	}
 	/**
-	 * Returns the next valid tile that an entity can move to in a given direction.
-	 * @param direction The direction which the entity is attempting to move in.
-	 * @param tile The tile which the entity is currently on.
-	 * @return The first tile (if not null) which the entity can move to in the given direction.
+	 * Returns the next valid tile that an entity can move to in a given
+	 * direction.
+	 * 
+	 * @param direction
+	 *            The direction which the entity is attempting to move in.
+	 * @param tile
+	 *            The tile which the entity is currently on.
+	 * @return The first tile (if not null) which the entity can move to in the
+	 *         given direction.
 	 */
 	public Tile nextValidTile(Direction direction, Tile tile) {
 		Tile[][] tileGrid = this.getTileGrid();
@@ -151,12 +203,16 @@ public class LevelControl {
 		return null;
 	}
 	/**
-	 * Initiates movement of an entity into a tile.
-	 * Triggers any appropriate item effects or other behaviours on movement.
-	 * Will only move if the move is valid.
-	 * @param x The x coordinate of the tile to move to.
-	 * @param y The Y coordinate of the tile to move to.
-	 * @param entity The entity attempting the move.
+	 * Initiates movement of an entity into a tile. Triggers any appropriate
+	 * item effects or other behaviours on movement. Will only move if the move
+	 * is valid.
+	 * 
+	 * @param x
+	 *            The x coordinate of the tile to move to.
+	 * @param y
+	 *            The Y coordinate of the tile to move to.
+	 * @param entity
+	 *            The entity attempting the move.
 	 * @return Boolean value denoting if the move succeeded.
 	 */
 	public boolean moveToTile(int x, int y, WalkingEntity entity) {
@@ -184,9 +240,13 @@ public class LevelControl {
 	}
 	/**
 	 * Checks if a movement of an entity is valid.
-	 * @param x The x coordinate of the tile to check for move validity.
-	 * @param y The Y coordinate of the tile to check for move validity.
-	 * @param entity The entity attempting the move.
+	 * 
+	 * @param x
+	 *            The x coordinate of the tile to check for move validity.
+	 * @param y
+	 *            The Y coordinate of the tile to check for move validity.
+	 * @param entity
+	 *            The entity attempting the move.
 	 * @return Boolean value denoting if the move is valid.
 	 */
 	public boolean canMoveToTile(int x, int y, WalkingEntity entity) {
@@ -212,9 +272,13 @@ public class LevelControl {
 	}
 	/**
 	 * Checks if two tiles have at least one matching colour.
-	 * @param x The x coordinate of the tile to check for colour match.
-	 * @param y The Y coordinate of the tile to check for colour match.
-	 * @param currentTile The tile being checked against.
+	 * 
+	 * @param x
+	 *            The x coordinate of the tile to check for colour match.
+	 * @param y
+	 *            The Y coordinate of the tile to check for colour match.
+	 * @param currentTile
+	 *            The tile being checked against.
 	 * @return Boolean value denoting if there is a colour match.
 	 */
 	public boolean tileColourCheck(int x, int y, Tile currentTile) {
@@ -234,13 +298,16 @@ public class LevelControl {
 		return false;
 	}
 	/**
-	 * Movement and appropriate effects for flying assassin.
-	 * Destroys entities on the tile being moved to.
-	 * No checks of colour or obstruction are made.
+	 * Movement and appropriate effects for flying assassin. Destroys entities
+	 * on the tile being moved to. No checks of colour or obstruction are made.
 	 * Items are not activated.
-	 * @param x The x coordinate of the tile to move to.
-	 * @param y The Y coordinate of the tile to move to.
-	 * @param entity The entity attempting the move.
+	 * 
+	 * @param x
+	 *            The x coordinate of the tile to move to.
+	 * @param y
+	 *            The Y coordinate of the tile to move to.
+	 * @param entity
+	 *            The entity attempting the move.
 	 * @return Boolean value denoting if the move succeeded.
 	 */
 	public boolean flyingMove(int x, int y, WalkingEntity entity) {
@@ -259,7 +326,8 @@ public class LevelControl {
 		return false;
 	}
 	/**
-	 * Updates the entityList ArrayList in this instance with every entity in the grid.
+	 * Updates the entityList ArrayList in this instance with every entity in
+	 * the grid.
 	 */
 	private void listEntities() {
 		entityList = new ArrayList<WalkingEntity>();
@@ -273,8 +341,9 @@ public class LevelControl {
 		}
 	}
 	/**
-	 * Returns a reference to the player entity in the tilegrid.
-	 * There should only be one player in any level.
+	 * Returns a reference to the player entity in the tilegrid. There should
+	 * only be one player in any level.
+	 * 
 	 * @return The player returned.
 	 */
 	public Player getPlayer() {
@@ -282,9 +351,14 @@ public class LevelControl {
 	}
 	/**
 	 * Sets the player for the level.
-	 * @param player Player to be set.
+	 * 
+	 * @param player
+	 *            Player to be set.
 	 */
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+	public boolean isGameOver() {
+		return isGameOver;
 	}
 }

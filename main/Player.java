@@ -1,13 +1,21 @@
+import java.awt.event.*;   
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 
 public class Player extends WalkingEntity {
+	
+	
 	@Override
 	public void die() {
-		// to do
+		this.getLevelControl().playerLose();
 	};
 	
-	public void testingMoveUp() {
+	public void moveInDirection(Direction direction) {
 		Tile nowTile = this.getLevelControl().findTileByEntity(this);
-		this.getLevelControl().moveToTile(nowTile.getX(), nowTile.getY()-1, this);
+		LevelControl control = this.getLevelControl();
+		Tile tileToMove = control.nextValidTile(direction, nowTile);
+		control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		
 	}
 
 	@Override

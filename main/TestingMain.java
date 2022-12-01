@@ -5,13 +5,7 @@ public class TestingMain {
 		LevelControl control = new LevelControl();
 		 control.setLevel(LevelFileReader.createFromFile("D:/Documents/leveldef4.txt",control));
 		System.out.println(LevelFileReader.levelToString(control.getLevel()));
-		control.oneMovementRound();
-		control.oneMovementRound();
-		control.oneMovementRound();
-		control.oneMovementRound();
-		control.oneMovementRound();
-		control.oneMovementRound();
-	
+		control.timeProgression();
 
 		
 		
