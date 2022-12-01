@@ -8,9 +8,16 @@ import java.util.ArrayList;
  * @author Enzo Tobias 2117781
  */
 public class LevelControl {
+	public long getTimeLeft() {
+		return timeLeft;
+	}
+	public void setTimeLeft(long timeLeft) {
+		this.timeLeft = timeLeft;
+	}
 	private Level level;
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
+	public long timeLeft;
 	public Level getLevel() {
 		return level;
 	}
@@ -22,6 +29,7 @@ public class LevelControl {
 	 */
 	public void setLevel(Level level) {
 		this.level = level;
+		this.timeLeft = level.getInitialTime();
 	}
 	/**
 	 * Returns the tilegrid of this instance's level instance for ease of
@@ -61,20 +69,29 @@ public class LevelControl {
 		return null;
 	}
 	/**
-	 * Checks the tilegrid to see if all loot has been collected.
+	 * Checks the tilegrid to see if all loot or levers have been collected.
 	 * @return A boolean value denoting if all loot has been collected.
 	 */
 	public boolean isAllLootCollected() {
 		Tile[][] tileGrid = this.getTileGrid();
 		for (int i = 0; i < tileGrid.length; i++) {
 			for (int j = 0; j < tileGrid[0].length; j++) {
-				if (tileGrid[i][j].hasItem() && tileGrid[i][j]
-						.getContainedItem() instanceof Collectable) {
+				if (tileGrid[i][j].hasItem() && (tileGrid[i][j]
+						.getContainedItem() instanceof Collectable || tileGrid[i][j]
+								.getContainedItem() instanceof Lever)) {
 					return false;
 				}
 			}
 		}
 		return true;
+	}
+	
+	public void playerWin() {
+		
+	}
+	
+	public void playerLose() {
+		
 	}
 	/**
 	 * Returns the next valid tile that an entity can move to in a given direction.

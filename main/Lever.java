@@ -17,6 +17,7 @@ public class Lever extends Item {
 				}
 			}
 		}
+		tile.setContainedItem(null);
 	}
 
 	public Colour getColour() {
