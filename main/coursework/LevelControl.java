@@ -59,7 +59,10 @@ public class LevelControl  {
 		this.listEntities();
 		System.out.println(LevelFileReader.levelToString(this.getLevel()));
 		for (WalkingEntity entity : entityList) {
-			entity.nextMove(this.findTileByEntity(entity));
+			if(!(entity instanceof Player)) {
+				entity.nextMove(this.findTileByEntity(entity));
+			}
+			
 		}
 	}
 

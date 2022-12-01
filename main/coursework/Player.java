@@ -21,7 +21,7 @@ public class Player extends WalkingEntity {
 
 	@Override
 	public boolean nextMove(Tile tile) {
-		// TODO Auto-generated method stub
+		//no automatic movement for player
 		return false;
 	}
 
