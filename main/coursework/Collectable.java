@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Represents a collectable item (e.g. ruby,cent etc).
  * 

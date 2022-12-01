@@ -1,3 +1,4 @@
+package coursework;
 
 public class FlyingAssassin extends WalkingEntity {
 

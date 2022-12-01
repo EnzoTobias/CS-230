@@ -1,3 +1,4 @@
+package coursework;
 public class Door extends Item {
 
 	public Door() {
@@ -10,7 +11,7 @@ public class Door extends Item {
 			if (entity instanceof Player) {
 				tile.getLevelControl().playerWin();
 			} else {
-				tile.getLevelControl().playerLose();;
+				tile.getLevelControl().playerLose();
 			}
 		}
 

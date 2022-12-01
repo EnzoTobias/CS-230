@@ -1,3 +1,4 @@
+package coursework;
 /**
  * 
  * Colours viable to be used in tiles

@@ -1,3 +1,4 @@
+package coursework;
 import java.util.ArrayList;
 
 public class SmartThief extends Thief {
@@ -20,7 +21,8 @@ public class SmartThief extends Thief {
 
 		if (nextTile.hasItem()
 				&& (nextTile.getContainedItem() instanceof Collectable
-						|| nextTile.getContainedItem() instanceof Lever)) {
+						|| nextTile.getContainedItem() instanceof Lever
+						|| nextTile.getContainedItem() instanceof Clock)) {
 			return 0;
 		}
 

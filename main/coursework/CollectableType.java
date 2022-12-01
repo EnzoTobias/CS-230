@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Type of collectable and its value.
  */

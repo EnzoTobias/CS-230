@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Abstract superclass of all item classes
  * 
