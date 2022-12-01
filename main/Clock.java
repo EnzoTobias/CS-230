@@ -1,13 +1,11 @@
 public class Clock extends Item {
-	private long time;
+	private final long TIME = 10l;
 
-	public Clock() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
-		// TODO Auto-generated method stub
+	public void itemEffect(Tile tile, WalkingEntity entity) {
+		tile.getLevelControl()
+				.setTimeLeft(tile.getLevelControl().getTimeLeft() + TIME);
 
 	}
 

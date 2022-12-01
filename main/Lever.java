@@ -1,14 +1,23 @@
 public class Lever extends Item {
 	private Colour colour;
 
-	public Lever() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
-		// TODO Auto-generated method stub
+	public void itemEffect(Tile tile, WalkingEntity entity) {
+		Tile[][] tileGrid = tile.getLevelControl().getTileGrid();
 
+		for (int i = 0; i < tileGrid.length; i++) {
+			for (int j = 0; j < tileGrid[0].length; j++) {
+				Tile tileChecked = tileGrid[i][j];
+				if (tileChecked.hasItem()
+						&& tileChecked.getContainedItem() instanceof Gate) {
+					if (((Gate) tileChecked.getContainedItem())
+							.getColour() == this.getColour()) {
+						tileChecked.setContainedItem(null);
+					}
+				}
+			}
+		}
+		tile.setContainedItem(null);
 	}
 
 	public Colour getColour() {

@@ -10,4 +10,10 @@ public class Player extends WalkingEntity {
 		this.getLevelControl().moveToTile(nowTile.getX(), nowTile.getY()-1, this);
 	}
 
+	@Override
+	public boolean nextMove(Tile tile) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

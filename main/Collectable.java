@@ -15,7 +15,7 @@ public class Collectable extends Item {
 	}
 
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
+	public void itemEffect(Tile tile, WalkingEntity entity) {
 		entity.setScore(entity.getScore() + type.getValue());
 		this.deleteSelf(tile);
 	}

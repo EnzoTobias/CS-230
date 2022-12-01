@@ -5,8 +5,14 @@ public class Door extends Item {
 	}
 
 	@Override
-	void itemEffect(Tile tile, WalkingEntity entity) {
-		// TODO Auto-generated method stub
+	public void itemEffect(Tile tile, WalkingEntity entity) {
+		if (tile.getLevelControl().isAllLootCollected()) {
+			if (entity instanceof Player) {
+				tile.getLevelControl().playerWin();
+			} else {
+				tile.getLevelControl().playerLose();;
+			}
+		}
 
 	}
 
