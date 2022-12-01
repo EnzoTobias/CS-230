@@ -24,18 +24,6 @@ public class LevelControl  {
 	private boolean isGameOver = false;
 
 	
-	public LevelControl() {
-		JFrame frame = new JFrame();
-		frame.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_W) {
-					System.out.println("W");
-				}
-			}
-		});
-		frame.setVisible(true);
-	}
-	
 	public int getTimeLeft() {
 		return timeLeft;
 	}
