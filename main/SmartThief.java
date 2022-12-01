@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class SmartThief extends Thief {
 	private final int ERROR_RETURN = -1;
-	private int shortestPathLength(Tile nextTile, ArrayList<Tile> visitedTiles) {
+	private int shortestPathLength(Tile nextTile,
+			ArrayList<Tile> visitedTiles) {
 		if (visitedTiles.contains(nextTile)) {
 			return ERROR_RETURN;
 		}
@@ -18,7 +19,8 @@ public class SmartThief extends Thief {
 		}
 
 		if (nextTile.hasItem()
-				&& nextTile.getContainedItem() instanceof Collectable) {
+				&& (nextTile.getContainedItem() instanceof Collectable
+						|| nextTile.getContainedItem() instanceof Lever)) {
 			return 0;
 		}
 
