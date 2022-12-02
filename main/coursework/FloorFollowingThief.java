@@ -1,23 +1,31 @@
 package coursework;
-
+/**
+ * Implementation of the floor following thief.
+ * @author Enzo Tobias 2117781
+ *
+ */
 public class FloorFollowingThief extends Thief {
 
 	private Colour colour;
-
-	@Override
-	public void die() {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Returns this entity's colour.
+	 * @return Colour to be returned.
+	 */
 	public Colour getColour() {
 		return colour;
 	}
-
+	/**
+	 * Sets this entity's colour
+	 * @param colour Colour to be set.
+	 */
 	public void setColour(Colour colour) {
 		this.colour = colour;
 	}
-
+	/**
+	 * Processes the movement logic for this instance and returns a tile as the next move.
+	 * @param currentTile The tile this entity is currently on.
+	 * @return The tile this entity should move to.
+	 */
 	private Tile movementLogic(Tile currentTile) {
 		Tile[][] tileGrid = this.getLevelControl().getTileGrid();
 		LevelControl control = this.getLevelControl();
@@ -57,7 +65,12 @@ public class FloorFollowingThief extends Thief {
 
 		return currentTile;
 	}
-
+	/**
+	 * Returns the first tile in a direction.
+	 * @param tile The current tile.
+	 * @param direction The direction.
+	 * @return The first tile in that direction.
+	 */
 	private Tile tileInDirection(Tile tile, Direction direction) {
 		Level level = this.getLevelControl().getLevel();
 		switch (direction) {
@@ -72,6 +85,12 @@ public class FloorFollowingThief extends Thief {
 		}
 		return null;
 	}
+	/**
+	 * Returns the real direction given a direction this entity is facing and the direction wanted relative to itself. 
+	 * @param facingDir The direction this entity should be facing.
+	 * @param wantedDir The wanted relative direction.
+	 * @return The real direction.
+	 */
 	private Direction relativeDirection(Direction facingDir,
 			Direction wantedDir) {
 		int shiftAmount = 0;
@@ -92,7 +111,12 @@ public class FloorFollowingThief extends Thief {
 
 		return directionShiftClockwise(shiftAmount, wantedDir);
 	}
-
+	/**
+	 * Shifts a given direction clockwise a given amount of times.
+	 * @param amount Amount of times to shift.
+	 * @param direction Original direction.
+	 * @return New shifted direction.
+	 */
 	private Direction directionShiftClockwise(int amount, Direction direction) {
 		Direction up = Direction.UP;
 		Direction right = Direction.RIGHT;
@@ -124,6 +148,11 @@ public class FloorFollowingThief extends Thief {
 
 		return null;
 	}
+	/**
+	 * Trigger this entity's next move
+	 * @param tile The tile this entity is currently on.
+	 * @return Boolean denoting if the move succeeded.
+	 */
 	@Override
 	public boolean nextMove(Tile tile) {
 		Tile nextTile = movementLogic(tile);
