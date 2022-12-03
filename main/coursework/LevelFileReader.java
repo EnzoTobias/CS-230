@@ -1,3 +1,4 @@
+package coursework;
 import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -91,32 +92,13 @@ public class LevelFileReader {
 			return null;
 		}
 		for (int i = 0; i <= 3; i++) {
-			switch (chars[i]) {
-				case 'R' :
-					colours[i] = Colour.RED;
-					break;
-				case 'G' :
-					colours[i] = Colour.GREEN;
-					break;
-				case 'B' :
-					colours[i] = Colour.BLUE;
-					break;
-				case 'Y' :
-					colours[i] = Colour.YELLOW;
-					break;
-				case 'C' :
-					colours[i] = Colour.CYAN;
-					break;
-				case 'M' :
-					colours[i] = Colour.MAGENTA;
-					break;
-				default :
-					System.out.println(ERROR);
-					return null;
+			if (getColour(Character.toString(chars[i])) == null) {
+				System.out.println(ERROR);
+				return null;
 			}
+			colours[i] = getColour(Character.toString(chars[i]));
 
 		}
-		int expectedDefSize = 0;
 		Tile tile = new Tile(colours);
 		tile.setX(x);
 		tile.setY(y);
@@ -124,11 +106,29 @@ public class LevelFileReader {
 			String tileContent = info.substring(info.indexOf("(") + 1,
 					info.lastIndexOf(")"));
 			String[] contentDefinitions = tileContent.split(",");
+			if (processEntity(contentDefinitions, control, tile) == false) {
+				System.out.println(ERROR);
+				return null;
+			}
+			
+		} else {
+			if (chars.length > 4) {
+				System.out.println(ERROR);
+				return null;
+			}
+		}
+		tile.setLevelControl(control);
+		return tile;
+	}
+
+	private static boolean processEntity(String[] contentDefinitions, LevelControl control, Tile tile) {
+		int expectedDefSize = 0;
+		try {
 			switch (contentDefinitions[0]) {
 				case "P" :
 					if (getDirection(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					Player p = new Player();
 					p.setLevelControl(control);
@@ -140,7 +140,7 @@ public class LevelFileReader {
 				case "ST" :
 					if (getDirection(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					SmartThief s = new SmartThief();
 					s.setDirection(getDirection(contentDefinitions[1]));
@@ -151,7 +151,7 @@ public class LevelFileReader {
 				case "FA" :
 					if (getDirection(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					FlyingAssassin f = new FlyingAssassin();
 					f.setLevelControl(control);
@@ -162,11 +162,11 @@ public class LevelFileReader {
 				case "FT" :
 					if (getDirection(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					if (getColour(contentDefinitions[2]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					FloorFollowingThief ff = new FloorFollowingThief();
 					ff.setDirection(getDirection(contentDefinitions[1]));
@@ -204,7 +204,7 @@ public class LevelFileReader {
 				case "G" :
 					if (getColour(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					Gate g = new Gate();
 					g.setColour(getColour(contentDefinitions[1]));
@@ -214,7 +214,7 @@ public class LevelFileReader {
 				case "L" :
 					if (getColour(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
-						return null;
+						return false;
 					}
 					Lever lv = new Lever();
 					lv.setColour(getColour(contentDefinitions[1]));
@@ -233,22 +233,22 @@ public class LevelFileReader {
 					break;
 				default :
 					System.out.println(ERROR);
-					return null;
+					return false;
 			}
-			if (contentDefinitions.length != expectedDefSize) {
-				System.out.println(ERROR);
-				return null;
-			}
-		} else {
-			if (chars.length > 4) {
-				System.out.println(ERROR);
-				return null;
-			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println(ERROR);
+			return false;
 		}
-		tile.setLevel(control);
-		return tile;
+		
+		if (contentDefinitions.length != expectedDefSize) {
+			System.out.println(ERROR);
+			return false;
+		}
+		return true;
 	}
+	
 
+	
 	private static Colour getColour(String colour) {
 		switch (colour) {
 			case "R" :

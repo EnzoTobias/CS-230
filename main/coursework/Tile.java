@@ -1,3 +1,4 @@
+package coursework;
 /**
  * Represents one tile
  * 
@@ -18,7 +19,7 @@ public class Tile {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public Tile(Colour[] colours) {
 		this.colours = colours;
 	}
@@ -43,11 +44,11 @@ public class Tile {
 		this.containedItem = containedItem;
 	}
 
-	public LevelControl getLevel() {
+	public LevelControl getLevelControl() {
 		return level;
 	}
-	
-	public void setLevel(LevelControl level) {
+
+	public void setLevelControl(LevelControl level) {
 		this.level = level;
 	}
 
@@ -72,12 +73,22 @@ public class Tile {
 		}
 		return true;
 	}
-	
+
 	public boolean isTileBlocked() {
 		if (this.hasItem() && this.getContainedItem() instanceof Gate) {
 			return true;
 		}
-		if (this.hasEntity())  {
+
+		if (this.hasItem() && this.getContainedItem() instanceof Bomb) {
+			return true;
+		}
+
+		if (this.hasItem() && this.getContainedItem() instanceof Door
+				&& !this.getLevelControl().isAllLootCollected()) {
+			return true;
+		}
+
+		if (this.hasEntity()) {
 			return true;
 		}
 		return false;
