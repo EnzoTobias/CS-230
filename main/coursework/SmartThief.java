@@ -1,9 +1,12 @@
 package coursework;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SmartThief extends Thief {
 	private final int ERROR_RETURN = -1;
 	private Tile lastTile;
+	private static final Random RANDOM = new Random();
+	
 	private int shortestPathLength(Tile nextTile,
 			ArrayList<Tile> visitedTiles) {
 		if (visitedTiles.contains(nextTile)) {
@@ -22,6 +25,7 @@ public class SmartThief extends Thief {
 		if (this.getLevelControl().isAllLootCollected() && nextTile.hasItem()
 				&& nextTile.getContainedItem() instanceof Door) {
 			visitedTiles = new ArrayList<Tile>();
+			lastTile = null;
 			return 0;
 		}
 
@@ -30,30 +34,31 @@ public class SmartThief extends Thief {
 						|| nextTile.getContainedItem() instanceof Lever
 						|| nextTile.getContainedItem() instanceof Clock)) {
 			visitedTiles = new ArrayList<Tile>();
+			lastTile = null;
 			return 0;
 		}
 
 		int toReturn;
 		int currentReturn;
-
+		ArrayList<Tile> tempVisited = new ArrayList<Tile>(visitedTiles);
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.LEFT, nextTile),
-				visitedTiles);
-		toReturn = currentReturn;
+				tempVisited );
+		toReturn = chooseToReturn(-1, currentReturn);
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.RIGHT, nextTile),
-				visitedTiles);
+				tempVisited );
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.UP, nextTile),
-				visitedTiles);
+				tempVisited );
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		currentReturn = shortestPathLength(
 				this.getLevelControl().nextValidTile(Direction.DOWN, nextTile),
-				visitedTiles);
+				tempVisited );
 		toReturn = chooseToReturn(toReturn, currentReturn);
 
 		if (toReturn == ERROR_RETURN) {
@@ -68,7 +73,7 @@ public class SmartThief extends Thief {
 		if (toReturn == ERROR_RETURN) {
 			return currentReturn;
 		}
-		if (currentReturn != ERROR_RETURN && currentReturn < toReturn) {
+		if (currentReturn != ERROR_RETURN && currentReturn <= toReturn) {
 			return currentReturn;
 		}
 
@@ -80,6 +85,7 @@ public class SmartThief extends Thief {
 		LevelControl control = this.getLevelControl();
 		int shortest = ERROR_RETURN;
 		Tile tileToMove = null;
+		int currentShortest = shortestPathLength(tile,new ArrayList<Tile>());
 		for (Direction direction : Direction.values()) {
 			int currentReturn;
 			currentReturn = shortestPathLength(
@@ -87,13 +93,23 @@ public class SmartThief extends Thief {
 							control.findTileByEntity(this)),
 					new ArrayList<Tile>());
 			shortest = chooseToReturn(shortest, currentReturn);
-			if (currentReturn == shortest) {
+			if (currentReturn == currentShortest - 1) {
 				this.setDirection(direction);
 				tileToMove = this.getLevelControl().nextValidTile(direction,
 						control.findTileByEntity(this));
 			}
 
 		}
+		
+		
+		Direction[] directions = Direction.values();
+		Direction randomDirection = directions[RANDOM.nextInt(directions.length)];
+		
+		if (shortest == ERROR_RETURN) {
+			tileToMove =  this.getLevelControl().nextValidTile(randomDirection,
+					control.findTileByEntity(this));
+		}
+		
 		if (tileToMove == null) {
 			return false;
 		}
