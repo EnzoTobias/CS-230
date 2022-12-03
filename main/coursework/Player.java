@@ -15,7 +15,10 @@ public class Player extends WalkingEntity {
 		Tile nowTile = this.getLevelControl().findTileByEntity(this);
 		LevelControl control = this.getLevelControl();
 		Tile tileToMove = control.nextValidTile(direction, nowTile);
-		control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		if (!(tileToMove == null)) {
+			control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		}
+		
 		
 	}
 

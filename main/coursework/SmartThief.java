@@ -3,11 +3,16 @@ import java.util.ArrayList;
 
 public class SmartThief extends Thief {
 	private final int ERROR_RETURN = -1;
+	private Tile lastTile;
 	private int shortestPathLength(Tile nextTile,
 			ArrayList<Tile> visitedTiles) {
 		if (visitedTiles.contains(nextTile)) {
 			return ERROR_RETURN;
 		}
+		if (nextTile == this.lastTile) {
+			return ERROR_RETURN;
+		}
+		
 		visitedTiles.add(nextTile);
 
 		if (nextTile == null) {
@@ -16,6 +21,7 @@ public class SmartThief extends Thief {
 
 		if (this.getLevelControl().isAllLootCollected() && nextTile.hasItem()
 				&& nextTile.getContainedItem() instanceof Door) {
+			visitedTiles = new ArrayList<Tile>();
 			return 0;
 		}
 
@@ -23,6 +29,7 @@ public class SmartThief extends Thief {
 				&& (nextTile.getContainedItem() instanceof Collectable
 						|| nextTile.getContainedItem() instanceof Lever
 						|| nextTile.getContainedItem() instanceof Clock)) {
+			visitedTiles = new ArrayList<Tile>();
 			return 0;
 		}
 
@@ -90,6 +97,7 @@ public class SmartThief extends Thief {
 		if (tileToMove == null) {
 			return false;
 		}
+		this.lastTile = tile;
 		return this.getLevelControl().moveToTile(tileToMove.getX(),
 				tileToMove.getY(), this);
 	}
