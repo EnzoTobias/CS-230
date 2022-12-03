@@ -52,7 +52,11 @@ public class Main extends Application {
 	//Y axis and Xaxis
 	private int xAxis;
 	private int yAxis;
+
+	private int gameStart = 0;
 	
+
+
 	// The canvas in the GUI. This needs to be a global variable
 	// (in this setup) as we need to access it in different methods.
 	// We could use FXML to place code in the controller instead.
@@ -66,9 +70,15 @@ public class Main extends Application {
 	private Image yellowTile;
 	private Image wallTile;
 	private Image tile;
+	private Image entityTile;
+	private Image itemTile;
 	private Image magentaTile;
 	private Image greenTile;
 	private Image cyanTile;
+	private Image coinItem;
+	
+	//level control
+	private LevelControl control;
 	
 	
 	// X and Y coordinate of player on the grid.
@@ -93,6 +103,9 @@ public class Main extends Application {
 		magentaTile = new Image("magenta.png");
 		greenTile = new Image("green.png");
 		cyanTile = new Image("cyan.png");
+		coinItem = new Image("coin.png");
+		
+		String fileToLoad = "leveldef.txt";
 
 		// Build the GUI 
 		Pane root = buildGUI();
@@ -111,6 +124,11 @@ public class Main extends Application {
 		tickTimeline.setCycleCount(Animation.INDEFINITE);
 		// We start the timeline upon a button press.
 		
+		LevelControl newControl = new LevelControl();
+		newControl.setLevel(LevelFileReader.createFromFile(fileToLoad, newControl));
+		
+		this.setControl(newControl);
+		
 		// Display the scene on the stage
 		drawGame();
 		primaryStage.setScene(scene);
@@ -123,10 +141,15 @@ public class Main extends Application {
 	 */
 	public void processKeyEvent(KeyEvent event) {
 		// We change the behaviour depending on the actual key that was pressed.
-		switch (event.getCode()) {			
+
+		Tile [][] Tilegrid =control.getTileGrid();
+
+		switch (event.getCode()) {	
+
+		
 		    case RIGHT:
 		    	// Right key was pressed. So move the player right by one cell.
-				if (playerX < (11)){
+				if (playerX < (Tilegrid.length-1)){
 	        	playerX = playerX + 1;
 				}
 	        	break;		        
@@ -142,7 +165,7 @@ public class Main extends Application {
 				}
 	        	break;		        
 	        case DOWN:
-			if (playerY < 7){
+			if (playerY < Tilegrid[0].length-1){
 				playerY = playerY + 1;
 			}
 				break;
@@ -174,15 +197,18 @@ public class Main extends Application {
 		//gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		// Set the background to gray.
-		gc.setFill(Color.GRAY);
-		gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		//gc.setFill(Color.GRAY);
+		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-		LevelControl control = new LevelControl();
-		control.setLevel(LevelFileReader.createFromFile("C:/Users/fredf/Documents/Coding/Year 2/group project/CS-230-grid/leveldef.txt",control));
+		
 		String gridTile = LevelFileReader.levelToString(control.getLevel());
 		int counter = 0;
-		
+
 		Tile [][] Tilegrid =control.getTileGrid();
+
+		gc.setFill(Color.GRAY);
+		gc.fillRect(0, 0, Tilegrid.length, Tilegrid[0].length);
+
 
 		for (int j = 0; j < Tilegrid[0].length; j++) {
 			for (int i = 0; i < Tilegrid.length; i++) {
@@ -224,14 +250,74 @@ public class Main extends Application {
 						gc.drawImage(tile, (50*i)+25 ,(50*j)+25 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
 						counter = -1;
 					}
-					counter = counter +1;
+					counter = counter +1;	
 				}
-			}		
+				if (tileToHandle.hasEntity()) {
+					WalkingEntity entity = tileToHandle.getContainedEntity();
+					if (entity instanceof Player && gameStart==0) {
+						playerX = i;
+						playerY = j;
+						gameStart = 1;
+
+					} else if (entity instanceof SmartThief) {
+						entityTile=iconImage;
+						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+
+					} else if (entity instanceof FlyingAssassin) {
+						entityTile=iconImage;
+						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+
+					} else if (entity instanceof FloorFollowingThief) {
+						entityTile=iconImage;
+						((FloorFollowingThief) entity).getColour();
+						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+					}
+					
+					
+
+				} else {
+					if (tileToHandle.hasItem()) {
+						Item item = tileToHandle.getContainedItem();
+						if (item instanceof Collectable) {
+							switch (((Collectable) item).getCollectableType()) {
+								case CENT :
+									itemTile=coinItem;
+									break;
+								case DOLLAR :
+									itemTile=coinItem;
+									break;
+								case RUBY :
+									itemTile=coinItem;
+									break;
+								case DIAMOND :
+									itemTile=coinItem;
+									break;
+							}
+						} else if (item instanceof Gate) {
+							itemTile=coinItem;
+
+						} else if (item instanceof Lever) {
+							itemTile=coinItem;
+
+						} else if (item instanceof Bomb) {
+							itemTile=coinItem;
+
+						} else if (item instanceof Door) {
+							itemTile=coinItem;
+
+						}
+						gc.drawImage(itemTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+					}
+			}		}
 		}
 
 		// Draw player at current location
-		gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);			
+		gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+		
+		
 	}
+
+
 	
 	/**
 	 * Reset the player's location and move them back to (0,0). 
@@ -409,11 +495,16 @@ public class Main extends Application {
 	}
 	        	
 	public static void main(String[] args) {
-		LevelControl control1 = new LevelControl();
-		control1.setLevel(LevelFileReader.createFromFile("C:/Users/fredf/Documents/Coding/Year 2/group project/CS-230-grid/leveldef.txt",control1));
-	   System.out.println(LevelFileReader.levelToString(control1.getLevel()));
-
 		launch(args);
 
+	}
+	
+
+	public LevelControl getControl() {
+		return control;
+	}
+
+	public void setControl(LevelControl control) {
+		this.control = control;
 	}
 }
