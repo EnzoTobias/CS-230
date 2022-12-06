@@ -1,23 +1,31 @@
 package coursework;
-
+/**
+ * Implementation of the floor following thief.
+ * @author Enzo Tobias 2117781
+ *
+ */
 public class FloorFollowingThief extends Thief {
 
 	private Colour colour;
-
-	@Override
-	public void die() {
-		// TODO Auto-generated method stub
-
-	}
-
+	/**
+	 * Returns this entity's colour.
+	 * @return Colour to be returned.
+	 */
 	public Colour getColour() {
 		return colour;
 	}
-
+	/**
+	 * Sets this entity's colour
+	 * @param colour Colour to be set.
+	 */
 	public void setColour(Colour colour) {
 		this.colour = colour;
 	}
-
+	/**
+	 * Processes the movement logic for this instance and returns a tile as the next move.
+	 * @param currentTile The tile this entity is currently on.
+	 * @return The tile this entity should move to.
+	 */
 	private Tile movementLogic(Tile currentTile) {
 		Tile[][] tileGrid = this.getLevelControl().getTileGrid();
 		LevelControl control = this.getLevelControl();
@@ -34,22 +42,22 @@ public class FloorFollowingThief extends Thief {
 		Tile tileToUp = tileInDirection(currentTile, upAbsolute);
 		Tile tileToDown = tileInDirection(currentTile, downAbsolute);
 
-		if (tileToLeft != null && control.canMoveToTile(tileToLeft.getX(),
+		if (tileToLeft != null && canMoveToTileFloorFollowing(tileToLeft.getX(),
 				tileToLeft.getY(), this)) {
 			this.setDirection(leftAbsolute);
 			return tileToLeft;
 		}
-		if (tileToUp != null && control.canMoveToTile(tileToUp.getX(),
+		if (tileToUp != null && canMoveToTileFloorFollowing(tileToUp.getX(),
 				tileToUp.getY(), this)) {
 			this.setDirection(upAbsolute);
 			return tileToUp;
 		}
-		if (tileToRight != null && control.canMoveToTile(tileToRight.getX(),
+		if (tileToRight != null && canMoveToTileFloorFollowing(tileToRight.getX(),
 				tileToRight.getY(), this)) {
 			this.setDirection(rightAbsolute);
 			return tileToRight;
 		}
-		if (tileToDown != null && control.canMoveToTile(tileToDown.getX(),
+		if (tileToDown != null && canMoveToTileFloorFollowing(tileToDown.getX(),
 				tileToDown.getY(), this)) {
 			this.setDirection(downAbsolute);
 			return tileToDown;
@@ -57,7 +65,12 @@ public class FloorFollowingThief extends Thief {
 
 		return currentTile;
 	}
-
+	/**
+	 * Returns the first tile in a direction.
+	 * @param tile The current tile.
+	 * @param direction The direction.
+	 * @return The first tile in that direction.
+	 */
 	private Tile tileInDirection(Tile tile, Direction direction) {
 		Level level = this.getLevelControl().getLevel();
 		switch (direction) {
@@ -72,6 +85,12 @@ public class FloorFollowingThief extends Thief {
 		}
 		return null;
 	}
+	/**
+	 * Returns the real direction given a direction this entity is facing and the direction wanted relative to itself. 
+	 * @param facingDir The direction this entity should be facing.
+	 * @param wantedDir The wanted relative direction.
+	 * @return The real direction.
+	 */
 	private Direction relativeDirection(Direction facingDir,
 			Direction wantedDir) {
 		int shiftAmount = 0;
@@ -92,7 +111,12 @@ public class FloorFollowingThief extends Thief {
 
 		return directionShiftClockwise(shiftAmount, wantedDir);
 	}
-
+	/**
+	 * Shifts a given direction clockwise a given amount of times.
+	 * @param amount Amount of times to shift.
+	 * @param direction Original direction.
+	 * @return New shifted direction.
+	 */
 	private Direction directionShiftClockwise(int amount, Direction direction) {
 		Direction up = Direction.UP;
 		Direction right = Direction.RIGHT;
@@ -124,6 +148,33 @@ public class FloorFollowingThief extends Thief {
 
 		return null;
 	}
+	
+	public boolean canMoveToTileFloorFollowing(int x, int y, WalkingEntity entity) {
+		LevelControl control = this.getLevelControl();
+		Level level = control.getLevel();
+;		Tile previousTile = control.findTileByEntity(entity);
+		Tile tileToMove = level.safeGetTile(x, y);
+		if (level.safeGetTile(x, y) == null) {
+			return false;
+		}
+
+		if (tileToMove.isTileBlocked()) {
+			return false;
+		}
+
+		for (Colour col : tileToMove.getColours()) {
+			if (col == this.getColour()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	/**
+	 * Trigger this entity's next move
+	 * @param tile The tile this entity is currently on.
+	 * @return Boolean denoting if the move succeeded.
+	 */
 	@Override
 	public boolean nextMove(Tile tile) {
 		Tile nextTile = movementLogic(tile);

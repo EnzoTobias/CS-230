@@ -16,25 +16,15 @@ import javax.swing.JFrame;
  */
 public class LevelControl  {
 	private final long ONE_TIME_UNIT = 1000l;
+	private final int MOVEMENT_EVERY = 2;
 	private Level level;
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
 	public int timeLeft;
-	private Timer timer = new Timer();
+	//private Timer timer = new Timer();
 	private boolean isGameOver = false;
+	private int movementProgression = 0;
 
-	
-	public LevelControl() {
-		JFrame frame = new JFrame();
-		frame.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_W) {
-					System.out.println("W");
-				}
-			}
-		});
-		frame.setVisible(true);
-	}
 	
 	public int getTimeLeft() {
 		return timeLeft;
@@ -42,6 +32,11 @@ public class LevelControl  {
 	public void setTimeLeft(int timeLeft) {
 		this.timeLeft = timeLeft;
 	}
+	
+	public void displayGrid() {
+		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+	}
+	
 	public Level getLevel() {
 		return level;
 	}
@@ -69,24 +64,32 @@ public class LevelControl  {
 	 */
 	public void oneMovementRound() {
 		this.listEntities();
-		System.out.println(LevelFileReader.levelToString(this.getLevel()));
 		for (WalkingEntity entity : entityList) {
-			entity.nextMove(this.findTileByEntity(entity));
+			if(!(entity instanceof Player)) {
+				entity.nextMove(this.findTileByEntity(entity));
+			}
+			
 		}
+		displayGrid();
+
 	}
 
-	public void timeProgression() {
+	public void timeProgression() {		
 		if (!this.isGameOver) {
+			movementProgression += 1;
+			if (movementProgression == MOVEMENT_EVERY) {
+				movementProgression = 0;
+				this.oneMovementRound();
+			}
 			this.timeLeft -=  1;
-			this.oneMovementRound();
 			TimerTask task = new TimerTask() {
 				public void run() {
 					timeProgression();
 				}
 			};
-			timer.schedule(task, ONE_TIME_UNIT);
+			//timer.schedule(task, ONE_TIME_UNIT);
 		} else {
-			timer.cancel();
+			//timer.cancel();
 		}
 	}
 	/**
@@ -130,14 +133,14 @@ public class LevelControl  {
 	}
 
 	public void playerWin() {
-		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+		displayGrid();
 
 		System.out.println("you win gg");
 		this.isGameOver= true;
 	}
 
 	public void playerLose() {
-		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+		displayGrid();
 		System.out.println("you snooze you lose");
 		this.isGameOver= true;
 	}

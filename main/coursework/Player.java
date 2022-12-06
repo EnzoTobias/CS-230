@@ -15,13 +15,16 @@ public class Player extends WalkingEntity {
 		Tile nowTile = this.getLevelControl().findTileByEntity(this);
 		LevelControl control = this.getLevelControl();
 		Tile tileToMove = control.nextValidTile(direction, nowTile);
-		control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		if (!(tileToMove == null)) {
+			control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		}
+		
 		
 	}
 
 	@Override
 	public boolean nextMove(Tile tile) {
-		// TODO Auto-generated method stub
+		//no automatic movement for player
 		return false;
 	}
 
