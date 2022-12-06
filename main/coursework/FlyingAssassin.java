@@ -1,4 +1,4 @@
-package coursework;
+
 /**
  * Implementation of the flying assassin.
  * @author Enzo Tobias 2117781

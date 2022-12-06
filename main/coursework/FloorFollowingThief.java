@@ -1,4 +1,4 @@
-package coursework;
+
 /**
  * Implementation of the floor following thief.
  * @author Enzo Tobias 2117781
@@ -42,22 +42,22 @@ public class FloorFollowingThief extends Thief {
 		Tile tileToUp = tileInDirection(currentTile, upAbsolute);
 		Tile tileToDown = tileInDirection(currentTile, downAbsolute);
 
-		if (tileToLeft != null && canMoveToTileFloorFollowing(tileToLeft.getX(),
+		if (tileToLeft != null && control.canMoveToTile(tileToLeft.getX(),
 				tileToLeft.getY(), this)) {
 			this.setDirection(leftAbsolute);
 			return tileToLeft;
 		}
-		if (tileToUp != null && canMoveToTileFloorFollowing(tileToUp.getX(),
+		if (tileToUp != null && control.canMoveToTile(tileToUp.getX(),
 				tileToUp.getY(), this)) {
 			this.setDirection(upAbsolute);
 			return tileToUp;
 		}
-		if (tileToRight != null && canMoveToTileFloorFollowing(tileToRight.getX(),
+		if (tileToRight != null && control.canMoveToTile(tileToRight.getX(),
 				tileToRight.getY(), this)) {
 			this.setDirection(rightAbsolute);
 			return tileToRight;
 		}
-		if (tileToDown != null && canMoveToTileFloorFollowing(tileToDown.getX(),
+		if (tileToDown != null && control.canMoveToTile(tileToDown.getX(),
 				tileToDown.getY(), this)) {
 			this.setDirection(downAbsolute);
 			return tileToDown;
@@ -147,28 +147,6 @@ public class FloorFollowingThief extends Thief {
 		}
 
 		return null;
-	}
-	
-	public boolean canMoveToTileFloorFollowing(int x, int y, WalkingEntity entity) {
-		LevelControl control = this.getLevelControl();
-		Level level = control.getLevel();
-;		Tile previousTile = control.findTileByEntity(entity);
-		Tile tileToMove = level.safeGetTile(x, y);
-		if (level.safeGetTile(x, y) == null) {
-			return false;
-		}
-
-		if (tileToMove.isTileBlocked()) {
-			return false;
-		}
-
-		for (Colour col : tileToMove.getColours()) {
-			if (col == this.getColour()) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 	/**
 	 * Trigger this entity's next move

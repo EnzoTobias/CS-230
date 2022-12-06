@@ -1,5 +1,3 @@
-package coursework;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -143,39 +141,41 @@ public class Main extends Application {
 	 */
 	public void processKeyEvent(KeyEvent event) {
 		// We change the behaviour depending on the actual key that was pressed.
+
+		Tile [][] Tilegrid =control.getTileGrid();
+
+		switch (event.getCode()) {	
+
 		
-		if(!control.isGameOver()) {
-			Tile [][] Tilegrid =control.getTileGrid();
-
-			switch (event.getCode()) {	
-
-			
-			    case RIGHT:
-			    	control.getPlayer().moveInDirection(Direction.RIGHT);
-			    	drawGame();
-		        	break;		        
-		        case LEFT:
-		        	control.getPlayer().moveInDirection(Direction.LEFT);
-			    	drawGame();
-		        	break;	
-				case UP:
-					control.getPlayer().moveInDirection(Direction.UP);
-			    	drawGame();
-		        	break;		        
-		        case DOWN:
-		        	control.getPlayer().moveInDirection(Direction.DOWN);
-			    	drawGame();
-		        	break;	
-				default:
-		        	// Do nothing for all other keys.
-		        	break;
+		    case RIGHT:
+		    	// Right key was pressed. So move the player right by one cell.
+				if (playerX < (Tilegrid.length-1)){
+	        	playerX = playerX + 1;
+				}
+	        	break;		        
+	        case LEFT:
+				if (playerX > 0){
+				playerX = playerX - 1;
+				}
+				break;
+			case UP:
+		    	// Right key was pressed. So move the player right by one cell.
+				if (playerY > 0){
+	        	playerY = playerY - 1;
+				}
+	        	break;		        
+	        case DOWN:
+			if (playerY < Tilegrid[0].length-1){
+				playerY = playerY + 1;
 			}
-			
-			// Redraw game as the player may have moved.
-			drawGame();
+				break;
+			default:
+	        	// Do nothing for all other keys.
+	        	break;
 		}
 		
-		
+		// Redraw game as the player may have moved.
+		drawGame();
 		
 		// Consume the event. This means we mark it as dealt with. This stops other GUI nodes (buttons etc) responding to it.
 		event.consume();
@@ -254,7 +254,7 @@ public class Main extends Application {
 				}
 				if (tileToHandle.hasEntity()) {
 					WalkingEntity entity = tileToHandle.getContainedEntity();
-					if (entity instanceof Player) {
+					if (entity instanceof Player && gameStart==0) {
 						playerX = i;
 						playerY = j;
 						gameStart = 1;
@@ -345,13 +345,12 @@ public class Main extends Application {
 	 * over them all and calling their own tick method). 
 	 */
 	public void tick() {
-		
-		if (control.isGameOver()) {
-			tickTimeline.stop();
-		} else {
-			control.oneMovementRound();
+		// Here we move the player right one cell and teleport
+		// them back to the left side when they reach the right side.
+		playerX = playerX + 1;
+		if (playerX > 11) {
+			playerX = 0;
 		}
-		
 		// We then redraw the whole canvas.
 		drawGame();
 	}

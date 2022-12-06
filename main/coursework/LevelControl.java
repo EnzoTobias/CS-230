@@ -1,4 +1,4 @@
-package coursework;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -21,7 +21,7 @@ public class LevelControl  {
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
 	public int timeLeft;
-	//private Timer timer = new Timer();
+	private Timer timer = new Timer();
 	private boolean isGameOver = false;
 	private int movementProgression = 0;
 
@@ -87,9 +87,9 @@ public class LevelControl  {
 					timeProgression();
 				}
 			};
-			//timer.schedule(task, ONE_TIME_UNIT);
+			timer.schedule(task, ONE_TIME_UNIT);
 		} else {
-			//timer.cancel();
+			timer.cancel();
 		}
 	}
 	/**

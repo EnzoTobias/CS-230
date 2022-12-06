@@ -1,4 +1,4 @@
-package coursework;
+
 /**
  * Type of collectable and its value.
  * @author Enzo Tobias 2117781

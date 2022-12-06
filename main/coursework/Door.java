@@ -1,4 +1,4 @@
-package coursework;
+
 /**
  * The door item which allows the player or a thief to end the level.
  * @author Enzo Tobias 2117781

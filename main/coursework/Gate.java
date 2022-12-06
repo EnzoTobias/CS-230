@@ -1,4 +1,4 @@
-package coursework;
+
 public class Gate extends Item {
 	private Colour colour;
 	/**

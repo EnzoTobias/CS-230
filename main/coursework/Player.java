@@ -1,4 +1,4 @@
-package coursework;
+
 import java.awt.event.*;   
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -15,10 +15,7 @@ public class Player extends WalkingEntity {
 		Tile nowTile = this.getLevelControl().findTileByEntity(this);
 		LevelControl control = this.getLevelControl();
 		Tile tileToMove = control.nextValidTile(direction, nowTile);
-		if (!(tileToMove == null)) {
-			control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
-		}
-		
+		control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
 		
 	}
 
