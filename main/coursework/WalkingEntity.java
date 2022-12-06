@@ -10,6 +10,7 @@ public abstract class WalkingEntity {
 	private int score;
 	private Direction direction;
 	private LevelControl control;
+	private Tile thisTile;
 
 
 	public abstract boolean nextMove(Tile tile);
@@ -50,6 +51,16 @@ public abstract class WalkingEntity {
 
 	public void setLevelControl(LevelControl control) {
 		this.control = control;
+	}
+
+
+	public Tile getThisTile() {
+		return thisTile;
+	}
+
+
+	public void setThisTile(Tile thisTile) {
+		this.thisTile = thisTile;
 	}
 
 }

@@ -24,7 +24,14 @@ public class LevelControl  {
 	//private Timer timer = new Timer();
 	private boolean isGameOver = false;
 	private int movementProgression = 0;
+	public boolean isLootCollected;
 
+	public boolean isLootCollected() {
+		return isLootCollected;
+	}
+	public void setLootCollected(boolean isLootCollected) {
+		this.isLootCollected = isLootCollected;
+	}
 	
 	public int getTimeLeft() {
 		return timeLeft;
@@ -66,7 +73,7 @@ public class LevelControl  {
 		this.listEntities();
 		for (WalkingEntity entity : entityList) {
 			if(!(entity instanceof Player)) {
-				entity.nextMove(this.findTileByEntity(entity));
+				entity.nextMove(entity.getThisTile());
 			}
 			
 		}
@@ -130,6 +137,10 @@ public class LevelControl  {
 			}
 		}
 		return true;
+	}
+	
+	public void updateLootCollectedStatus() {
+		this.setLootCollected(isAllLootCollected());
 	}
 
 	public void playerWin() {
@@ -220,12 +231,13 @@ public class LevelControl  {
 	 * @return Boolean value denoting if the move succeeded.
 	 */
 	public boolean moveToTile(int x, int y, WalkingEntity entity) {
-		Tile previousTile = this.findTileByEntity(entity);
+		Tile previousTile = entity.getThisTile();
 		Tile tileToMove = level.safeGetTile(x, y);
 		if (!canMoveToTile(x, y, entity)) {
 			return false;
 		}
 		tileToMove.setContainedEntity(entity);
+		entity.setThisTile(tileToMove);
 		previousTile.setContainedEntity(null);
 		if (tileToMove.hasItem()) {
 			tileToMove.getContainedItem().itemEffect(tileToMove, entity);
@@ -254,7 +266,7 @@ public class LevelControl  {
 	 * @return Boolean value denoting if the move is valid.
 	 */
 	public boolean canMoveToTile(int x, int y, WalkingEntity entity) {
-		Tile previousTile = this.findTileByEntity(entity);
+		Tile previousTile = entity.getThisTile();
 		Tile tileToMove = level.safeGetTile(x, y);
 		if (level.safeGetTile(x, y) == null) {
 			return false;
@@ -315,7 +327,7 @@ public class LevelControl  {
 	 * @return Boolean value denoting if the move succeeded.
 	 */
 	public boolean flyingMove(int x, int y, WalkingEntity entity) {
-		Tile previousTile = this.findTileByEntity(entity);
+		Tile previousTile = entity.getThisTile();
 
 		if (level.safeGetTile(x, y) != null
 				&& level.safeGetTile(x, y).hasEntity()) {
@@ -325,6 +337,7 @@ public class LevelControl  {
 		if (level.safeGetTile(x, y) != null) {
 			previousTile.setContainedEntity(null);
 			level.safeGetTile(x, y).setContainedEntity(entity);
+			entity.setThisTile(level.safeGetTile(x, y));
 			return true;
 		}
 		return false;

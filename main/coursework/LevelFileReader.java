@@ -131,6 +131,7 @@ public class LevelFileReader {
 						return false;
 					}
 					Player p = new Player();
+					p.setThisTile(tile);
 					p.setLevelControl(control);
 					p.setDirection(getDirection(contentDefinitions[1]));
 					tile.setContainedEntity(p);
@@ -145,6 +146,7 @@ public class LevelFileReader {
 					SmartThief s = new SmartThief();
 					s.setDirection(getDirection(contentDefinitions[1]));
 					s.setLevelControl(control);
+					s.setThisTile(tile);
 					tile.setContainedEntity(s);
 					expectedDefSize = 2;
 					break;
@@ -157,6 +159,7 @@ public class LevelFileReader {
 					f.setLevelControl(control);
 					f.setDirection(getDirection(contentDefinitions[1]));
 					tile.setContainedEntity(f);
+					f.setThisTile(tile);
 					expectedDefSize = 2;
 					break;
 				case "FT" :
@@ -172,6 +175,7 @@ public class LevelFileReader {
 					ff.setDirection(getDirection(contentDefinitions[1]));
 					ff.setColour(getColour(contentDefinitions[2]));
 					ff.setLevelControl(control);
+					ff.setThisTile(tile);
 					tile.setContainedEntity(ff);
 					expectedDefSize = 3;
 					break;

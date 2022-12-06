@@ -41,8 +41,8 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 500;
 
 	// The dimensions of the canvas
-	private static final int CANVAS_WIDTH = 600;
-	private static final int CANVAS_HEIGHT = 400;
+	private static final int CANVAS_WIDTH = 1200;
+	private static final int CANVAS_HEIGHT = 800;
 
 	// The width and height (in pixels) of each cell that makes up the game.
 	private static final int GRID_CELL_WIDTH = 50;

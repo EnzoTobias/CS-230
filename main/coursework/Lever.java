@@ -5,7 +5,7 @@ public class Lever extends Item {
 	@Override
 	public void itemEffect(Tile tile, WalkingEntity entity) {
 		Tile[][] tileGrid = tile.getLevelControl().getTileGrid();
-
+		
 		for (int i = 0; i < tileGrid.length; i++) {
 			for (int j = 0; j < tileGrid[0].length; j++) {
 				Tile tileChecked = tileGrid[i][j];
@@ -18,6 +18,7 @@ public class Lever extends Item {
 				}
 			}
 		}
+		tile.getLevelControl().updateLootCollectedStatus();
 		tile.setContainedItem(null);
 	}
 
