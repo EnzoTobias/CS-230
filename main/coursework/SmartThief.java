@@ -109,10 +109,8 @@ public class SmartThief extends Thief {
 	@Override
 	public boolean nextMove(Tile tile) {
 		this.tileToMoveCheat = null;
-		LevelControl control = this.getLevelControl();
 		Tile tileToMove = null;
 		int currentShortest = shortestPathLength(tile,new ArrayList<Tile>(),0);
-		boolean found = false;
 		tileToMove = this.tileToMoveCheat;
 		
 		
