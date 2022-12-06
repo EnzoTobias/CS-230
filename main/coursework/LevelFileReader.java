@@ -272,6 +272,8 @@ public class LevelFileReader {
 				return Colour.CYAN;
 			case "M" :
 				return Colour.MAGENTA;
+			case "V" :
+				return Colour.VOID;
 			default :
 				return null;
 
@@ -319,6 +321,8 @@ public class LevelFileReader {
 						case MAGENTA :
 							output += "M";
 							break;
+						case VOID :
+							output += "V";
 						default :
 							break;
 					}
@@ -378,6 +382,8 @@ public class LevelFileReader {
 							output += "B";
 						} else if (item instanceof Door) {
 							output += "DR";
+						} else if (item instanceof Gun) {
+							output += "GN";
 						}
 						output += ")";
 					}
@@ -419,6 +425,8 @@ public class LevelFileReader {
 				return "C";
 			case MAGENTA :
 				return "M";
+			case VOID :
+				return "V";
 		}
 		return null;
 

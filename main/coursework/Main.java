@@ -78,6 +78,7 @@ public class Main extends Application {
 	private Image greenTile;
 	private Image cyanTile;
 	private Image coinItem;
+	private Image voidTile;
 	
 	//level control
 	private LevelControl control;
@@ -106,6 +107,7 @@ public class Main extends Application {
 		greenTile = new Image("green.png");
 		cyanTile = new Image("cyan.png");
 		coinItem = new Image("coin.png");
+		voidTile = new Image("wall.png");
 		
 		String fileToLoad = "leveldef.txt";
 
@@ -232,6 +234,9 @@ public class Main extends Application {
 							break;
 						case MAGENTA :
 							tile = magentaTile;
+							break;
+						case VOID :
+							tile = voidTile;
 							break;
 						default :
 							break;

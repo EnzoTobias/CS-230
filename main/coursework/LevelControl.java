@@ -325,8 +325,13 @@ public class LevelControl {
 				if (col == col2) {
 					return true;
 				}
+				if (col2 == Colour.VOID) {
+					return true;
+				}
 			}
 		}
+		
+		
 
 		return false;
 	}

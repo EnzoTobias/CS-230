@@ -87,7 +87,13 @@ public class Tile {
 				&& !this.getLevelControl().isAllLootCollected()) {
 			return true;
 		}
-
+		
+		for (Colour colour : this.getColours()) {
+			if (colour == Colour.VOID) {
+				return true;
+			}
+		}
+		
 		if (this.hasEntity()) {
 			return true;
 		}
