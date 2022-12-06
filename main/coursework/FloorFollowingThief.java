@@ -42,26 +42,7 @@ public class FloorFollowingThief extends Thief {
 		Tile tileToUp = tileInDirection(currentTile, upAbsolute);
 		Tile tileToDown = tileInDirection(currentTile, downAbsolute);
 		
-		if (tileToLeft != null && canMoveToTileFloorFollowing(tileToLeft.getX(),
-				tileToLeft.getY(), this)) {
-			if (tileToRight != null && !canMoveToTileFloorFollowing(tileToRight.getX(),
-					tileToRight.getY(), this)) {
-				this.setDirection(this.directionShiftClockwise(2, this.getDirection()));
-			}
-		}
 		
-		leftAbsolute = relativeDirection(this.getDirection(),
-				Direction.LEFT);
-		rightAbsolute = relativeDirection(this.getDirection(),
-				Direction.RIGHT);
-		upAbsolute = relativeDirection(this.getDirection(),
-				Direction.UP);
-		downAbsolute = relativeDirection(this.getDirection(),
-				Direction.DOWN);
-		tileToLeft = tileInDirection(currentTile, leftAbsolute);
-		tileToRight = tileInDirection(currentTile, rightAbsolute);
-		tileToUp = tileInDirection(currentTile, upAbsolute);
-		tileToDown = tileInDirection(currentTile, downAbsolute);
 		
 		if (tileToLeft != null && canMoveToTileFloorFollowing(tileToLeft.getX(),
 				tileToLeft.getY(), this)) {
