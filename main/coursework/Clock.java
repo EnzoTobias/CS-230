@@ -5,7 +5,7 @@ package coursework;
  *
  */
 public class Clock extends Item {
-	private final int TIME = 10;
+	private final int TIME = 15;
 
 	/**
 	 * Adds time to the level (when activated by player).

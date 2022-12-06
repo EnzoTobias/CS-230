@@ -235,6 +235,11 @@ public class LevelFileReader {
 					tile.setContainedItem(dr);
 					expectedDefSize = 1;
 					break;
+				case "GN" :
+					Gun gn = new Gun();
+					tile.setContainedItem(gn);
+					expectedDefSize = 1;
+					break;
 				default :
 					System.out.println(ERROR);
 					return false;

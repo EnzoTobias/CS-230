@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
-
 /**
  * Centralises behaviours around the manipulation of the level and movement.
  * Provides utilities to Tile and Entity classes which are used for their
@@ -14,14 +13,14 @@ import javax.swing.JFrame;
  * 
  * @author Enzo Tobias 2117781
  */
-public class LevelControl  {
+public class LevelControl {
 	private final long ONE_TIME_UNIT = 1000l;
 	private final int MOVEMENT_EVERY = 2;
 	private Level level;
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
 	public int timeLeft;
-	//private Timer timer = new Timer();
+	// private Timer timer = new Timer();
 	private boolean isGameOver = false;
 	private int movementProgression = 0;
 	public boolean isLootCollected;
@@ -32,18 +31,18 @@ public class LevelControl  {
 	public void setLootCollected(boolean isLootCollected) {
 		this.isLootCollected = isLootCollected;
 	}
-	
+
 	public int getTimeLeft() {
 		return timeLeft;
 	}
 	public void setTimeLeft(int timeLeft) {
 		this.timeLeft = timeLeft;
 	}
-	
+
 	public void displayGrid() {
 		System.out.println(LevelFileReader.levelToString(this.getLevel()));
 	}
-	
+
 	public Level getLevel() {
 		return level;
 	}
@@ -72,31 +71,31 @@ public class LevelControl  {
 	public void oneMovementRound() {
 		this.listEntities();
 		for (WalkingEntity entity : entityList) {
-			if(!(entity instanceof Player)) {
+			if (!(entity instanceof Player)) {
 				entity.nextMove(entity.getThisTile());
 			}
-			
+
 		}
 		displayGrid();
 
 	}
 
-	public void timeProgression() {		
+	public void timeProgression() {
 		if (!this.isGameOver) {
 			movementProgression += 1;
 			if (movementProgression == MOVEMENT_EVERY) {
 				movementProgression = 0;
 				this.oneMovementRound();
 			}
-			this.timeLeft -=  1;
+			this.timeLeft -= 1;
 			TimerTask task = new TimerTask() {
 				public void run() {
 					timeProgression();
 				}
 			};
-			//timer.schedule(task, ONE_TIME_UNIT);
+			// timer.schedule(task, ONE_TIME_UNIT);
 		} else {
-			//timer.cancel();
+			// timer.cancel();
 		}
 	}
 	/**
@@ -138,22 +137,40 @@ public class LevelControl  {
 		}
 		return true;
 	}
-	
+
 	public void updateLootCollectedStatus() {
 		this.setLootCollected(isAllLootCollected());
+	}
+
+	public WalkingEntity closestEntityToTile(Tile tile) {
+		this.listEntities();
+		int distance = 0;
+		WalkingEntity returnEntity = null;
+		for (WalkingEntity entity : entityList) {
+			Tile entityTile = entity.getThisTile();
+			int tempDistance = (int) Math
+					.sqrt(Math.pow(tile.getX() - entityTile.getX(), 2)
+							+ Math.pow(tile.getY() - entityTile.getY(), 2));
+			if ((tempDistance < distance || distance == 0) && tempDistance != 0) {
+				distance = tempDistance;
+				returnEntity =  entity;
+			}
+		}
+
+		return returnEntity;
 	}
 
 	public void playerWin() {
 		displayGrid();
 
 		System.out.println("you win gg");
-		this.isGameOver= true;
+		this.isGameOver = true;
 	}
 
 	public void playerLose() {
 		displayGrid();
 		System.out.println("you snooze you lose");
-		this.isGameOver= true;
+		this.isGameOver = true;
 	}
 	/**
 	 * Returns the next valid tile that an entity can move to in a given
