@@ -255,7 +255,9 @@ public class LevelControl {
 		}
 		tileToMove.setContainedEntity(entity);
 		entity.setThisTile(tileToMove);
-		previousTile.setContainedEntity(null);
+		if(previousTile.hasEntity() && previousTile.getContainedEntity().getID() == entity.getID()) {
+			previousTile.setContainedEntity(null);
+		}
 		if (tileToMove.hasItem()) {
 			tileToMove.getContainedItem().itemEffect(tileToMove, entity);
 		}
@@ -356,8 +358,10 @@ public class LevelControl {
 			level.safeGetTile(x, y).getContainedEntity().die();
 		}
 
-		if (level.safeGetTile(x, y) != null) {
-			previousTile.setContainedEntity(null);
+		if (level.safeGetTile(x, y) != null && !level.safeGetTile(x, y).hasEntity()) {
+			if(previousTile.hasEntity() && previousTile.getContainedEntity().getID() == entity.getID()) {
+				previousTile.setContainedEntity(null);
+			}
 			level.safeGetTile(x, y).setContainedEntity(entity);
 			entity.setThisTile(level.safeGetTile(x, y));
 			return true;

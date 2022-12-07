@@ -171,7 +171,7 @@ public class Main extends Application {
 				
 		// Register a tick method to be called periodically.
 		// Make a new timeline with one keyframe that triggers the tick method every half a second.
-		tickTimeline = new Timeline(new KeyFrame(Duration.millis(500), event -> tick()));
+		tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
 		 // Loop the timeline forever
 		tickTimeline.setCycleCount(Animation.INDEFINITE);
 		// We start the timeline upon a button press.
@@ -255,7 +255,8 @@ public class Main extends Application {
 		// Set the background to gray.
 		//gc.setFill(Color.GRAY);
 		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
+		
+		playerScore = control.getPlayer().getScore();
 		
 		String gridTile = LevelFileReader.levelToString(control.getLevel());
 		int counter = 0;

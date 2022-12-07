@@ -38,7 +38,8 @@ public abstract class WalkingEntity {
 	}
 
 	public void die() {
-		this.getLevelControl().findTileByEntity(this).setContainedEntity(null);
+		if (this.getThisTile().hasEntity() && this.getID() == this.getThisTile().getContainedEntity().getID());
+		this.getThisTile().setContainedEntity(null);
 	};
 
 	public int getID() {
