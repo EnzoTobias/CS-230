@@ -1,8 +1,10 @@
 package coursework;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Optional;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -126,7 +129,7 @@ public class Main extends Application {
 
 	private Profile profile;
 	private int levelNumber;
-
+	private String fileToLoad;
 
 	// X and Y coordinate of player on the grid.
 	private int playerX = 0;
@@ -145,7 +148,6 @@ public class Main extends Application {
 	private AnchorPane scenePane;
 	@FXML
 	private TextField nameField;
-
 
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
@@ -213,9 +215,6 @@ public class Main extends Application {
 		gateTest = new Image("Gate-Red.png");
 		leverTest = new Image("Lever-Red.png");
 
-		String fileToLoad = "level" + this.levelNumber + ".txt";
-		
-
 		// Build the GUI
 		Pane root = buildGUI();
 
@@ -249,18 +248,20 @@ public class Main extends Application {
 		drawGame();
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.setFullScreenExitHint("");
+		primaryStage.setFullScreen(true);
+		
 	}
 
 	public void saveCurrentGame() {
 		try {
-			PrintWriter out = new PrintWriter(new FileWriter(
-					control.getLevelNumber()
-							+ control.getCurrentProfile().getPlayerName(),
-					true));
+			PrintWriter out = new PrintWriter(
+					new FileWriter(this.profile.getPlayerName() + "-level"
+							+ this.levelNumber + ".txt", false));
 			out.write(LevelFileReader.levelToString(control));
 			out.close();
 		} catch (IOException I) {
-			System.out.println("addScore catch");
+			System.out.println("IOException");
 		}
 
 	}
@@ -574,30 +575,30 @@ public class Main extends Application {
 		// Create the toolbar content
 
 		// Reset Player Location Button
-		//Button resetPlayerLocationButton = new Button("Reset Player");
-		//toolbar.getChildren().add(resetPlayerLocationButton);
+		// Button resetPlayerLocationButton = new Button("Reset Player");
+		// toolbar.getChildren().add(resetPlayerLocationButton);
 
 		// Setup the behaviour of the button.
-		//resetPlayerLocationButton.setOnAction(e -> {
-			// We keep this method short and use a method for the bulk of the
-			// work.
-			//resetPlayerLocation();
-		//});
+		// resetPlayerLocationButton.setOnAction(e -> {
+		// We keep this method short and use a method for the bulk of the
+		// work.
+		// resetPlayerLocation();
+		// });
 
 		// Center Player Button
-		//Button centerPlayerLocationButton = new Button("Center Player");
-		//toolbar.getChildren().add(centerPlayerLocationButton);
+		// Button centerPlayerLocationButton = new Button("Center Player");
+		// toolbar.getChildren().add(centerPlayerLocationButton);
 
-		//GraphicsContext gc = canvas.getGraphicsContext2D();
-		//gc.fillText("Text centered on your Canvas",
-		//		Math.round(canvas.getWidth()), Math.round(canvas.getHeight()));
+		// GraphicsContext gc = canvas.getGraphicsContext2D();
+		// gc.fillText("Text centered on your Canvas",
+		// Math.round(canvas.getWidth()), Math.round(canvas.getHeight()));
 
 		// Setup the behaviour of the button.
-		//centerPlayerLocationButton.setOnAction(e -> {
-			// We keep this method short and use a method for the bulk of the
-			// work.
-		//	movePlayerToCenter();
-		//});
+		// centerPlayerLocationButton.setOnAction(e -> {
+		// We keep this method short and use a method for the bulk of the
+		// work.
+		// movePlayerToCenter();
+		// });
 
 		// Tick Timeline buttons
 		Button startTickTimelineButton = new Button("Start Ticks");
@@ -627,7 +628,7 @@ public class Main extends Application {
 
 		// Setup a draggable image.
 		ImageView draggableImage = new ImageView();
-		//draggableImage.setImage(iconImage);
+		// draggableImage.setImage(iconImage);
 		toolbar.getChildren().add(draggableImage);
 
 		// This code setup what happens when the dragging starts on the image.
@@ -715,17 +716,50 @@ public class Main extends Application {
 		stage.show();
 
 	}
-	
+
 	public void switchToGameLevel(ActionEvent event) throws IOException {
+		///////////TEMPORARY	
+		Profile p = new Profile("tester", 1);
+		this.profile = p;
+		////////
+		ButtonType newLevel = new ButtonType("Start New");
+		ButtonType loadLevel = new ButtonType("Load");
+		ButtonType leaderboard = new ButtonType("Leaderboard");
+
+		String savedLevel = this.profile.getPlayerName() + "-level"
+				+ this.levelNumber + ".txt";
+		File f = new File(savedLevel);
+
+		Alert levelAlert;
+		if (f.exists() && !f.isDirectory()) {
+			levelAlert = new Alert(AlertType.NONE, "Level " + this.levelNumber
+					+ " selected, you have save data for this level. What would you like to do?",
+					newLevel, loadLevel, leaderboard);
+		} else {
+			levelAlert = new Alert(AlertType.NONE,
+					"Level " + this.levelNumber
+							+ " selected, what would you like to do?",
+					newLevel, leaderboard);
+		}
+
+		levelAlert.setTitle("Level Choice");
+		Optional<ButtonType> result = levelAlert.showAndWait();
+
+		if (result.get() == newLevel) {
+			fileToLoad = "level" + this.levelNumber + ".txt";
+		} else if (result.get() == loadLevel) {
+			fileToLoad = savedLevel;
+		}
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		this.startLevel(stage);
+
 	}
-	
+
 	public void level1(ActionEvent event) throws IOException {
 		this.levelNumber = 1;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level2(ActionEvent event) throws IOException {
 		this.levelNumber = 2;
 		switchToGameLevel(event);

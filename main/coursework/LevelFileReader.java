@@ -387,6 +387,8 @@ public class LevelFileReader {
 							output += "DR";
 						} else if (item instanceof Gun) {
 							output += "GN";
+						} else if (item instanceof Clock) {
+							output += "CL";
 						}
 						output += ")";
 					}
