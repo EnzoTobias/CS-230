@@ -19,10 +19,10 @@
       <Button fx:id="exitButton" layoutX="177.0" layoutY="313.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Exit" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="52.0" prefHeight="57.0" prefWidth="269.0" style="-fx-text-fill: #316b62;" text="Jewel Thieves" textFill="#316b62">
          <font>
-            <Font name="Trattatello" size="48.0" />
+            <Font name="Arial Narrow" size="48.0" />
          </font>
       </Label>
-      <Button fx:id="startToLevel" layoutX="177.0" layoutY="247.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Start">
+      <Button fx:id="startToLevel" layoutX="177.0" layoutY="253.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Start">
          <font>
             <Font name="Skia" size="14.0" />
          </font></Button>
@@ -36,7 +36,7 @@
             <Blend />
          </effect>
       </TextField>
-      <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="182.0" layoutY="255.0">
+      <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="184.0" layoutY="261.0">
          <image>
             <Image url="@power.png" />
          </image>
@@ -67,6 +67,17 @@
             <Image url="@rank.png" />
          </image>
       </ImageView>
-      <TextField fx:id="textarea123" layoutX="9.0" layoutY="231.0"  prefHeight="161.0" prefWidth="152.0" style="-fx-background-color: #ffffff;" />
+      <TextField fx:id="textarea123" layoutX="9.0" layoutY="231.0" prefHeight="161.0" prefWidth="152.0" style="-fx-background-color: #ffffff;" />
+      <Button layoutX="408.0" layoutY="165.0" mnemonicParsing="false" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 50;" text="Delete">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="473.0" layoutY="165.0" mnemonicParsing="false" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 50;" text="Load">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="soundButton" layoutX="29.0" layoutY="25.0" mnemonicParsing="false" onAction="#buttonTextChange" style="-fx-text-fill: #222224; -fx-background-color: #316b62; -fx-background-radius: 10;" text="Mute Sound" />
    </children>
 </AnchorPane>
