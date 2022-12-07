@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<!--> Main Menu, Created using scene builder.
+@Author Bader Shalata - 2221254.
+@Date - Sep-Dec.-->
+
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222224; -fx-border-color: #316b62; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.HelloController">
+   <children>
+      <Button fx:id="exitButton" layoutX="177.0" layoutY="313.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Exit" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="52.0" prefHeight="57.0" prefWidth="269.0" style="-fx-text-fill: #316b62;" text="Jewel Thieves" textFill="#316b62">
+         <font>
+            <Font name="Arial Narrow" size="48.0" />
+         </font>
+      </Label>
+      <Button fx:id="startToLevel" layoutX="177.0" layoutY="253.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Start">
+         <font>
+            <Font name="Skia" size="14.0" />
+         </font></Button>
+      <Label layoutX="29.0" layoutY="153.0" prefHeight="55.0" prefWidth="130.0" style="-fx-text-fill: #316b62;" text="Player Name" textFill="#316b62">
+         <font>
+            <Font name="Trattatello" size="28.0" />
+         </font>
+      </Label>
+      <TextField fx:id="Player" layoutX="166.0" layoutY="167.0" promptText="Insert Name" style="-fx-background-color: #222224; -fx-text-fill: #316b62; -fx-border-color: #316b62;">
+         <effect>
+            <Blend />
+         </effect>
+      </TextField>
+      <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="184.0" layoutY="261.0">
+         <image>
+            <Image url="@power.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="446.0" layoutY="30.0" mnemonicParsing="false" onAction="#switchToScene2" prefHeight="43.0" prefWidth="108.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Scores" />
+      <ImageView layoutX="185.0" layoutY="322.0">
+         <image>
+            <Image url="@logout.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="460.0" layoutY="40.0">
+         <image>
+            <Image url="@rank.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="dayMessage" layoutX="338.0" layoutY="206.0" onMouseEntered="#textfieldDisplay" onMouseExited="#textfieldRemoveDisplay" prefHeight="172.0" prefWidth="231.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 25;" />
+      <Button layoutX="348.0" layoutY="165.0" mnemonicParsing="false" onAction="#playerName" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 50;" text="Save">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Text fx:id="Title" fill="#222224" layoutX="335.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surprise Message!" textAlignment="CENTER" wrappingWidth="237.0">
+         <font>
+            <Font name="Trattatello" size="20.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="26.0" fitWidth="25.0" layoutX="454.0" layoutY="39.0">
+         <image>
+            <Image url="@rank.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="textarea123" layoutX="9.0" layoutY="231.0" prefHeight="161.0" prefWidth="152.0" style="-fx-background-color: #ffffff;" />
+      <Button layoutX="408.0" layoutY="165.0" mnemonicParsing="false" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 50;" text="Delete">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="473.0" layoutY="165.0" mnemonicParsing="false" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 50;" text="Load">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="soundButton" layoutX="29.0" layoutY="25.0" mnemonicParsing="false" onAction="#buttonTextChange" style="-fx-text-fill: #222224; -fx-background-color: #316b62; -fx-background-radius: 10;" text="Mute Sound" />
+   </children>
+</AnchorPane>
