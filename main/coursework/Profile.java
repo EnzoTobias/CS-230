@@ -1,3 +1,5 @@
+package coursework;
+
 public class Profile {
     private String playerName;
     private int currentLevel;
