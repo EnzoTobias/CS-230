@@ -3,10 +3,15 @@ package coursework;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Adds the scores of each level to a file
+ * @author Alex Rendell 211331
+ */
+
 public class levelSelection {
 
     LevelControl control = new LevelControl();
-
+    
     public String score(int level, String user, int score){
         try {
             File f = new File("level" + level + "_score.txt");
@@ -23,7 +28,6 @@ public class levelSelection {
     }
     //creates a new file
     public String newLevelFile(int level, String user, int score) throws IOException {
-        System.out.println("here");
         File f = new File("level" + level + "_score.txt");
         f.createNewFile();
         addScore(level, user, score);
