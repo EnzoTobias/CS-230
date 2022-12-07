@@ -367,6 +367,8 @@ public class Main extends Application {
 						} else if (item instanceof Door) {
 							itemTile=door;
 
+						} else if (item instanceof Clock) {
+							itemTile=clock;
 						}
 						gc.drawImage(itemTile, (50*i)+10 ,(50*j)+10+20 , (GRID_CELL_WIDTH/1.5),(GRID_CELL_HEIGHT/1.5));
 					}
