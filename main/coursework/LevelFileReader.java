@@ -295,9 +295,12 @@ public class LevelFileReader {
 		}
 	}
 
-	public static String levelToString(Level level) {
+	public static String levelToString(LevelControl control) {
 		String output = "";
+		Level level = control.getLevel();
 		Tile[][] tileGrid = level.getTileGrid();
+		output += (tileGrid.length) + "x" + (tileGrid[0].length);
+		output += System.lineSeparator();
 		for (int j = 0; j < tileGrid[0].length; j++) {
 			for (int i = 0; i < tileGrid.length; i++) {
 				Tile tileToHandle = tileGrid[i][j];
@@ -393,6 +396,7 @@ public class LevelFileReader {
 			output += System.lineSeparator();
 		}
 		output = output.substring(0, output.length() - 1);
+		output += control.getTimeLeft();
 		return output;
 	}
 

@@ -260,7 +260,7 @@ public class Main extends Application {
 		playerScore = control.getPlayer().getScore();
 		timeLeft = control.getTimeLeft();
 		
-		String gridTile = LevelFileReader.levelToString(control.getLevel());
+		String gridTile = LevelFileReader.levelToString(control);
 		int counter = 0;
 
 		Tile [][] Tilegrid =control.getTileGrid();

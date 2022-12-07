@@ -40,7 +40,7 @@ public class LevelControl {
 	}
 
 	public void displayGrid() {
-		System.out.println(LevelFileReader.levelToString(this.getLevel()));
+		System.out.println(LevelFileReader.levelToString(this));
 	}
 
 	public Level getLevel() {
