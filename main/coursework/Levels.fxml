@@ -7,20 +7,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #222224; -fx-border-color: #316b62; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.newproject.HelloController">
    <children>
-      <Button layoutX="119.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Level 1" />
-      <Button alignment="CENTER" layoutX="272.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Level 2" />
-      <Button alignment="CENTER" layoutX="416.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Level 3" />
-      <Button alignment="CENTER" layoutX="264.0" layoutY="308.0" mnemonicParsing="false" onAction="#switchToScene1" prefHeight="46.0" prefWidth="93.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Menu" />
-      <ImageView layoutX="274.0" layoutY="323.0">
+      <Button layoutX="119.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Level 1" />
+      <Button alignment="CENTER" layoutX="272.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Level 2" />
+      <Button alignment="CENTER" layoutX="416.0" layoutY="170.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224; -fx-background-radius: 10;" text="Level 3" />
+      <Button alignment="CENTER" layoutX="254.0" layoutY="308.0" mnemonicParsing="false" onAction="#switchToScene1" prefHeight="46.0" prefWidth="93.0" style="-fx-background-color: #316b62; -fx-text-fill: #222224;" text="Menu" />
+      <ImageView layoutX="264.0" layoutY="325.0">
          <image>
             <Image url="@menu.png" />
          </image>
       </ImageView>
-      <Text layoutX="205.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a Level" wrappingWidth="211.05078125">
+      <Text fill="#316b62" layoutX="168.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a Level" wrappingWidth="285.05078125">
          <font>
-            <Font name="Arial Black" size="24.0" />
+            <Font name="Trattatello" size="48.0" />
          </font>
       </Text>
    </children>
