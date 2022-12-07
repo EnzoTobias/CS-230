@@ -71,15 +71,16 @@ public class levelSelection {
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
-				String[] nameScore = data.split(" ");
+				String[] nameScore = data.split("    ");
 				ScoreEntry thisEntry = new ScoreEntry();
 				thisEntry.setProfileName(nameScore[0]);
 				thisEntry.setScore(Integer.parseInt(nameScore[1]));
 				scoreList.add(thisEntry);
+				System.out.println(thisEntry.getProfileName() + " " + thisEntry.getScore());
 			}
 			myReader.close();
 		} catch (FileNotFoundException E) {
-			System.out.println("File not found at readScore");
+			System.out.println("File not found at readScoreList");
 		}
 		return scoreList;
 	}
@@ -90,9 +91,11 @@ public class levelSelection {
 		l.score(1, "Alex", 400);
 		l.score(1, "John", 350);
 		l.score(1, "Paul", 300);
-		l.score(2, "Pete", 600);
+		//l.score(2, "Pete", 600);
 
-		l.readScore(1);
-		l.readScore(2);
+		//l.readScore(1);
+		//l.readScore(2);
+
+		l.readScoreList(1);
 	}
 }
