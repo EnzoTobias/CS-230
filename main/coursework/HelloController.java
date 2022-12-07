@@ -16,6 +16,7 @@ import java.io.*;
  * @Bader Shalata - 2221254
  * Date - Sep-Dec */
 public class HelloController extends HelloApplication{
+
     private Parent root;
     private Stage stage;
     private Scene scene;
@@ -27,6 +28,8 @@ public class HelloController extends HelloApplication{
     private TextField Player;
     @FXML
     private TextField dayMessage;
+    @FXML
+    private Button soundButton;
 
 
     /**
@@ -130,4 +133,20 @@ public class HelloController extends HelloApplication{
     {
         dayMessage.setText("");
     }
+    /** method that handles sound (muting and unmuting) button */
+
+    public void buttonTextChange()
+    {
+        String mute = "Mute Sound";
+        String unmute = "Unmute Sound";
+        if(soundButton.getText().equals(mute))
+        {
+            soundButton.setText(unmute);
+        }
+        else
+        {
+            soundButton.setText(mute);
+        }
+    }
+
 }
