@@ -24,6 +24,8 @@ public class LevelControl {
 	private boolean isGameOver = false;
 	private int movementProgression = 0;
 	public boolean isLootCollected;
+	private Profile currentProfile;
+	private int levelNumber;
 
 	public boolean isLootCollected() {
 		return isLootCollected;
@@ -403,5 +405,17 @@ public class LevelControl {
 	}
 	public boolean isGameOver() {
 		return isGameOver;
+	}
+	public Profile getCurrentProfile() {
+		return currentProfile;
+	}
+	public void setCurrentProfile(Profile currentProfile) {
+		this.currentProfile = currentProfile;
+	}
+	public int getLevelNumber() {
+		return levelNumber;
+	}
+	public void setLevelNumber(int levelNumber) {
+		this.levelNumber = levelNumber;
 	}
 }

@@ -45,6 +45,7 @@ public class HelloController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
     }
     public void switchToScene2(ActionEvent event) throws IOException
     {
@@ -53,6 +54,7 @@ public class HelloController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
     }
     public void switchToLevel(ActionEvent event) throws IOException
     {
@@ -62,6 +64,8 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
+    
+    
     @FXML
     private TextField dayMessage;
     public void textfieldDisplay() throws IOException
