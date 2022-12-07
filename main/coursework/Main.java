@@ -42,7 +42,7 @@ public class Main extends Application {
 
 	// The dimensions of the canvas
 	private static final int CANVAS_WIDTH = 1200;
-	private static final int CANVAS_HEIGHT = 800;
+	private static final int CANVAS_HEIGHT = 1000;
 
 	// The width and height (in pixels) of each cell that makes up the game.
 	private static final int GRID_CELL_WIDTH = 50;
@@ -56,6 +56,9 @@ public class Main extends Application {
 	private int yAxis;
 
 	private int gameStart = 0;
+
+	private int playerScore = 0;
+	private String playerDirection = "UP";
 	
 
 
@@ -64,24 +67,50 @@ public class Main extends Application {
 	// We could use FXML to place code in the controller instead.
 	private Canvas canvas;
 		
-	// Loaded images
+	// Load entity images
 	private Image playerImage;
+	private Image playerImageRight;
+	private Image playerImageLeft;
+	private Image playerImageDown;
 	private Image iconImage;
+	private Image entityTile;
+	private Image smartTheif; 
+	private Image flyingAssasin;
+	private Image floorFollowingTheif;
+
+	// Load tile images
 	private Image redTile;
 	private Image blueTile;
 	private Image yellowTile;
 	private Image wallTile;
-	private Image tile;
-	private Image entityTile;
-	private Image itemTile;
 	private Image magentaTile;
 	private Image greenTile;
 	private Image cyanTile;
-	private Image coinItem;
-	private Image voidTile;
+	private Image tile;
 	
+	// Load item images
+	private Image itemTile;
+	private Image coinItem;
+	private Image centItem;
+	private Image dollarItem;
+	private Image rubyItem;
+	private Image diamondItem;
+	private Image bomb;
+	private Image bomb1;
+	private Image bomb2;
+	private Image bomb3;
+	private Image bombExpload;
+	private Image clock;
+	private Image door;
+	private Image gateTest;
+	private Image leverTest;
+	private Image voidTile;
+
+
 	//level control
 	private LevelControl control;
+
+	private WalkingEntity player;
 	
 	
 	// X and Y coordinate of player on the grid.
@@ -98,6 +127,9 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		// Load images. Note we use png images with a transparent background.
 		playerImage = new Image("player.png");
+		playerImageRight = new Image("playerRight.png");
+		playerImageDown = new Image("playerDown.png");
+		playerImageLeft = new Image("playerLeft.png");
 		iconImage = new Image("icon.png");
 		redTile = new Image("red.png");
 		blueTile = new Image("blue.png");
@@ -106,8 +138,24 @@ public class Main extends Application {
 		magentaTile = new Image("magenta.png");
 		greenTile = new Image("green.png");
 		cyanTile = new Image("cyan.png");
-		coinItem = new Image("coin.png");
 		voidTile = new Image("wall.png");
+		coinItem = new Image("coin.png");
+		centItem = new Image("cent.png");
+		dollarItem = new Image("dollar.png");
+		rubyItem = new Image("ruby.png");
+		diamondItem = new Image("diamond.png");
+		smartTheif = new Image("SmartThief.png");
+		flyingAssasin = new Image("FlyingAssassin.png");
+		floorFollowingTheif = new Image("FloorFollowingThief.png");
+		bomb1 = new Image("Bomb1.png");
+		bomb2 = new Image("Bomb2.png");
+		bomb3 = new Image("Bomb3.png");
+		bomb = new Image("Bomb-Numberless.png");
+		clock = new Image("Clock.png");
+		door = new Image("Door.png");
+		gateTest = new Image("Gate-Red.png");
+		leverTest = new Image("Lever-Red.png");
+
 		
 		String fileToLoad = "leveldef.txt";
 
@@ -154,18 +202,22 @@ public class Main extends Application {
 			
 			    case RIGHT:
 			    	control.getPlayer().moveInDirection(Direction.RIGHT);
+					playerDirection = "RIGHT";
 			    	drawGame();
 		        	break;		        
 		        case LEFT:
 		        	control.getPlayer().moveInDirection(Direction.LEFT);
+					playerDirection = "LEFT";
 			    	drawGame();
 		        	break;	
 				case UP:
 					control.getPlayer().moveInDirection(Direction.UP);
+					playerDirection = "UP";
 			    	drawGame();
 		        	break;		        
 		        case DOWN:
 		        	control.getPlayer().moveInDirection(Direction.DOWN);
+					playerDirection = "DOWN";
 			    	drawGame();
 		        	break;	
 				default:
@@ -194,7 +246,9 @@ public class Main extends Application {
 	public void drawGame() {
 		// Get the Graphic Context of the canvas. This is what we draw on.
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		
+		GraphicsContext gc1 = canvas.getGraphicsContext2D();
+
+
 		// Clear canvas
 		//gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
@@ -209,7 +263,7 @@ public class Main extends Application {
 		Tile [][] Tilegrid =control.getTileGrid();
 
 		gc.setFill(Color.GRAY);
-		gc.fillRect(0, 0, Tilegrid.length, Tilegrid[0].length);
+		gc.fillRect(0, 20, Tilegrid.length, Tilegrid[0].length);
 
 
 		for (int j = 0; j < Tilegrid[0].length; j++) {
@@ -243,16 +297,16 @@ public class Main extends Application {
 					}
 			
 					if (counter == 0){
-						gc.drawImage(tile, 50*i ,50*j , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(tile, 50*i ,50*j+20 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
 					}
 					if (counter == 1){
-						gc.drawImage(tile, (50*i)+25 ,50*j , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(tile, (50*i)+25 ,50*j+20 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
 					}
 					if (counter == 2){
-						gc.drawImage(tile, 50*i ,(50*j)+25 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(tile, 50*i ,(50*j)+25+20 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
 					} 
 					if (counter > 2 ){
-						gc.drawImage(tile, (50*i)+25 ,(50*j)+25 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(tile, (50*i)+25 ,(50*j)+25+20 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
 						counter = -1;
 					}
 					counter = counter +1;	
@@ -265,17 +319,17 @@ public class Main extends Application {
 						gameStart = 1;
 
 					} else if (entity instanceof SmartThief) {
-						entityTile=iconImage;
-						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						entityTile=smartTheif;
+						gc.drawImage(entityTile, (50*i) ,(50*j)+20 , (GRID_CELL_WIDTH),(GRID_CELL_HEIGHT));
 
 					} else if (entity instanceof FlyingAssassin) {
-						entityTile=iconImage;
-						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						entityTile=flyingAssasin;
+						gc.drawImage(entityTile, (50*i) ,(50*j)+20 , (GRID_CELL_WIDTH),(GRID_CELL_HEIGHT));
 
 					} else if (entity instanceof FloorFollowingThief) {
-						entityTile=iconImage;
+						entityTile=floorFollowingTheif;
 						((FloorFollowingThief) entity).getColour();
-						gc.drawImage(entityTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(entityTile, (50*i) ,(50*j)+20 , (GRID_CELL_WIDTH),(GRID_CELL_HEIGHT));
 					}
 					
 					
@@ -286,40 +340,63 @@ public class Main extends Application {
 						if (item instanceof Collectable) {
 							switch (((Collectable) item).getCollectableType()) {
 								case CENT :
-									itemTile=coinItem;
+									itemTile=centItem;
 									break;
 								case DOLLAR :
-									itemTile=coinItem;
+									itemTile=dollarItem;
 									break;
 								case RUBY :
-									itemTile=coinItem;
+									itemTile=rubyItem;
 									break;
 								case DIAMOND :
-									itemTile=coinItem;
+									itemTile=diamondItem;
 									break;
 							}
 						} else if (item instanceof Gate) {
-							itemTile=coinItem;
+							itemTile=gateTest;
 
 						} else if (item instanceof Lever) {
-							itemTile=coinItem;
+							itemTile=leverTest;
 
 						} else if (item instanceof Bomb) {
-							itemTile=coinItem;
+							itemTile=bomb;
 
 						} else if (item instanceof Door) {
-							itemTile=coinItem;
+							itemTile=door;
 
 						}
-						gc.drawImage(itemTile, (50*i)+12 ,(50*j)+12 , (GRID_CELL_WIDTH/2),(GRID_CELL_HEIGHT/2));
+						gc.drawImage(itemTile, (50*i)+10 ,(50*j)+10+20 , (GRID_CELL_WIDTH/1.5),(GRID_CELL_HEIGHT/1.5));
 					}
 			}		}
 		}
 
 		// Draw player at current location
-		gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, playerY * GRID_CELL_HEIGHT);
+		switch (playerDirection) {
+			case "RIGHT" :
+				gc.drawImage(playerImageRight, playerX * GRID_CELL_WIDTH, (playerY * GRID_CELL_HEIGHT)+20);
+				break;
+			case "LEFT" :
+				gc.drawImage(playerImageLeft, playerX * GRID_CELL_WIDTH, (playerY * GRID_CELL_HEIGHT)+20);
+				break;
+			case "UP" :
+				gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH, (playerY * GRID_CELL_HEIGHT)+20);
+				break;
+			case "DOWN" :
+				gc.drawImage(playerImageDown, playerX * GRID_CELL_WIDTH, (playerY * GRID_CELL_HEIGHT)+20);
+				break;
+		}
 		
 		
+		gc1.setFill(Color.BLACK);
+		gc1.fillRect(0, 0, Tilegrid.length*50, 20);
+		gc1.setFill(Color.WHITE);
+		//playerScore = WalkingEntity.getScore();
+        gc1.fillText("Score: " +(playerScore) , 10, 15);
+		gc1.fillText("Time : " +("0") , 70, 15);
+		
+		
+
+
 	}
 
 
@@ -415,6 +492,13 @@ public class Main extends Application {
 		// Center Player Button		
 		Button centerPlayerLocationButton = new Button("Center Player");
 		toolbar.getChildren().add(centerPlayerLocationButton);		
+
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+		gc.fillText(
+            "Text centered on your Canvas", 
+            Math.round(canvas.getWidth()), 
+            Math.round(canvas.getHeight())
+        );
 
 		// Setup the behaviour of the button.
 		centerPlayerLocationButton.setOnAction(e -> {
