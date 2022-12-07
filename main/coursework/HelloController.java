@@ -1,4 +1,4 @@
-package com.example.newproject;
+package coursework;
 /** imports */
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
