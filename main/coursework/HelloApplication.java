@@ -31,6 +31,7 @@ public class HelloApplication extends Application
         stage.setTitle("Menu");
         stage.setScene(scene);
         stage.show();
+        Sound.staticSound.menuMusic();
         stage.setOnCloseRequest
                 (event ->
         {

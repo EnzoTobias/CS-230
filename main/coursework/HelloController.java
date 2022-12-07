@@ -142,10 +142,12 @@ public class HelloController extends HelloApplication{
         if(soundButton.getText().equals(mute))
         {
             soundButton.setText(unmute);
+            Sound.staticSound.muteSound(true);
         }
         else
         {
             soundButton.setText(mute);
+            Sound.staticSound.muteSound(false);
         }
     }
 
