@@ -18,7 +18,7 @@ public class Clock extends Item {
 			tile.getLevelControl()
 			.setTimeLeft(tile.getLevelControl().getTimeLeft() + TIME);
 		}
-
+		this.deleteSelf(tile);
 	}
 
 }

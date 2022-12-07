@@ -58,6 +58,7 @@ public class Main extends Application {
 	private int gameStart = 0;
 
 	private int playerScore = 0;
+	private int timeLeft;
 	private String playerDirection = "UP";
 	
 
@@ -170,7 +171,7 @@ public class Main extends Application {
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> processKeyEvent(event));
 				
 		// Register a tick method to be called periodically.
-		// Make a new timeline with one keyframe that triggers the tick method every half a second.
+		// Make a new timeline with one keyframe that triggers the tick method every second.
 		tickTimeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> tick()));
 		 // Loop the timeline forever
 		tickTimeline.setCycleCount(Animation.INDEFINITE);
@@ -257,6 +258,7 @@ public class Main extends Application {
 		//gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		
 		playerScore = control.getPlayer().getScore();
+		timeLeft = control.getTimeLeft();
 		
 		String gridTile = LevelFileReader.levelToString(control.getLevel());
 		int counter = 0;
@@ -393,7 +395,7 @@ public class Main extends Application {
 		gc1.setFill(Color.WHITE);
 		//playerScore = WalkingEntity.getScore();
         gc1.fillText("Score: " +(playerScore) , 10, 15);
-		gc1.fillText("Time : " +("0") , 70, 15);
+		gc1.fillText("Time : " +(timeLeft) , 70, 15);
 		
 		
 
@@ -433,6 +435,7 @@ public class Main extends Application {
 			tickTimeline.stop();
 		} else {
 			control.oneMovementRound();
+			control.setTimeLeft(control.getTimeLeft() - 1);
 		}
 		
 		// We then redraw the whole canvas.
