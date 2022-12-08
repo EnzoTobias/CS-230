@@ -24,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -148,6 +149,8 @@ public class Main extends Application {
 	private AnchorPane scenePane;
 	@FXML
 	private TextField nameField;
+	@FXML
+	private Label logInDisplay;
 
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
@@ -256,7 +259,7 @@ public class Main extends Application {
 	public void saveCurrentGame() {
 		try {
 			PrintWriter out = new PrintWriter(
-					new FileWriter(this.profile.getPlayerName() + "-level"
+					new FileWriter("saves/" + this.profile.getPlayerName() + "-level"
 							+ this.levelNumber + ".txt", false));
 			out.write(LevelFileReader.levelToString(control));
 			out.close();
@@ -726,15 +729,17 @@ public class Main extends Application {
 		ButtonType loadLevel = new ButtonType("Load");
 		ButtonType leaderboard = new ButtonType("Leaderboard");
 
-		String savedLevel = this.profile.getPlayerName() + "-level"
+		String savedLevel = "saves/" + this.profile.getPlayerName() + "-level"
 				+ this.levelNumber + ".txt";
 		File f = new File(savedLevel);
 
 		Alert levelAlert;
-		if (f.exists() && !f.isDirectory()) {
+		if (f.exists() && !f.isDirectory() && profile.getCurrentLevel() >= levelNumber) {
 			levelAlert = new Alert(AlertType.NONE, "Level " + this.levelNumber
 					+ " selected, you have save data for this level. What would you like to do?",
 					newLevel, loadLevel, leaderboard);
+		} else if (profile.getCurrentLevel() < levelNumber){
+			levelAlert = new Alert(AlertType.WARNING, "You have not yet unlocked this level");
 		} else {
 			levelAlert = new Alert(AlertType.NONE,
 					"Level " + this.levelNumber
@@ -746,14 +751,28 @@ public class Main extends Application {
 		Optional<ButtonType> result = levelAlert.showAndWait();
 
 		if (result.get() == newLevel) {
-			fileToLoad = "level" + this.levelNumber + ".txt";
+			fileToLoad = "levels/" + "level" + this.levelNumber + ".txt";
 		} else if (result.get() == loadLevel) {
 			fileToLoad = savedLevel;
 		}
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		this.startLevel(stage);
+		if (profile.getCurrentLevel() >= levelNumber){
+			this.startLevel(stage);
+		}
 
 	}
+	
+	public void createProfile(ActionEvent event) throws IOException {
+		String profileName = nameField.getText();
+	}
+	
+	public void loadProfile(ActionEvent event) throws IOException {
+		String profileName = nameField.getText();
+	}
+	public void deleteProfile(ActionEvent event) throws IOException {
+		String profileName = nameField.getText();
+	}
+	
 
 	public void level1(ActionEvent event) throws IOException {
 		this.levelNumber = 1;
@@ -762,6 +781,31 @@ public class Main extends Application {
 
 	public void level2(ActionEvent event) throws IOException {
 		this.levelNumber = 2;
+		switchToGameLevel(event);
+	}
+	
+	public void level3(ActionEvent event) throws IOException {
+		this.levelNumber = 3;
+		switchToGameLevel(event);
+	}
+	
+	public void level4(ActionEvent event) throws IOException {
+		this.levelNumber = 4;
+		switchToGameLevel(event);
+	}
+	
+	public void level5(ActionEvent event) throws IOException {
+		this.levelNumber = 5;
+		switchToGameLevel(event);
+	}
+	
+	public void level6(ActionEvent event) throws IOException {
+		this.levelNumber = 6;
+		switchToGameLevel(event);
+	}
+	
+	public void level7(ActionEvent event) throws IOException {
+		this.levelNumber = 7;
 		switchToGameLevel(event);
 	}
 

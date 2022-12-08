@@ -16,7 +16,7 @@ public class LevelSelection {
 
 	public String score(int level, String user, int score) {
 		try {
-			File f = new File("level" + level + "_score.txt");
+			File f = new File("scores/"+"level" + level + "_score.txt");
 			Scanner in = new Scanner(f);
 			addScore(level, user, score);
 			in.close();
@@ -41,7 +41,7 @@ public class LevelSelection {
 	public String addScore(int level, String user, int score) {
 		try {
 			PrintWriter out = new PrintWriter(
-					new FileWriter("level" + level + "_score.txt", true));
+					new FileWriter("scores/"+"level" + level + "_score.txt", true));
 			out.write(user + "    " + score + "\n");
 			out.close();
 		} catch (IOException I) {
@@ -52,7 +52,7 @@ public class LevelSelection {
 
 	public String readScore(int level) {
 		try {
-			File myObj = new File("level" + level + "_score.txt");
+			File myObj = new File("scores/"+"level" + level + "_score.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
@@ -68,7 +68,7 @@ public class LevelSelection {
 	public ArrayList<ScoreEntry> readScoreList(int level) {
 		ArrayList<ScoreEntry> scoreList = new ArrayList<ScoreEntry>();
 		try {
-			File myObj = new File("level" + level + "_score.txt");
+			File myObj = new File("scores/"+"level" + level + "_score.txt");
 			Scanner myReader = new Scanner(myObj);
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
