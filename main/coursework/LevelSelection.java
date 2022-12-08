@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Alex Rendell 211331
  */
 
-public class levelSelection {
+public class LevelSelection {
 
 	LevelControl control = new LevelControl();
 
@@ -87,7 +87,7 @@ public class levelSelection {
 
 	public static void main(String args[]) {
 
-		levelSelection l = new levelSelection();
+		LevelSelection l = new LevelSelection();
 		l.score(1, "Alex", 400);
 		l.score(1, "John", 350);
 		l.score(1, "Paul", 300);
