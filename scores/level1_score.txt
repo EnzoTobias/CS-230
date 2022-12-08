@@ -1,3 +1,9 @@
-Alex    400
-John    350
-Paul    300
+Alex 400
+John 350
+Paul 300
+Alex 400
+John 350
+Paul 300
+Alex 400
+John 350
+Paul 300

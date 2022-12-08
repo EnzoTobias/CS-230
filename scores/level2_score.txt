@@ -1,1 +1,3 @@
-Pete    600
+Pete 600
+Pete 600
+Pete 600

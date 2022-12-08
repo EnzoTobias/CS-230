@@ -14,9 +14,12 @@ public class LevelSelection {
 
 	LevelControl control = new LevelControl();
 
-	public String score(int level, String user, int score) {
+	static public String score(int level, String user, int score) throws IOException {
 		try {
 			File f = new File("scores/"+"level" + level + "_score.txt");
+			if (!f.exists()) {
+				f.createNewFile();
+			}
 			Scanner in = new Scanner(f);
 			addScore(level, user, score);
 			in.close();
@@ -30,7 +33,7 @@ public class LevelSelection {
 		return null;
 	}
 	// creates a new file
-	public String newLevelFile(int level, String user, int score)
+	public static String newLevelFile(int level, String user, int score)
 			throws IOException {
 		File f = new File("level" + level + "_score.txt");
 		f.createNewFile();
@@ -38,11 +41,11 @@ public class LevelSelection {
 		return null;
 	}
 	// adds score and name to file
-	public String addScore(int level, String user, int score) {
+	static public String addScore(int level, String user, int score) {
 		try {
 			PrintWriter out = new PrintWriter(
 					new FileWriter("scores/"+"level" + level + "_score.txt", true));
-			out.write(user + "    " + score + "\n");
+			out.write(user + " " + score + "\n");
 			out.close();
 		} catch (IOException I) {
 			System.out.println("addScore catch");
@@ -50,7 +53,7 @@ public class LevelSelection {
 		return null;
 	}
 
-	public String readScore(int level) {
+	static public String readScore(int level) {
 		try {
 			File myObj = new File("scores/"+"level" + level + "_score.txt");
 			Scanner myReader = new Scanner(myObj);
@@ -65,7 +68,7 @@ public class LevelSelection {
 		return null;
 	}
 
-	public ArrayList<ScoreEntry> readScoreList(int level) {
+	static public ArrayList<ScoreEntry> readScoreList(int level) {
 		ArrayList<ScoreEntry> scoreList = new ArrayList<ScoreEntry>();
 		try {
 			File myObj = new File("scores/"+"level" + level + "_score.txt");
@@ -80,12 +83,12 @@ public class LevelSelection {
 			}
 			myReader.close();
 		} catch (FileNotFoundException E) {
-			System.out.println("File not found at readScore");
+			System.out.println("File not found at readScoreList");
 		}
 		return scoreList;
 	}
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 
 		LevelSelection l = new LevelSelection();
 		l.score(1, "Alex", 400);

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import javafx.animation.Animation;
@@ -39,6 +41,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -151,6 +154,26 @@ public class Main extends Application {
 	private TextField nameField;
 	@FXML
 	private Label logInDisplay;
+	@FXML
+	private Text entry10;
+	@FXML
+	private Text entry11;
+	@FXML
+	private Text entry12;
+	@FXML
+	private Text entry13;
+	@FXML
+	private Text entry14;
+	@FXML
+	private Text entry15;
+	@FXML
+	private Text entry16;
+	@FXML
+	private Text entry17;
+	@FXML
+	private Text entry18;
+	@FXML
+	private Text entry19;
 
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
@@ -754,9 +777,11 @@ public class Main extends Application {
 			fileToLoad = "levels/" + "level" + this.levelNumber + ".txt";
 		} else if (result.get() == loadLevel) {
 			fileToLoad = savedLevel;
+		} else if (result.get()== leaderboard) {
+			this.switchToScene2(event);
 		}
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		if (profile.getCurrentLevel() >= levelNumber){
+		if (profile.getCurrentLevel() >= levelNumber && !(result.get()== leaderboard)){
 			this.startLevel(stage);
 		}
 
@@ -818,6 +843,31 @@ public class Main extends Application {
 		stage.show();
 
 	}
+	
+	
+	@FXML
+	public void populateScore() {
+		ArrayList<ScoreEntry> scoreList = LevelSelection.readScoreList(1);
+		Text[] labelList = new Text[]{entry10,entry11,entry12,entry13,entry14,entry15,entry16,entry17,entry18,entry19};
+		scoreList.sort((ScoreEntry s1, ScoreEntry s2) -> {
+			if (s1.getScore() > s2.getScore()) {
+				return -1;
+			}
+			if (s1.getScore() < s2.getScore()) {
+				return 1;
+			}
+			return 0;
+		});
+		int counter = 0;
+		for (Text l : labelList) {
+			if (!(scoreList.size()-1 < counter)) {
+				ScoreEntry score = scoreList.get(counter);
+				l.setText(score.getProfileName()+ " : " + score.getScore());
+				counter += 1;
+			}
+		}
+	}
+	
 	public void switchToLevel(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("Levels.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
