@@ -59,17 +59,17 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="create" layoutX="21.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Create">
+      <Button fx:id="create" layoutX="21.0" layoutY="192.0" mnemonicParsing="false" onAction="#createProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Create">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="load" layoutX="94.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Load">
+      <Button fx:id="load" layoutX="94.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Load">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="delete" layoutX="168.0" layoutY="192.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Delete">
+      <Button fx:id="delete" layoutX="168.0" layoutY="192.0" mnemonicParsing="false" onAction="#deleteProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Delete">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
