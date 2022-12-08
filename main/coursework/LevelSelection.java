@@ -12,8 +12,11 @@ import java.util.Scanner;
 
 public class LevelSelection {
 
-	LevelControl control = new LevelControl();
-
+	public static void levelSelection(String path){
+		LevelControl control = new LevelControl();
+		LevelFileReader.createFromFile(path, control);
+	}
+	
 	public String score(int level, String user, int score) {
 		try {
 			File f = new File("level" + level + "_score.txt");
