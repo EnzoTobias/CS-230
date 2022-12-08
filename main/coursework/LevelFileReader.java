@@ -35,6 +35,7 @@ public class LevelFileReader {
 		int currentY = 0;
 		String line = null;
 		int initialTime;
+		int initialScore;
 		try {
 			line = in.nextLine();
 			String[] size = line.split("x");
@@ -71,6 +72,7 @@ public class LevelFileReader {
 		}
 		try {
 			initialTime = Integer.parseInt(in.nextLine());
+			initialScore = Integer.parseInt(in.nextLine());
 		} catch (NumberFormatException | NoSuchElementException E) {
 			System.out.println(ERROR);
 			return null;
@@ -79,6 +81,7 @@ public class LevelFileReader {
 		Level level = new Level();
 		level.setTileGrid(tileGrid);
 		level.setInitialTime(initialTime);
+		control.getPlayer().setScore(initialScore);
 		return level;
 
 	}
@@ -399,6 +402,8 @@ public class LevelFileReader {
 		}
 		output = output.substring(0, output.length() - 1);
 		output += control.getTimeLeft();
+		output += System.lineSeparator();
+		output += control.getPlayer().getScore();
 		return output;
 	}
 
