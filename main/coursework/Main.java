@@ -186,7 +186,7 @@ public class Main extends Application {
 		stage.setTitle("Menu");
 		stage.getIcons().add(new Image("Icon-Image.png"));
 		stage.setScene(scene);
-		Sound.staticSound.menuMusic();
+		Sound.StaticSound.menuMusic();
 		stage.show();
 		stage.setOnCloseRequest(event -> {
 			event.consume();
@@ -248,6 +248,9 @@ public class Main extends Application {
 		hitMan = new Image("HitMan.png");
 
 		profile = ProfileReader.getProfileStorage();
+		
+		Sound.StaticSound.stopSound();
+		Sound.StaticSound.playInGameMusic();
 		
 		// Build the GUI
 		Pane root = buildGUI();
@@ -955,12 +958,12 @@ public class Main extends Application {
 		if(soundButton.getText().equals(mute))
 		{
 			soundButton.setText(unmute);
-			Sound.staticSound.muteSound(true);
+			Sound.StaticSound.muteSound(true);
 		}
 		else
 		{
 			soundButton.setText(mute);
-			Sound.staticSound.muteSound(false);
+			Sound.StaticSound.muteSound(false);
 		}
 	}
 

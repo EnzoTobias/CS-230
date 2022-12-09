@@ -13,12 +13,13 @@ import java.io.InputStream;
 public class Sound {
 
     private static MediaPlayer mediaPlayer;
+    private static MediaPlayer secondaryPlayer;
 
-    public static class staticSound {
+    public static class StaticSound {
 
         /**
          * Plays the sound from the file
-         //* @param pathToFile The path to the sound file
+         //* @param fileName The path to the sound file
          */
         private static void playSound(String fileName) {
             try {
@@ -26,6 +27,17 @@ public class Sound {
                 Media media = new Media(new File(pathToSound + fileName).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
                 mediaPlayer.play();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        private static void playSecondarySound(String fileName) {
+        	try {
+                String pathToSound = "main/sounds/";
+                Media media = new Media(new File(pathToSound + fileName).toURI().toString());
+                secondaryPlayer = new MediaPlayer(media);
+                secondaryPlayer.play();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -50,31 +62,31 @@ public class Sound {
         }
 
         public static void collectableSound() {
-            playSound("item-noise.wav");
+        	playSecondarySound("item-noise.wav");
         }
 
         public static void bombTick() {
-            playSound("bomb-tick.wav");
+        	playSecondarySound("bomb-tick.wav");
         }
 
         public static void bombExplosion() {
-            playSound("bomb-explosion.wav");
+        	playSecondarySound("bomb-explosion.wav");
         }
 
         public static void leverSound() {
-            playSound("lever.wav");
+        	playSecondarySound("lever.wav");
         }
 
         public static void gunSound() {
-            playSound("gun-shot.wav");
+        	playSecondarySound("gun-shot.wav");
         }
 
         public static void winSound() {
-            playSound("win.wav");
+        	playSecondarySound("win.wav");
         }
 
         public static void lossSound() {
-            playSound("loss.wav");
+        	playSecondarySound("loss.wav");
         }
     }
 }

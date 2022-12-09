@@ -29,6 +29,7 @@ public class Collectable extends Item {
 	public void itemEffect(Tile tile, WalkingEntity entity) {
 		tile.getLevelControl().updateLootCollectedStatus();
 		entity.setScore(entity.getScore() + type.getValue());
+		Sound.StaticSound.collectableSound();
 		this.deleteSelf(tile);
 	}
 
