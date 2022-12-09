@@ -64,7 +64,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="load" layoutX="94.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Load">
+      <Button fx:id="load" layoutX="94.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Log in">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
