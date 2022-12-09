@@ -2,7 +2,7 @@ package coursework;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SmartThief extends Thief {
+public class Hitman extends Thief {
 	private static final Random RANDOM = new Random();
 	private final int ERROR_RETURN = -1;
 	private final int MAX_STEPS = 15;
@@ -30,19 +30,9 @@ public class SmartThief extends Thief {
 			return ERROR_RETURN;
 		}
 		
-		if (this.getLevelControl().isLootCollected && nextTile.hasItem()
-				&& nextTile.getContainedItem() instanceof Door) {
-			visitedTiles = new ArrayList<Tile>();
+		if (nextTile.hasEntity() && nextTile.getContainedEntity() instanceof Player) {
 			lastTile = null;
-			return 0;
-		}
-
-		if (nextTile.hasItem()
-				&& (nextTile.getContainedItem() instanceof Collectable
-						|| nextTile.getContainedItem() instanceof Lever
-						|| nextTile.getContainedItem() instanceof Clock)) {
 			visitedTiles = new ArrayList<Tile>();
-			lastTile = null;
 			return 0;
 		}
 
@@ -51,7 +41,7 @@ public class SmartThief extends Thief {
 		Direction correctDirection = null;
 		ArrayList<Tile> tempVisited = new ArrayList<Tile>(visitedTiles);
 		currentReturn = shortestPathLength(
-				this.getLevelControl().nextValidTile(Direction.LEFT, nextTile),
+				this.getLevelControl().nextValidTileForHitman(Direction.LEFT, nextTile),
 				tempVisited, searchLevel+1 );
 		toReturn = chooseToReturn(-1, currentReturn);
 		if (toReturn == currentReturn) {
@@ -59,7 +49,7 @@ public class SmartThief extends Thief {
 		}
 
 		currentReturn = shortestPathLength(
-				this.getLevelControl().nextValidTile(Direction.RIGHT, nextTile),
+				this.getLevelControl().nextValidTileForHitman(Direction.RIGHT, nextTile),
 				tempVisited, searchLevel+1);
 		toReturn = chooseToReturn(toReturn, currentReturn);
 		if (toReturn == currentReturn) {
@@ -67,7 +57,7 @@ public class SmartThief extends Thief {
 		}
 
 		currentReturn = shortestPathLength(
-				this.getLevelControl().nextValidTile(Direction.UP, nextTile),
+				this.getLevelControl().nextValidTileForHitman(Direction.UP, nextTile),
 				tempVisited, searchLevel+1 );
 		toReturn = chooseToReturn(toReturn, currentReturn);
 		if (toReturn == currentReturn) {
@@ -76,7 +66,7 @@ public class SmartThief extends Thief {
 
 
 		currentReturn = shortestPathLength(
-				this.getLevelControl().nextValidTile(Direction.DOWN, nextTile),
+				this.getLevelControl().nextValidTileForHitman(Direction.DOWN, nextTile),
 				tempVisited, searchLevel+1 );
 		toReturn = chooseToReturn(toReturn, currentReturn);
 		if (toReturn == currentReturn) {
@@ -89,7 +79,7 @@ public class SmartThief extends Thief {
 		}
 		
 		if (searchLevel == 0) {
-			this.tileToMoveCheat = this.getLevelControl().nextValidTile(correctDirection, nextTile);
+			this.tileToMoveCheat = this.getLevelControl().nextValidTileForHitman(correctDirection, nextTile);
 		}
 		
 		return toReturn + 1;
@@ -106,8 +96,8 @@ public class SmartThief extends Thief {
 		return toReturn;
 	}
 
-	@Override
-	public boolean nextMove(Tile tile) {
+
+	public boolean makeMove(Tile tile) {
 		this.tileToMoveCheat = null;
 		Tile tileToMove = null;
 		int currentShortest = shortestPathLength(tile,new ArrayList<Tile>(),0);
@@ -116,17 +106,13 @@ public class SmartThief extends Thief {
 		Direction moveDirection = null;
 		Direction[] directions = Direction.values();
 		for (Direction direction : directions) {
-			if (this.getLevelControl().nextValidTile(direction, tile) == tileToMove) {
+			if (this.getLevelControl().nextValidTileForHitman(direction, tile) == tileToMove) {
 				moveDirection = direction;
 			}
 		}
+
 		
-		if (tileToMove == null) {
-			Direction randomDirection = directions[RANDOM.nextInt(directions.length)];
-			this.setDirection(randomDirection);
-			tileToMove =  this.getLevelControl().nextValidTile(randomDirection,
-					this.getThisTile());
-		}
+		
 		if (tileToMove == null) {
 			return false;
 		}
@@ -134,8 +120,20 @@ public class SmartThief extends Thief {
 		
 		this.lastTile = tile;
 		this.setDirection(moveDirection);
-		return this.getLevelControl().moveToTile(tileToMove.getX(),
-				tileToMove.getY(), this);
+		if (tileToMove.hasEntity() && tileToMove.getContainedEntity() instanceof Player) {
+			tileToMove.getContainedEntity().die();
+			return true;
+		} else {
+			return this.getLevelControl().moveToTile(tileToMove.getX(),
+					tileToMove.getY(), this);
+		}
+		
+	}
+	
+	@Override
+	public boolean nextMove(Tile tile) {
+		
+		return this.makeMove(this.getThisTile());
 	}
 
 }

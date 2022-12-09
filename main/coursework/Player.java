@@ -9,7 +9,6 @@ public class Player extends WalkingEntity {
 	@Override
 	public void die() {
 		this.getLevelControl().setPlayerExploded(true);
-		this.getThisTile().setContainedEntity(null);
 		this.getLevelControl().getMyMain().drawGame();
 	};
 	

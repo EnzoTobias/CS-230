@@ -99,4 +99,30 @@ public class Tile {
 		}
 		return false;
 	}
+	
+	public boolean isTileBlockedForHitman() {
+		if (this.hasItem() && this.getContainedItem() instanceof Gate) {
+			return true;
+		}
+
+		if (this.hasItem() && this.getContainedItem() instanceof Bomb) {
+			return true;
+		}
+
+		if (this.hasItem() && this.getContainedItem() instanceof Door
+				&& !this.getLevelControl().isAllLootCollected()) {
+			return true;
+		}
+		
+		for (Colour colour : this.getColours()) {
+			if (colour == Colour.VOID) {
+				return true;
+			}
+		}
+		
+		if (this.hasEntity() && !(this.getContainedEntity() instanceof Player)) {
+			return true;
+		}
+		return false;
+	}
 }

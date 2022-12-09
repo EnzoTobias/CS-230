@@ -30,7 +30,12 @@ public class LevelControl {
 	private int levelNumber;
 	private Main myMain;
 	private boolean playerExploded;
-
+	private boolean movementRound = false;
+	
+	public boolean isMovementRound() {
+		return movementRound;
+	}
+	
 	public boolean isLootCollected() {
 		return isLootCollected;
 	}
@@ -75,23 +80,31 @@ public class LevelControl {
 	 * One round of movement for all the entities.
 	 */
 	public void oneMovementRound() {
+		
 		this.listEntities();
 		if (!playerExploded && this.timeLeft > 0) {
 			this.updateLootCollectedStatus();
+			
 			for (WalkingEntity entity : entityList) {
-				if (!(entity instanceof Player)) {
+				if (!(entity instanceof Player) && movementRound == true) {
 					entity.nextMove(entity.getThisTile());
 				}
-
+				if (entity instanceof Hitman && movementRound == false) {
+					entity.nextMove(entity.getThisTile());
+				}
 			}
+			if (movementRound == true) {
+				movementRound = false;
+			} else {
+				movementRound = true;
+			}
+			
 			displayGrid();
 		} else {
 			this.playerLose();
 		}
-		
-		
-	}
 
+	}
 
 	/**
 	 * Locates and returns the tile that the given entity is currently on.
@@ -240,6 +253,59 @@ public class LevelControl {
 
 		return null;
 	}
+
+	public Tile nextValidTileForHitman(Direction direction, Tile tile) {
+		Tile[][] tileGrid = this.getTileGrid();
+		switch (direction) {
+			case RIGHT :
+				for (int i = tile.getX() + 1; i < tileGrid.length; i++) {
+					if (this.tileColourCheck(i, tile.getY(), tile)) {
+						if (this.getLevel().safeGetTile(i, tile.getY())
+								.isTileBlockedForHitman()) {
+							return null;
+						}
+						return tileGrid[i][tile.getY()];
+					}
+				}
+				break;
+			case LEFT :
+				for (int i = tile.getX() - 1; i >= 0; i--) {
+					if (this.tileColourCheck(i, tile.getY(), tile)) {
+						if (this.getLevel().safeGetTile(i, tile.getY())
+								.isTileBlockedForHitman()) {
+							return null;
+						}
+						return tileGrid[i][tile.getY()];
+					}
+				}
+				break;
+			case DOWN :
+				for (int i = tile.getY() + 1; i < tileGrid[0].length; i++) {
+					if (this.tileColourCheck(tile.getX(), i, tile)) {
+						if (this.getLevel().safeGetTile(tile.getX(), i)
+								.isTileBlockedForHitman()) {
+							return null;
+						}
+						return tileGrid[tile.getX()][i];
+					}
+				}
+				break;
+			case UP :
+				for (int i = tile.getY() - 1; i >= 0; i--) {
+					if (this.tileColourCheck(tile.getX(), i, tile)) {
+						if (this.getLevel().safeGetTile(tile.getX(), i)
+								.isTileBlockedForHitman()) {
+							return null;
+						}
+						return tileGrid[tile.getX()][i];
+					}
+				}
+
+		}
+
+		return null;
+	}
+
 	/**
 	 * Initiates movement of an entity into a tile. Triggers any appropriate
 	 * item effects or other behaviours on movement. Will only move if the move
@@ -298,7 +364,11 @@ public class LevelControl {
 			return false;
 		}
 
-		if (tileToMove.isTileBlocked()) {
+		if (tileToMove.isTileBlocked() && !(entity instanceof Hitman)) {
+			return false;
+		}
+
+		if (tileToMove.isTileBlockedForHitman() && entity instanceof Hitman) {
 			return false;
 		}
 

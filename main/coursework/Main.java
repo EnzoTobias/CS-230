@@ -279,7 +279,7 @@ public class Main extends Application {
 		// Make a new timeline with one keyframe that triggers the tick method
 		// every second.
 		tickTimeline = new Timeline(
-				new KeyFrame(Duration.millis(1000), event -> tick()));
+				new KeyFrame(Duration.millis(500), event -> tick()));
 		// Loop the timeline forever
 		tickTimeline.setCycleCount(Animation.INDEFINITE);
 		// We start the timeline upon a button press.
@@ -474,6 +474,9 @@ public class Main extends Application {
 
 					} else if (entity instanceof FloorFollowingThief) {
 						entityName = "FloorFollowingThief";
+						
+					} else if (entity instanceof Hitman) {
+						entityName = "Hitman";
 					}
 					
 					if (!(entity instanceof Player)) {
@@ -650,7 +653,10 @@ public class Main extends Application {
 			tickTimeline.stop();
 		} else if (isPaused == false) {
 			control.oneMovementRound();
-			control.setTimeLeft(control.getTimeLeft() - 1);
+			if (control.isMovementRound()) {
+				control.setTimeLeft(control.getTimeLeft() - 1);
+			}
+			
 		}
 
 		// We then redraw the whole canvas.

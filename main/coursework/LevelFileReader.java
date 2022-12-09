@@ -182,6 +182,18 @@ public class LevelFileReader {
 					tile.setContainedEntity(ff);
 					expectedDefSize = 3;
 					break;
+				case "H" :
+					if (getDirection(contentDefinitions[1]) == null) {
+						System.out.println(ERROR);
+						return false;
+					}
+					Hitman h = new Hitman();
+					h.setDirection(getDirection(contentDefinitions[1]));
+					h.setLevelControl(control);
+					h.setThisTile(tile);
+					tile.setContainedEntity(h);
+					expectedDefSize = 2;
+					break;
 				case "C" :
 					Collectable c = new Collectable(CollectableType.CENT);
 					tile.setContainedItem(c);
@@ -355,6 +367,10 @@ public class LevelFileReader {
 						output += ",";
 						output += colToString(
 								((FloorFollowingThief) entity).getColour());
+					} else if (entity instanceof Hitman) {
+						output += "H";
+						output += ",";
+						output += dirToString(entity.getDirection());
 					}
 					output += ")";
 				} else {
