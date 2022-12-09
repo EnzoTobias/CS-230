@@ -7,8 +7,10 @@ public class Gun extends Item {
 		WalkingEntity toKill = tile.getLevelControl().closestEntityToTile(tile);
 		if (toKill != null && entity instanceof Player) {
 			toKill.die();
+			Sound.StaticSound.gunSound();
+		} else {
+			Sound.StaticSound.collectableSound();
 		}
-		Sound.StaticSound.gunSound();
 		this.deleteSelf(tile);
 		
 	}

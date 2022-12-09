@@ -20,6 +20,7 @@ public class Player extends WalkingEntity {
 		if (!(tileToMove == null)) {
 			control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
 		}
+		this.setDirection(direction);
 		
 		
 	}

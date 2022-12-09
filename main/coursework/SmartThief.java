@@ -113,11 +113,17 @@ public class SmartThief extends Thief {
 		int currentShortest = shortestPathLength(tile,new ArrayList<Tile>(),0);
 		tileToMove = this.tileToMoveCheat;
 		
-		
+		Direction moveDirection = null;
 		Direction[] directions = Direction.values();
+		for (Direction direction : directions) {
+			if (this.getLevelControl().nextValidTile(direction, tile) == tileToMove) {
+				moveDirection = direction;
+			}
+		}
 		Direction randomDirection = directions[RANDOM.nextInt(directions.length)];
 		
 		if (tileToMove == null) {
+			this.setDirection(randomDirection);
 			tileToMove =  this.getLevelControl().nextValidTile(randomDirection,
 					this.getThisTile());
 		}
@@ -127,6 +133,7 @@ public class SmartThief extends Thief {
 		
 		
 		this.lastTile = tile;
+		this.setDirection(moveDirection);
 		return this.getLevelControl().moveToTile(tileToMove.getX(),
 				tileToMove.getY(), this);
 	}

@@ -82,7 +82,7 @@ public class Main extends Application {
 
 	private int playerScore = 0;
 	private int timeLeft;
-	private String playerDirection = "UP";
+	private Direction playerDirection = null;
 
 	// The canvas in the GUI. This needs to be a global variable
 	// (in this setup) as we need to access it in different methods.
@@ -333,22 +333,18 @@ public class Main extends Application {
 
 				case RIGHT :
 					control.getPlayer().moveInDirection(Direction.RIGHT);
-					playerDirection = "RIGHT";
 					drawGame();
 					break;
 				case LEFT :
 					control.getPlayer().moveInDirection(Direction.LEFT);
-					playerDirection = "LEFT";
 					drawGame();
 					break;
 				case UP :
 					control.getPlayer().moveInDirection(Direction.UP);
-					playerDirection = "UP";
 					drawGame();
 					break;
 				case DOWN :
 					control.getPlayer().moveInDirection(Direction.DOWN);
-					playerDirection = "DOWN";
 					drawGame();
 					break;
 				case ESCAPE :
@@ -449,27 +445,44 @@ public class Main extends Application {
 				}
 				if (tileToHandle.hasEntity()) {
 					WalkingEntity entity = tileToHandle.getContainedEntity();
+					String entityDirection = null;
+					String entityName = null;
+					switch (entity.getDirection()) {
+						case RIGHT:
+							entityDirection = "Right";
+							break;
+						case LEFT:
+							entityDirection = "Left";
+							break;
+						case DOWN:
+							entityDirection = "Down";
+							break;
+						case UP:
+							entityDirection = "";
+							break;
+					}
 					if (entity instanceof Player) {
 						playerX = i;
 						playerY = j;
 						gameStart = 1;
 
 					} else if (entity instanceof SmartThief) {
-						entityTile = smartThief;
-						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
-								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
+						entityName = "SmartThief";
 
 					} else if (entity instanceof FlyingAssassin) {
-						entityTile = flyingAssassin;
-						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
-								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
+						entityName = "FlyingAssassin";
 
 					} else if (entity instanceof FloorFollowingThief) {
-						entityTile = floorFollowingThief;
-						((FloorFollowingThief) entity).getColour();
+						entityName = "FloorFollowingThief";
+					}
+					
+					if (!(entity instanceof Player)) {
+						entityTile =  new Image(entityName + entityDirection + ".png");
 						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
 								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
 					}
+					
+
 
 				} else {
 					if (tileToHandle.hasItem()) {
@@ -515,20 +528,21 @@ public class Main extends Application {
 		}
 
 		// Draw player at current location
+		playerDirection = this.getControl().getPlayer().getDirection();
 		switch (playerDirection) {
-			case "RIGHT" :
+			case RIGHT :
 				gc.drawImage(playerImageRight, playerX * GRID_CELL_WIDTH,
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
-			case "LEFT" :
+			case LEFT :
 				gc.drawImage(playerImageLeft, playerX * GRID_CELL_WIDTH,
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
-			case "UP" :
+			case UP :
 				gc.drawImage(playerImage, playerX * GRID_CELL_WIDTH,
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
-			case "DOWN" :
+			case DOWN :
 				gc.drawImage(playerImageDown, playerX * GRID_CELL_WIDTH,
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
@@ -872,7 +886,7 @@ public class Main extends Application {
 		stage.setFullScreen(false);
 		if (didPlayerWin == true) {
 			Sound.StaticSound.winSound();
-			playerScore = control.getPlayer().getScore();
+			playerScore = control.getPlayer().getScore() + control.getTimeLeft();
 			Alert win = new Alert(AlertType.INFORMATION,
 					"You won with " + playerScore + " points!");
 			win.show();

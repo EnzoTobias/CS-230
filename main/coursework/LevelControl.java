@@ -21,7 +21,7 @@ public class LevelControl {
 	private Level level;
 	private Player player;
 	private ArrayList<WalkingEntity> entityList;
-	public int timeLeft;
+	private int timeLeft;
 	// private Timer timer = new Timer();
 	private boolean isGameOver = false;
 	private int movementProgression = 0;
@@ -76,7 +76,8 @@ public class LevelControl {
 	 */
 	public void oneMovementRound() {
 		this.listEntities();
-		if (!playerExploded) {
+		if (!playerExploded && this.timeLeft > 0) {
+			this.updateLootCollectedStatus();
 			for (WalkingEntity entity : entityList) {
 				if (!(entity instanceof Player)) {
 					entity.nextMove(entity.getThisTile());
@@ -88,7 +89,7 @@ public class LevelControl {
 			this.playerLose();
 		}
 		
-		this.updateLootCollectedStatus();
+		
 	}
 
 
