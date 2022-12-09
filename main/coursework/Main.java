@@ -64,8 +64,8 @@ public class Main extends Application {
 	private static final int WINDOW_HEIGHT = 500;
 
 	// The dimensions of the canvas
-	private static final int CANVAS_WIDTH = 1200;
-	private static final int CANVAS_HEIGHT = 1000;
+	private static final int CANVAS_WIDTH = 1920;
+	private static final int CANVAS_HEIGHT = 1080;
 
 	// The width and height (in pixels) of each cell that makes up the game.
 	private static final int GRID_CELL_WIDTH = 50;
@@ -253,7 +253,8 @@ public class Main extends Application {
 		hitMan = new Image("HitMan.png");
 
 		profile = ProfileReader.getProfileStorage();
-
+		
+		
 		Sound.StaticSound.stopSound();
 		Sound.StaticSound.playInGameMusic();
 
@@ -299,6 +300,7 @@ public class Main extends Application {
 		primaryStage.setFullScreenExitHint("");
 		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		primaryStage.setFullScreen(true);
+		this.tickTimeline.play();
 
 	}
 
@@ -372,9 +374,13 @@ public class Main extends Application {
 	 * Draw the game on the canvas.
 	 */
 	public void drawGame() {
+		
+
+		
 		// Get the Graphic Context of the canvas. This is what we draw on.
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		GraphicsContext gc1 = canvas.getGraphicsContext2D();
+		GraphicsContext gc2 = canvas.getGraphicsContext2D();
 
 		// Clear canvas
 		// gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -388,9 +394,12 @@ public class Main extends Application {
 
 		String gridTile = LevelFileReader.levelToString(control);
 		int counter = 0;
-
+		
+		if (gameStart == 0) {
+			gc.drawImage(new Image("stars.png"), 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+		}
+		
 		Tile[][] Tilegrid = control.getTileGrid();
-
 		gc.setFill(Color.GRAY);
 		gc.fillRect(0, 20, Tilegrid.length, Tilegrid[0].length);
 
@@ -613,7 +622,8 @@ public class Main extends Application {
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
 		}
-
+		
+		
 		gc1.setFill(Color.BLACK);
 		gc1.fillRect(0, 0, Tilegrid.length * 50, 20);
 		gc1.setFill(Color.WHITE);
@@ -706,7 +716,7 @@ public class Main extends Application {
 		HBox toolbar = new HBox();
 		toolbar.setSpacing(10);
 		toolbar.setPadding(new Insets(10, 10, 10, 10));
-		root.setTop(toolbar);
+		//root.setTop(toolbar);
 
 		// Create the toolbar content
 
