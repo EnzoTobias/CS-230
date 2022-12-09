@@ -94,9 +94,9 @@ public class Main extends Application {
 	private Image playerImageDown;
 	private Image iconImage;
 	private Image entityTile;
-	private Image smartTheif;
-	private Image flyingAssasin;
-	private Image floorFollowingTheif;
+	private Image smartThief;
+	private Image flyingAssassin;
+	private Image floorFollowingThief;
 
 	// Load tile images
 	private Image redTile;
@@ -119,12 +119,14 @@ public class Main extends Application {
 	private Image bomb1;
 	private Image bomb2;
 	private Image bomb3;
-	private Image bombExpload;
+	private Image bombExplode;
 	private Image clock;
 	private Image door;
 	private Image gateTest;
 	private Image leverTest;
 	private Image voidTile;
+	private Image gun;
+	private Image hitMan;
 
 	// level control
 	private LevelControl control;
@@ -174,13 +176,17 @@ public class Main extends Application {
 	private Text entry18;
 	@FXML
 	private Text entry19;
+	@FXML
+	private Button soundButton;
 
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Menu");
+		stage.getIcons().add(new Image("Icon-Image.png"));
 		stage.setScene(scene);
+		Sound.staticSound.menuMusic();
 		stage.show();
 		stage.setOnCloseRequest(event -> {
 			event.consume();
@@ -190,7 +196,7 @@ public class Main extends Application {
 	}
 
 	public void logout(Stage stage) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Logout");
 		alert.setHeaderText("You're about to logout!");
@@ -211,27 +217,25 @@ public class Main extends Application {
 	 */
 	public void startLevel(Stage primaryStage) {
 		// Load images. Note we use png images with a transparent background.
-		playerImage = new Image("player.png");
-		playerImageRight = new Image("playerRight.png");
-		playerImageDown = new Image("playerDown.png");
-		playerImageLeft = new Image("playerLeft.png");
-		iconImage = new Image("icon.png");
-		redTile = new Image("red.png");
-		blueTile = new Image("blue.png");
-		yellowTile = new Image("yellow.png");
-		wallTile = new Image("wall.png");
-		magentaTile = new Image("magenta.png");
-		greenTile = new Image("green.png");
-		cyanTile = new Image("cyan.png");
-		voidTile = new Image("wall.png");
-		coinItem = new Image("coin.png");
-		centItem = new Image("cent.png");
-		dollarItem = new Image("dollar.png");
-		rubyItem = new Image("ruby.png");
-		diamondItem = new Image("diamond.png");
-		smartTheif = new Image("SmartThief.png");
-		flyingAssasin = new Image("FlyingAssassin.png");
-		floorFollowingTheif = new Image("FloorFollowingThief.png");
+		playerImage = new Image("Player.png");
+		playerImageRight = new Image("PlayerRight.png");
+		playerImageDown = new Image("PlayerDown.png");
+		playerImageLeft = new Image("PlayerLeft.png");
+		redTile = new Image("Red.png");
+		blueTile = new Image("Blue.png");
+		yellowTile = new Image("Yellow.png");
+		wallTile = new Image("Wall.png");
+		magentaTile = new Image("Magenta.png");
+		greenTile = new Image("Green.png");
+		cyanTile = new Image("Cyan.png");
+		voidTile = new Image("Wall.png");
+		centItem = new Image("Cent.png");
+		dollarItem = new Image("Dollar.png");
+		rubyItem = new Image("Ruby.png");
+		diamondItem = new Image("Diamond.png");
+		smartThief = new Image("SmartThief.png");
+		flyingAssassin = new Image("FlyingAssassin.png");
+		floorFollowingThief = new Image("FloorFollowingThief.png");
 		bomb1 = new Image("Bomb1.png");
 		bomb2 = new Image("Bomb2.png");
 		bomb3 = new Image("Bomb3.png");
@@ -240,6 +244,8 @@ public class Main extends Application {
 		door = new Image("Door.png");
 		gateTest = new Image("Gate-Red.png");
 		leverTest = new Image("Lever-Red.png");
+		gun = new Image("Gun.png");
+		hitMan = new Image("HitMan.png");
 
 		// Build the GUI
 		Pane root = buildGUI();
@@ -430,17 +436,17 @@ public class Main extends Application {
 						gameStart = 1;
 
 					} else if (entity instanceof SmartThief) {
-						entityTile = smartTheif;
+						entityTile = smartThief;
 						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
 								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
 
 					} else if (entity instanceof FlyingAssassin) {
-						entityTile = flyingAssasin;
+						entityTile = flyingAssassin;
 						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
 								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
 
 					} else if (entity instanceof FloorFollowingThief) {
-						entityTile = floorFollowingTheif;
+						entityTile = floorFollowingThief;
 						((FloorFollowingThief) entity).getColour();
 						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
 								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
@@ -888,7 +894,7 @@ public class Main extends Application {
 	}
 
 	public void logout(ActionEvent event) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Logout");
 		alert.setHeaderText("You're about to logout!");
@@ -898,6 +904,22 @@ public class Main extends Application {
 			stage = (Stage) scenePane.getScene().getWindow();
 			System.out.println("GOOD JOB");
 			stage.close();
+		}
+	}
+
+	public void buttonTextChange()
+	{
+		String mute = "Mute Sound";
+		String unmute = "Unmute Sound";
+		if(soundButton.getText().equals(mute))
+		{
+			soundButton.setText(unmute);
+			Sound.staticSound.muteSound(true);
+		}
+		else
+		{
+			soundButton.setText(mute);
+			Sound.staticSound.muteSound(false);
 		}
 	}
 
