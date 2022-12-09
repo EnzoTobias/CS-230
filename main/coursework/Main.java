@@ -152,12 +152,17 @@ public class Main extends Application {
 	@FXML
 	private Label logInDisplay;
 
+	@FXML
+	private Button soundButton;
+
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
 		Scene scene = new Scene(root);
 		stage.setTitle("Menu");
+		stage.getIcons().add(new Image("sprites/Icon-Image.png"));
 		stage.setScene(scene);
+		Sound.staticSound.menuMusic();
 		stage.show();
 		stage.setOnCloseRequest(event -> {
 			event.consume();
@@ -167,7 +172,7 @@ public class Main extends Application {
 	}
 
 	public void logout(Stage stage) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Logout");
 		alert.setHeaderText("You're about to logout!");
@@ -188,35 +193,34 @@ public class Main extends Application {
 	 */
 	public void startLevel(Stage primaryStage) {
 		// Load images. Note we use png images with a transparent background.
-		playerImage = new Image("player.png");
-		playerImageRight = new Image("playerRight.png");
-		playerImageDown = new Image("playerDown.png");
-		playerImageLeft = new Image("playerLeft.png");
-		iconImage = new Image("icon.png");
-		redTile = new Image("red.png");
-		blueTile = new Image("blue.png");
-		yellowTile = new Image("yellow.png");
-		wallTile = new Image("wall.png");
-		magentaTile = new Image("magenta.png");
-		greenTile = new Image("green.png");
-		cyanTile = new Image("cyan.png");
-		voidTile = new Image("wall.png");
-		coinItem = new Image("coin.png");
-		centItem = new Image("cent.png");
-		dollarItem = new Image("dollar.png");
-		rubyItem = new Image("ruby.png");
-		diamondItem = new Image("diamond.png");
-		smartTheif = new Image("SmartThief.png");
-		flyingAssasin = new Image("FlyingAssassin.png");
-		floorFollowingTheif = new Image("FloorFollowingThief.png");
-		bomb1 = new Image("Bomb1.png");
-		bomb2 = new Image("Bomb2.png");
-		bomb3 = new Image("Bomb3.png");
-		bomb = new Image("Bomb-Numberless.png");
-		clock = new Image("Clock.png");
-		door = new Image("Door.png");
-		gateTest = new Image("Gate-Red.png");
-		leverTest = new Image("Lever-Red.png");
+		playerImage = new Image("sprites/Player.png");
+		playerImageRight = new Image("sprites/PlayerRight.png");
+		playerImageDown = new Image("sprites/PlayerDown.png");
+		playerImageLeft = new Image("sprites/PlayerLeft.png");
+		iconImage = new Image("sprites/Icon-Image.png");
+		redTile = new Image("sprites/Red.png");
+		blueTile = new Image("sprites/Blue.png");
+		yellowTile = new Image("sprites/Yellow.png");
+		wallTile = new Image("sprites/Wall.png");
+		magentaTile = new Image("sprites/Magenta.png");
+		greenTile = new Image("sprites/Green.png");
+		cyanTile = new Image("sprites/Cyan.png");
+		voidTile = new Image("sprites/Wall.png");
+		centItem = new Image("sprites/Cent.png");
+		dollarItem = new Image("sprites/Dollar.png");
+		rubyItem = new Image("sprites/Ruby.png");
+		diamondItem = new Image("sprites/Diamond.png");
+		smartTheif = new Image("sprites/SmartThief.png");
+		flyingAssasin = new Image("sprites/FlyingAssassin.png");
+		floorFollowingTheif = new Image("sprites/FloorFollowingThief.png");
+		bomb1 = new Image("sprites/Bomb1.png");
+		bomb2 = new Image("sprites/Bomb2.png");
+		bomb3 = new Image("sprites/Bomb3.png");
+		bomb = new Image("sprites/Bomb-Numberless.png");
+		clock = new Image("sprites/Clock.png");
+		door = new Image("sprites/Door.png");
+		gateTest = new Image("sprites/Gate-Red.png");
+		leverTest = new Image("sprites/Lever-Red.png");
 
 		// Build the GUI
 		Pane root = buildGUI();
@@ -711,8 +715,7 @@ public class Main extends Application {
 	}
 
 	public void switchToScene1(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader
-				.load(getClass().getResource("actionMenu.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("actionMenu.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -838,7 +841,7 @@ public class Main extends Application {
 	}
 
 	public void logout(ActionEvent event) {
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Logout");
 		alert.setHeaderText("You're about to logout!");
@@ -848,6 +851,22 @@ public class Main extends Application {
 			stage = (Stage) scenePane.getScene().getWindow();
 			System.out.println("GOOD JOB");
 			stage.close();
+		}
+	}
+
+	public void buttonTextChange()
+	{
+		String mute = "Mute Sound";
+		String unmute = "Unmute Sound";
+		if(soundButton.getText().equals(mute))
+		{
+			soundButton.setText(unmute);
+			Sound.staticSound.muteSound(true);
+		}
+		else
+		{
+			soundButton.setText(mute);
+			Sound.staticSound.muteSound(false);
 		}
 	}
 

@@ -74,6 +74,12 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
+
+      <Button fx:id="soundButton" layoutX="21.0" layoutY="25.0" mnemonicParsing="false" onAction="#buttonTextChange" style="-fx-text-fill: #54D8C4; -fx-background-color: #000000; " text="Mute Sound">
+         <font>
+                 <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
       <Label fx:id="logInDisplay" layoutX="40.0" layoutY="113.0" text="Not logged in">
          <font>
             <Font name="Arial Black" size="16.0" />
