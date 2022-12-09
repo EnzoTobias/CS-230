@@ -831,6 +831,8 @@ public class Main extends Application {
 				notThere.show();
 		 } else {
 				Alert done = new Alert(AlertType.INFORMATION, "Profile " + profileName + " deleted 0_0");
+				profile = null;
+				logInDisplay.setText("Not logged in");
 				done.show();
 
 		 };
@@ -921,11 +923,17 @@ public class Main extends Application {
 	}
 	
 	public void switchToLevel(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("Levels.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		if (profile != null) {
+			Parent root = FXMLLoader.load(getClass().getResource("Levels.fxml"));
+			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} else {
+			Alert alert = new Alert(AlertType.WARNING, "Please create a profile or log in before playing");
+			alert.show();
+		}
+	
 	}
 
 	@FXML
