@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
+<AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#updateLoadedProfile" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
    <children>
       <Button fx:id="exitButton" layoutX="45.0" layoutY="321.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Exit" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="63.0" prefHeight="34.0" prefWidth="269.0" text="Jewel Thieves">

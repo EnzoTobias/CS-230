@@ -241,6 +241,8 @@ public class Main extends Application {
 		gateTest = new Image("Gate-Red.png");
 		leverTest = new Image("Lever-Red.png");
 
+		profile = ProfileReader.getProfileStorage();
+		
 		// Build the GUI
 		Pane root = buildGUI();
 
@@ -744,10 +746,6 @@ public class Main extends Application {
 	}
 
 	public void switchToGameLevel(ActionEvent event) throws IOException {
-		///////////TEMPORARY	
-		Profile p = new Profile("tester", 1);
-		this.profile = p;
-		////////
 		ButtonType newLevel = new ButtonType("Start New");
 		ButtonType loadLevel = new ButtonType("Load");
 		ButtonType leaderboard = new ButtonType("Leaderboard");
@@ -782,6 +780,7 @@ public class Main extends Application {
 		}
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		if (profile.getCurrentLevel() >= levelNumber && !(result.get()== leaderboard)){
+
 			this.startLevel(stage);
 		}
 
@@ -789,13 +788,55 @@ public class Main extends Application {
 	
 	public void createProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
+		this.profile = ProfileReader.createProfile(profileName);
+		if (profile == null) {
+			Alert alreadyThere = new Alert(AlertType.WARNING, "That profile already exists, please load it instead");
+			alreadyThere.show();
+			logInDisplay.setText("Not logged in");
+		} else {
+			Alert done = new Alert(AlertType.INFORMATION, "Profile " + profileName + " created" );
+			done.show();
+			logInDisplay.setText("Current profile: " + profileName);
+		}
+		ProfileReader.setProfileStorage(profile);
 	}
 	
 	public void loadProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
+		this.profile = ProfileReader.loadProfile(profileName);
+		if (profile == null) {
+			Alert notThere = new Alert(AlertType.WARNING, "No profile found with that username, please create one");
+			notThere.show();
+			logInDisplay.setText("Not logged in");
+		} else {
+			logInDisplay.setText("Current profile: " + profileName);
+		}
+		ProfileReader.setProfileStorage(profile);
 	}
 	public void deleteProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
+		 if (ProfileReader.deleteProfile(profileName) == false) {
+				Alert notThere = new Alert(AlertType.WARNING, "This profile does not exist and thus cannot be deleted");
+				notThere.show();
+		 } else {
+				Alert done = new Alert(AlertType.INFORMATION, "Profile " + profileName + " deleted 0_0");
+				done.show();
+
+		 };
+		 ProfileReader.setProfileStorage(profile);
+	}
+	@FXML
+	public void updateLoadedProfile() {
+		profile = ProfileReader.getProfileStorage();
+		if (logInDisplay != null) {
+			if (profile == null) {
+				logInDisplay.setText("Not logged in");
+
+			} else {
+				logInDisplay.setText("Current profile: " + profile.getPlayerName());
+
+			}
+		}
 	}
 	
 

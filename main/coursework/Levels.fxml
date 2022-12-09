@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#updateLoadedProfile" onMouseClicked="#updateLoadedProfile" onMouseDragged="#updateLoadedProfile" onMouseEntered="#updateLoadedProfile" onMouseExited="#updateLoadedProfile" onMouseMoved="#updateLoadedProfile" onMousePressed="#updateLoadedProfile" onMouseReleased="#updateLoadedProfile" onScroll="#updateLoadedProfile" onScrollFinished="#updateLoadedProfile" onScrollStarted="#updateLoadedProfile" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
    <children>
       <Button fx:id="level1" layoutX="119.0" layoutY="170.0" mnemonicParsing="false" onAction="#level1" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Level 1" />
       <Button fx:id="level2" alignment="CENTER" layoutX="272.0" layoutY="170.0" mnemonicParsing="false" onAction="#level2" prefHeight="40.0" prefWidth="77.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" text="Level 2" />
