@@ -12,6 +12,7 @@ public class Bomb extends Item {
 	private final long BOMB_DELAY = 1000L;
 	private int currentStage = EXPLOSION_STAGES;
 	private Timer timer;
+	private boolean aboutToKaboom;
 	/**
 	 * Initiates the Bomb instance's countdown to explosion.
 	 * 
@@ -23,9 +24,13 @@ public class Bomb extends Item {
 	 */
 	@Override
 	public void itemEffect(Tile tile, WalkingEntity entity) {
-		timer = new Timer();
-		Sound.StaticSound.bombTick();
-		nextStage(tile);
+		if (aboutToKaboom == false) {
+			timer = new Timer();
+			Sound.StaticSound.bombTick();
+			aboutToKaboom = true;
+			nextStage(tile);
+		}
+		
 
 	}
 	/**
@@ -37,19 +42,29 @@ public class Bomb extends Item {
 	 *            explosion.
 	 */
 	private void nextStage(Tile tile) {
-		TimerTask task = new TimerTask() {
-			public void run() {
-				Sound.StaticSound.bombTick();
-				nextStage(tile);
-			}
-		};
-		currentStage -= 1;
-		if (currentStage == 0 && tile.hasItem()) {
-			explode(tile);
+		if (tile.getLevelControl().isGameOver()) {
 			timer.cancel();
 		} else {
-			timer.schedule(task, BOMB_DELAY);
+			TimerTask task = new TimerTask() {
+				public void run() {
+					Sound.StaticSound.bombTick();
+					nextStage(tile);
+				}
+			};
+			currentStage -= 1;
+			if (tile.hasItem()) {
+				if (currentStage == 0) {
+					explode(tile);
+					timer.cancel();
+				} else {
+					timer.schedule(task, BOMB_DELAY);
+				}
+			}
 		}
+		
+		
+	
+		
 
 	}
 	/**

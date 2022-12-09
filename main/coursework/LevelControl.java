@@ -4,6 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /**
@@ -27,6 +29,7 @@ public class LevelControl {
 	private Profile currentProfile;
 	private int levelNumber;
 	private Main myMain;
+	private boolean playerExploded;
 
 	public boolean isLootCollected() {
 		return isLootCollected;
@@ -73,34 +76,22 @@ public class LevelControl {
 	 */
 	public void oneMovementRound() {
 		this.listEntities();
-		for (WalkingEntity entity : entityList) {
-			if (!(entity instanceof Player)) {
-				entity.nextMove(entity.getThisTile());
-			}
-
-		}
-		displayGrid();
-
-	}
-
-	public void timeProgression() {
-		if (!this.isGameOver) {
-			movementProgression += 1;
-			if (movementProgression == MOVEMENT_EVERY) {
-				movementProgression = 0;
-				this.oneMovementRound();
-			}
-			this.timeLeft -= 1;
-			TimerTask task = new TimerTask() {
-				public void run() {
-					timeProgression();
+		if (!playerExploded) {
+			for (WalkingEntity entity : entityList) {
+				if (!(entity instanceof Player)) {
+					entity.nextMove(entity.getThisTile());
 				}
-			};
-			// timer.schedule(task, ONE_TIME_UNIT);
+
+			}
+			displayGrid();
 		} else {
-			// timer.cancel();
+			this.playerLose();
 		}
+		
+		this.updateLootCollectedStatus();
 	}
+
+
 	/**
 	 * Locates and returns the tile that the given entity is currently on.
 	 * 
@@ -154,9 +145,10 @@ public class LevelControl {
 			int tempDistance = (int) Math
 					.sqrt(Math.pow(tile.getX() - entityTile.getX(), 2)
 							+ Math.pow(tile.getY() - entityTile.getY(), 2));
-			if ((tempDistance < distance || distance == 0) && tempDistance != 0) {
+			if ((tempDistance < distance || distance == 0)
+					&& tempDistance != 0) {
 				distance = tempDistance;
-				returnEntity =  entity;
+				returnEntity = entity;
 			}
 		}
 
@@ -165,15 +157,25 @@ public class LevelControl {
 
 	public void playerWin() {
 		displayGrid();
-
-		System.out.println("you win gg");
 		this.isGameOver = true;
+		try {
+			this.myMain.processGameEnd(true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void playerLose() {
 		displayGrid();
 		System.out.println("you snooze you lose");
 		this.isGameOver = true;
+		try {
+			this.myMain.processGameEnd(false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Returns the next valid tile that an entity can move to in a given
@@ -258,7 +260,8 @@ public class LevelControl {
 		}
 		tileToMove.setContainedEntity(entity);
 		entity.setThisTile(tileToMove);
-		if(previousTile.hasEntity() && previousTile.getContainedEntity().getID() == entity.getID()) {
+		if (previousTile.hasEntity() && previousTile.getContainedEntity()
+				.getID() == entity.getID()) {
 			previousTile.setContainedEntity(null);
 		}
 		if (tileToMove.hasItem()) {
@@ -335,8 +338,6 @@ public class LevelControl {
 				}
 			}
 		}
-		
-		
 
 		return false;
 	}
@@ -361,8 +362,10 @@ public class LevelControl {
 			level.safeGetTile(x, y).getContainedEntity().die();
 		}
 
-		if (level.safeGetTile(x, y) != null && !level.safeGetTile(x, y).hasEntity()) {
-			if(previousTile.hasEntity() && previousTile.getContainedEntity().getID() == entity.getID()) {
+		if (level.safeGetTile(x, y) != null
+				&& !level.safeGetTile(x, y).hasEntity()) {
+			if (previousTile.hasEntity() && previousTile.getContainedEntity()
+					.getID() == entity.getID()) {
 				previousTile.setContainedEntity(null);
 			}
 			level.safeGetTile(x, y).setContainedEntity(entity);
@@ -425,4 +428,11 @@ public class LevelControl {
 	public void setMyMain(Main myMain) {
 		this.myMain = myMain;
 	}
+	public boolean isPlayerExploded() {
+		return playerExploded;
+	}
+	public void setPlayerExploded(boolean playerExploded) {
+		this.playerExploded = playerExploded;
+	}
+
 }

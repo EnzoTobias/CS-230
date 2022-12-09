@@ -33,6 +33,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -178,6 +180,9 @@ public class Main extends Application {
 	private Text entry19;
 	@FXML
 	private Button soundButton;
+	@FXML
+	private Text unlockedLevel;
+	private boolean isPaused = false;
 
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
@@ -248,10 +253,10 @@ public class Main extends Application {
 		hitMan = new Image("HitMan.png");
 
 		profile = ProfileReader.getProfileStorage();
-		
+
 		Sound.StaticSound.stopSound();
 		Sound.StaticSound.playInGameMusic();
-		
+
 		// Build the GUI
 		Pane root = buildGUI();
 
@@ -261,8 +266,14 @@ public class Main extends Application {
 		// Register an event handler for key presses.
 		// This causes the processKeyEvent method to be called each time a key
 		// is pressed.
-		scene.addEventFilter(KeyEvent.KEY_PRESSED,
-				event -> processKeyEvent(event));
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+			try {
+				processKeyEvent(event);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 
 		// Register a tick method to be called periodically.
 		// Make a new timeline with one keyframe that triggers the tick method
@@ -286,15 +297,16 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setFullScreenExitHint("");
+		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		primaryStage.setFullScreen(true);
-		
+
 	}
 
 	public void saveCurrentGame() {
 		try {
 			PrintWriter out = new PrintWriter(
-					new FileWriter("saves/" + this.profile.getPlayerName() + "-level"
-							+ this.levelNumber + ".txt", false));
+					new FileWriter("saves/" + this.profile.getPlayerName()
+							+ "-level" + this.levelNumber + ".txt", false));
 			out.write(LevelFileReader.levelToString(control));
 			out.close();
 		} catch (IOException I) {
@@ -308,8 +320,9 @@ public class Main extends Application {
 	 * 
 	 * @param event
 	 *            The key event that was pressed.
+	 * @throws IOException
 	 */
-	public void processKeyEvent(KeyEvent event) {
+	public void processKeyEvent(KeyEvent event) throws IOException {
 		// We change the behaviour depending on the actual key that was pressed.
 
 		if (!control.isGameOver()) {
@@ -338,7 +351,7 @@ public class Main extends Application {
 					drawGame();
 					break;
 				case ESCAPE :
-					this.saveCurrentGame();
+					this.quitChoices();
 					break;
 				default :
 					// Do nothing for all other keys.
@@ -491,7 +504,7 @@ public class Main extends Application {
 							itemTile = clock;
 						} else if (item instanceof Gun) {
 							itemTile = gun;
-						} 
+						}
 						gc.drawImage(itemTile, (50 * i) + 10,
 								(50 * j) + 10 + 20, (GRID_CELL_WIDTH / 1.5),
 								(GRID_CELL_HEIGHT / 1.5));
@@ -557,7 +570,7 @@ public class Main extends Application {
 
 		if (control.isGameOver()) {
 			tickTimeline.stop();
-		} else {
+		} else if (isPaused == false) {
 			control.oneMovementRound();
 			control.setTimeLeft(control.getTimeLeft() - 1);
 		}
@@ -765,12 +778,14 @@ public class Main extends Application {
 		File f = new File(savedLevel);
 
 		Alert levelAlert;
-		if (f.exists() && !f.isDirectory() && profile.getCurrentLevel() >= levelNumber) {
+		if (f.exists() && !f.isDirectory()
+				&& profile.getCurrentLevel() >= levelNumber) {
 			levelAlert = new Alert(AlertType.NONE, "Level " + this.levelNumber
 					+ " selected, you have save data for this level. What would you like to do?",
 					newLevel, loadLevel, leaderboard);
-		} else if (profile.getCurrentLevel() < levelNumber){
-			levelAlert = new Alert(AlertType.WARNING, "You have not yet unlocked this level");
+		} else if (profile.getCurrentLevel() < levelNumber) {
+			levelAlert = new Alert(AlertType.WARNING,
+					"You have not yet unlocked this level");
 		} else {
 			levelAlert = new Alert(AlertType.NONE,
 					"Level " + this.levelNumber
@@ -785,58 +800,93 @@ public class Main extends Application {
 			fileToLoad = "levels/" + "level" + this.levelNumber + ".txt";
 		} else if (result.get() == loadLevel) {
 			fileToLoad = savedLevel;
-		} else if (result.get()== leaderboard) {
+		} else if (result.get() == leaderboard) {
 			this.switchToScene2(event);
 		}
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		if (profile.getCurrentLevel() >= levelNumber && !(result.get()== leaderboard)){
+		if (profile.getCurrentLevel() >= levelNumber
+				&& !(result.get() == leaderboard)) {
 
 			this.startLevel(stage);
 		}
 
 	}
-	
+
 	public void createProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
 		this.profile = ProfileReader.createProfile(profileName);
 		if (profile == null) {
-			Alert alreadyThere = new Alert(AlertType.WARNING, "That profile already exists, please load it instead");
+			Alert alreadyThere = new Alert(AlertType.WARNING,
+					"That profile already exists, please load it instead");
 			alreadyThere.show();
 			logInDisplay.setText("Not logged in");
 		} else {
-			Alert done = new Alert(AlertType.INFORMATION, "Profile " + profileName + " created" );
+			Alert done = new Alert(AlertType.INFORMATION,
+					"Profile " + profileName + " created");
 			done.show();
 			logInDisplay.setText("Current profile: " + profileName);
 		}
 		ProfileReader.setProfileStorage(profile);
 	}
-	
+
 	public void loadProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
 		this.profile = ProfileReader.loadProfile(profileName);
 		if (profile == null) {
-			Alert notThere = new Alert(AlertType.WARNING, "No profile found with that username, please create one");
+			Alert notThere = new Alert(AlertType.WARNING,
+					"No profile found with that username, please create one");
 			notThere.show();
 			logInDisplay.setText("Not logged in");
 		} else {
 			logInDisplay.setText("Current profile: " + profileName);
+			Alert done = new Alert(AlertType.INFORMATION,
+					"Logged in as " + profileName);
+			done.show();
+
 		}
 		ProfileReader.setProfileStorage(profile);
 	}
 	public void deleteProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
-		 if (ProfileReader.deleteProfile(profileName) == false) {
-				Alert notThere = new Alert(AlertType.WARNING, "This profile does not exist and thus cannot be deleted");
-				notThere.show();
-		 } else {
-				Alert done = new Alert(AlertType.INFORMATION, "Profile " + profileName + " deleted 0_0");
-				profile = null;
-				logInDisplay.setText("Not logged in");
-				done.show();
+		if (ProfileReader.deleteProfile(profileName) == false) {
+			Alert notThere = new Alert(AlertType.WARNING,
+					"This profile does not exist and thus cannot be deleted");
+			notThere.show();
+		} else {
+			Alert done = new Alert(AlertType.INFORMATION,
+					"Profile " + profileName + " deleted 0_0");
+			profile = null;
+			logInDisplay.setText("Not logged in");
+			done.show();
 
-		 };
-		 ProfileReader.setProfileStorage(profile);
+		} ;
+		ProfileReader.setProfileStorage(profile);
+
 	}
+
+	public void processGameEnd(boolean didPlayerWin) throws IOException {
+		Sound.StaticSound.stopSound();
+		stage.setFullScreen(false);
+		if (didPlayerWin == true) {
+			Sound.StaticSound.winSound();
+			playerScore = control.getPlayer().getScore();
+			Alert win = new Alert(AlertType.INFORMATION,
+					"You won with " + playerScore + " points!");
+			win.show();
+			LevelSelection.addScore(levelNumber, profile.getPlayerName(),
+					playerScore);
+			ProfileReader.saveProfile(profile);
+
+		} else {
+			Sound.StaticSound.lossSound();
+			Alert loss = new Alert(AlertType.INFORMATION,
+					"You lost (which is weird since this game is easy), try again!");
+			loss.show();
+		}
+		this.start(stage);
+		this.tickTimeline.stop();
+	}
+
 	@FXML
 	public void updateLoadedProfile() {
 		profile = ProfileReader.getProfileStorage();
@@ -845,12 +895,16 @@ public class Main extends Application {
 				logInDisplay.setText("Not logged in");
 
 			} else {
-				logInDisplay.setText("Current profile: " + profile.getPlayerName());
+				logInDisplay
+						.setText("Current profile: " + profile.getPlayerName());
 
 			}
 		}
+		if (unlockedLevel != null) {
+			unlockedLevel.setText("Level unlocked: "
+					+ Integer.toString(profile.getCurrentLevel()));
+		}
 	}
-	
 
 	public void level1(ActionEvent event) throws IOException {
 		this.levelNumber = 1;
@@ -861,27 +915,27 @@ public class Main extends Application {
 		this.levelNumber = 2;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level3(ActionEvent event) throws IOException {
 		this.levelNumber = 3;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level4(ActionEvent event) throws IOException {
 		this.levelNumber = 4;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level5(ActionEvent event) throws IOException {
 		this.levelNumber = 5;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level6(ActionEvent event) throws IOException {
 		this.levelNumber = 6;
 		switchToGameLevel(event);
 	}
-	
+
 	public void level7(ActionEvent event) throws IOException {
 		this.levelNumber = 7;
 		switchToGameLevel(event);
@@ -896,12 +950,13 @@ public class Main extends Application {
 		stage.show();
 
 	}
-	
-	
+
 	@FXML
 	public void populateScore() {
 		ArrayList<ScoreEntry> scoreList = LevelSelection.readScoreList(1);
-		Text[] labelList = new Text[]{entry10,entry11,entry12,entry13,entry14,entry15,entry16,entry17,entry18,entry19};
+		this.updateLoadedProfile();
+		Text[] labelList = new Text[]{entry10, entry11, entry12, entry13,
+				entry14, entry15, entry16, entry17, entry18, entry19};
 		scoreList.sort((ScoreEntry s1, ScoreEntry s2) -> {
 			if (s1.getScore() > s2.getScore()) {
 				return -1;
@@ -913,26 +968,54 @@ public class Main extends Application {
 		});
 		int counter = 0;
 		for (Text l : labelList) {
-			if (!(scoreList.size()-1 < counter)) {
+			if (!(scoreList.size() - 1 < counter)) {
 				ScoreEntry score = scoreList.get(counter);
-				l.setText(score.getProfileName()+ " : " + score.getScore());
+				l.setText(score.getProfileName() + " : " + score.getScore());
 				counter += 1;
 			}
 		}
 	}
-	
+
+	public void quitChoices() throws IOException {
+		ButtonType exitSave = new ButtonType("Save");
+		ButtonType exitNoSave = new ButtonType("Quit without saving");
+		Alert alert = new Alert(AlertType.NONE,
+				"Would you like to quit the game?", exitSave, exitNoSave,
+				ButtonType.CANCEL);
+		alert.setTitle("Quit?");
+		stage.setFullScreen(false);
+		isPaused = true;
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == exitSave) {
+			this.saveCurrentGame();
+			Sound.StaticSound.stopSound();
+			this.start(stage);
+			this.tickTimeline.stop();
+		} else if (result.get() == exitNoSave) {
+			Sound.StaticSound.stopSound();
+			this.start(stage);
+			this.tickTimeline.stop();
+		} else if (result.get() == ButtonType.CANCEL) {
+			stage.setFullScreen(true);
+			isPaused = false;
+		}
+
+	}
+
 	public void switchToLevel(ActionEvent event) throws IOException {
 		if (profile != null) {
-			Parent root = FXMLLoader.load(getClass().getResource("Levels.fxml"));
+			Parent root = FXMLLoader
+					.load(getClass().getResource("Levels.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
 		} else {
-			Alert alert = new Alert(AlertType.WARNING, "Please create a profile or log in before playing");
+			Alert alert = new Alert(AlertType.WARNING,
+					"Please create a profile or log in before playing");
 			alert.show();
 		}
-	
+
 	}
 
 	@FXML
@@ -962,17 +1045,13 @@ public class Main extends Application {
 		Sound.StaticSound.resumeSound();
 	}
 
-	public void buttonTextChange()
-	{
+	public void buttonTextChange() {
 		String mute = "Mute Sound";
 		String unmute = "Unmute Sound";
-		if(soundButton.getText().equals(mute))
-		{
+		if (soundButton.getText().equals(mute)) {
 			soundButton.setText(unmute);
 			Sound.StaticSound.muteSound(true);
-		}
-		else
-		{
+		} else {
 			soundButton.setText(mute);
 			Sound.StaticSound.muteSound(false);
 		}
