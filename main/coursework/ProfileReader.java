@@ -55,6 +55,7 @@ public class ProfileReader {
 			f.createNewFile();
 			PrintWriter out = new PrintWriter(f);
 			out.write(Integer.toString(profile.getCurrentLevel()));
+			out.close();
 			return true;
 		} else {
 			return false;

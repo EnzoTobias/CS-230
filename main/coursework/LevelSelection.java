@@ -13,10 +13,12 @@ import java.util.Scanner;
 public class LevelSelection {
 
 	LevelControl control = new LevelControl();
+	private static int levelNumberStorage;
 
-	static public String score(int level, String user, int score) throws IOException {
+	static public void score(int level, String user, int score)
+			throws IOException {
 		try {
-			File f = new File("scores/"+"level" + level + "_score.txt");
+			File f = new File("scores/" + "level" + level + "_score.txt");
 			if (!f.exists()) {
 				f.createNewFile();
 			}
@@ -30,22 +32,20 @@ public class LevelSelection {
 				System.out.println("score catch");
 			}
 		}
-		return null;
 	}
 	// creates a new file
-	public static String newLevelFile(int level, String user, int score)
+	public static void newLevelFile(int level, String user, int score)
 			throws IOException {
 		File f = new File("level" + level + "_score.txt");
 		f.createNewFile();
 		addScore(level, user, score);
-		return null;
 	}
 	// adds score and name to file
 	static public String addScore(int level, String user, int score) {
 		try {
-			PrintWriter out = new PrintWriter(
-					new FileWriter("scores/"+"level" + level + "_score.txt", true));
-			out.write(user + " " + score + "\n");
+			PrintWriter out = new PrintWriter(new FileWriter(
+					"scores/" + "level" + level + "_score.txt", true));
+			out.write(user + "»" + score + "\n");
 			out.close();
 		} catch (IOException I) {
 			System.out.println("addScore catch");
@@ -53,35 +53,43 @@ public class LevelSelection {
 		return null;
 	}
 
-	static public String readScore(int level) {
+	static public void readScore(int level) {
+
+		File myObj = new File("scores/" + "level" + level + "_score.txt");
 		try {
-			File myObj = new File("scores/"+"level" + level + "_score.txt");
-			Scanner myReader = new Scanner(myObj);
-			while (myReader.hasNextLine()) {
-				String data = myReader.nextLine();
-				System.out.println(data);
+			if (myObj.exists()) {
+				Scanner myReader = new Scanner(myObj);
+				while (myReader.hasNextLine()) {
+					String data = myReader.nextLine();
+					System.out.println(data);
+				}
+				myReader.close();
 			}
-			myReader.close();
+
 		} catch (FileNotFoundException E) {
 			System.out.println("File not found at readScore");
 		}
-		return null;
 	}
 
 	static public ArrayList<ScoreEntry> readScoreList(int level) {
 		ArrayList<ScoreEntry> scoreList = new ArrayList<ScoreEntry>();
 		try {
-			File myObj = new File("scores/"+"level" + level + "_score.txt");
-			Scanner myReader = new Scanner(myObj);
-			while (myReader.hasNextLine()) {
-				String data = myReader.nextLine();
-				String[] nameScore = data.split(" ");
-				ScoreEntry thisEntry = new ScoreEntry();
-				thisEntry.setProfileName(nameScore[0]);
-				thisEntry.setScore(Integer.parseInt(nameScore[1]));
-				scoreList.add(thisEntry);
+			File myObj = new File("scores/" + "level" + level + "_score.txt");
+			if (myObj.exists()) {
+				Scanner myReader = new Scanner(myObj);
+				while (myReader.hasNextLine()) {
+					String data = myReader.nextLine();
+					String[] nameScore = data.split("»");
+					ScoreEntry thisEntry = new ScoreEntry();
+					thisEntry.setProfileName(nameScore[0]);
+					thisEntry.setScore(Integer.parseInt(nameScore[1]));
+					scoreList.add(thisEntry);
+
+				}
+				myReader.close();
+
 			}
-			myReader.close();
+
 		} catch (FileNotFoundException E) {
 			System.out.println("File not found at readScoreList");
 		}
@@ -98,5 +106,11 @@ public class LevelSelection {
 
 		l.readScore(1);
 		l.readScore(2);
+	}
+	public static int getLevelNumberStorage() {
+		return levelNumberStorage;
+	}
+	public static void setLevelNumberStorage(int levelNumberStorage) {
+		LevelSelection.levelNumberStorage = levelNumberStorage;
 	}
 }

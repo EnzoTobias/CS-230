@@ -303,6 +303,7 @@ public class Main extends Application {
 	}
 
 	public void saveCurrentGame() {
+		levelNumber = LevelSelection.getLevelNumberStorage();
 		try {
 			PrintWriter out = new PrintWriter(
 					new FileWriter("saves/" + this.profile.getPlayerName()
@@ -772,6 +773,7 @@ public class Main extends Application {
 		ButtonType newLevel = new ButtonType("Start New");
 		ButtonType loadLevel = new ButtonType("Load");
 		ButtonType leaderboard = new ButtonType("Leaderboard");
+		levelNumber = LevelSelection.getLevelNumberStorage();
 
 		String savedLevel = "saves/" + this.profile.getPlayerName() + "-level"
 				+ this.levelNumber + ".txt";
@@ -866,6 +868,7 @@ public class Main extends Application {
 
 	public void processGameEnd(boolean didPlayerWin) throws IOException {
 		Sound.StaticSound.stopSound();
+		levelNumber = LevelSelection.getLevelNumberStorage();
 		stage.setFullScreen(false);
 		if (didPlayerWin == true) {
 			Sound.StaticSound.winSound();
@@ -873,8 +876,10 @@ public class Main extends Application {
 			Alert win = new Alert(AlertType.INFORMATION,
 					"You won with " + playerScore + " points!");
 			win.show();
-			LevelSelection.addScore(levelNumber, profile.getPlayerName(),
+			LevelSelection.score(levelNumber, profile.getPlayerName(),
 					playerScore);
+			profile.setCurrentLevel(
+					Math.max(levelNumber + 1, profile.getCurrentLevel()));
 			ProfileReader.saveProfile(profile);
 
 		} else {
@@ -907,37 +912,37 @@ public class Main extends Application {
 	}
 
 	public void level1(ActionEvent event) throws IOException {
-		this.levelNumber = 1;
+		LevelSelection.setLevelNumberStorage(1);
 		switchToGameLevel(event);
 	}
 
 	public void level2(ActionEvent event) throws IOException {
-		this.levelNumber = 2;
+		LevelSelection.setLevelNumberStorage(2);
 		switchToGameLevel(event);
 	}
 
 	public void level3(ActionEvent event) throws IOException {
-		this.levelNumber = 3;
+		LevelSelection.setLevelNumberStorage(3);
 		switchToGameLevel(event);
 	}
 
 	public void level4(ActionEvent event) throws IOException {
-		this.levelNumber = 4;
+		LevelSelection.setLevelNumberStorage(4);
 		switchToGameLevel(event);
 	}
 
 	public void level5(ActionEvent event) throws IOException {
-		this.levelNumber = 5;
+		LevelSelection.setLevelNumberStorage(5);
 		switchToGameLevel(event);
 	}
 
 	public void level6(ActionEvent event) throws IOException {
-		this.levelNumber = 6;
+		LevelSelection.setLevelNumberStorage(6);
 		switchToGameLevel(event);
 	}
 
 	public void level7(ActionEvent event) throws IOException {
-		this.levelNumber = 7;
+		LevelSelection.setLevelNumberStorage(7);
 		switchToGameLevel(event);
 	}
 
@@ -953,7 +958,8 @@ public class Main extends Application {
 
 	@FXML
 	public void populateScore() {
-		ArrayList<ScoreEntry> scoreList = LevelSelection.readScoreList(1);
+		ArrayList<ScoreEntry> scoreList = LevelSelection
+				.readScoreList(LevelSelection.getLevelNumberStorage());
 		this.updateLoadedProfile();
 		Text[] labelList = new Text[]{entry10, entry11, entry12, entry13,
 				entry14, entry15, entry16, entry17, entry18, entry19};
