@@ -4,22 +4,26 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 
 public class Player extends WalkingEntity {
-	
+	private boolean dead = false;
 	
 	@Override
 	public void die() {
 		this.getLevelControl().setPlayerExploded(true);
 		this.getLevelControl().getMyMain().drawGame();
+		dead = true;
 	};
 	
 	public void moveInDirection(Direction direction) {
-		Tile nowTile = this.getLevelControl().findTileByEntity(this);
-		LevelControl control = this.getLevelControl();
-		Tile tileToMove = control.nextValidTile(direction, nowTile);
-		if (!(tileToMove == null)) {
-			control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+		if (dead == false) {
+			Tile nowTile = this.getLevelControl().findTileByEntity(this);
+			LevelControl control = this.getLevelControl();
+			Tile tileToMove = control.nextValidTile(direction, nowTile);
+			if (!(tileToMove == null)) {
+				control.moveToTile(tileToMove.getX(), tileToMove.getY(), this);
+			}
+			this.setDirection(direction);
 		}
-		this.setDirection(direction);
+		
 		
 		
 	}
