@@ -503,10 +503,52 @@ public class Main extends Application {
 									break;
 							}
 						} else if (item instanceof Gate) {
-							itemTile = gateTest;
+							String itemColour = null;
+							switch (((Gate) item).getColour()) {
+								case RED:
+									itemColour = "-Red";
+									break;
+								case BLUE:
+									itemColour = "-Blue";
+									break;
+								case GREEN:
+									itemColour = "-Green";
+									break;
+								case MAGENTA:
+									itemColour = "-Magenta";
+									break;
+								case CYAN:
+									itemColour = "-Cyan";
+									break;
+								case YELLOW:
+									itemColour = "-Yellow";
+									break;
+							}
+							itemTile = new Image("Gate" + itemColour  + ".png");
 
 						} else if (item instanceof Lever) {
-							itemTile = leverTest;
+							String itemColour = null;
+							switch (((Lever) item).getColour()) {
+								case RED:
+									itemColour = "-Red";
+									break;
+								case BLUE:
+									itemColour = "-Blue";
+									break;
+								case GREEN:
+									itemColour = "-Green";
+									break;
+								case MAGENTA:
+									itemColour = "-Magenta";
+									break;
+								case CYAN:
+									itemColour = "-Cyan";
+									break;
+								case YELLOW:
+									itemColour = "-Yellow";
+									break;
+							}
+							itemTile = new Image("Lever" + itemColour  + ".png");
 
 						} else if (item instanceof Bomb) {
 							itemTile = bomb;
