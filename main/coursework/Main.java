@@ -551,7 +551,28 @@ public class Main extends Application {
 							itemTile = new Image("Lever" + itemColour  + ".png");
 
 						} else if (item instanceof Bomb) {
-							itemTile = bomb;
+							
+							String bombStage = null;
+							
+							switch (((Bomb) item).getCurrentStage()) {
+								case 1:
+									bombStage = "1";
+									break;
+								case 2:
+									bombStage = "2";
+									break;
+								case 3:
+									bombStage = "3";
+									break;
+								case 4:
+									bombStage = "-Numberless";
+									break;
+								default:
+									bombStage = "-Numberless";
+									break;
+								
+							}
+							itemTile = new Image("Bomb" + bombStage + ".png");
 
 						} else if (item instanceof Door) {
 							itemTile = door;

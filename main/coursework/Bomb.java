@@ -1,6 +1,8 @@
 package coursework;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javafx.application.Platform;
 /**
  * Represents the bomb item.
  * 
@@ -13,6 +15,11 @@ public class Bomb extends Item {
 	private int currentStage = EXPLOSION_STAGES;
 	private Timer timer;
 	private boolean aboutToKaboom;
+	
+	public int getCurrentStage() {
+		return currentStage;
+	}
+	
 	/**
 	 * Initiates the Bomb instance's countdown to explosion.
 	 * 
@@ -52,6 +59,9 @@ public class Bomb extends Item {
 				}
 			};
 			currentStage -= 1;
+			Platform.runLater(() -> {
+				tile.getLevelControl().getMyMain().drawGame();
+			});
 			if (tile.hasItem()) {
 				if (currentStage == 0) {
 					explode(tile);
@@ -94,7 +104,10 @@ public class Bomb extends Item {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
 		Sound.StaticSound.bombExplosion();
-		tile.getLevelControl().getMyMain().drawGame();
+		Platform.runLater(() -> {
+			tile.getLevelControl().getMyMain().drawGame();
+		});
+		
 
 	}
 	/**
