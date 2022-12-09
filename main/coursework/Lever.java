@@ -19,6 +19,7 @@ public class Lever extends Item {
 			}
 		}
 		tile.getLevelControl().updateLootCollectedStatus();
+		Sound.StaticSound.leverSound();
 		tile.setContainedItem(null);
 	}
 

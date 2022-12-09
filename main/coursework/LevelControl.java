@@ -26,6 +26,7 @@ public class LevelControl {
 	public boolean isLootCollected;
 	private Profile currentProfile;
 	private int levelNumber;
+	private Main myMain;
 
 	public boolean isLootCollected() {
 		return isLootCollected;
@@ -417,5 +418,11 @@ public class LevelControl {
 	}
 	public void setLevelNumber(int levelNumber) {
 		this.levelNumber = levelNumber;
+	}
+	public Main getMyMain() {
+		return myMain;
+	}
+	public void setMyMain(Main myMain) {
+		this.myMain = myMain;
 	}
 }

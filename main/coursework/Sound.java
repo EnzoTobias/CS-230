@@ -58,7 +58,9 @@ public class Sound {
         }
 
         public static void playInGameMusic() {
-            playSound("Cyber-Stream-ambience.mp3");
+            if (!mediaPlayer.isMute()) {
+                playSound("Cyber-Stream-ambience.mp3");
+            }
         }
 
         public static void collectableSound() {

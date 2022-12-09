@@ -24,6 +24,7 @@ public class Bomb extends Item {
 	@Override
 	public void itemEffect(Tile tile, WalkingEntity entity) {
 		timer = new Timer();
+		Sound.StaticSound.bombTick();
 		nextStage(tile);
 
 	}
@@ -38,6 +39,7 @@ public class Bomb extends Item {
 	private void nextStage(Tile tile) {
 		TimerTask task = new TimerTask() {
 			public void run() {
+				Sound.StaticSound.bombTick();
 				nextStage(tile);
 			}
 		};
@@ -62,7 +64,7 @@ public class Bomb extends Item {
 		Tile[][] tileGrid;
 		tileGrid = tile.getLevelControl().getTileGrid();
 		tile.setContainedItem(null);
-
+				
 		for (int i = tile.getX() + 1; i < tileGrid.length; i++) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
@@ -76,6 +78,8 @@ public class Bomb extends Item {
 		for (int i = tile.getY() - 1; i >= 0; i--) {
 			bombDestroy(tileGrid[tile.getX()][i]);
 		}
+		Sound.StaticSound.bombExplosion();
+		tile.getLevelControl().getMyMain().drawGame();
 
 	}
 	/**

@@ -8,6 +8,7 @@ public class Gun extends Item {
 		if (toKill != null && entity instanceof Player) {
 			toKill.die();
 		}
+		Sound.StaticSound.gunSound();
 		this.deleteSelf(tile);
 		
 	}
