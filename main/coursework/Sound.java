@@ -22,7 +22,7 @@ public class Sound {
          */
         private static void playSound(String fileName) {
             try {
-                String pathToSound = "src/sounds/";
+                String pathToSound = "main/sounds/";
                 Media media = new Media(new File(pathToSound + fileName).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
                 mediaPlayer.play();
