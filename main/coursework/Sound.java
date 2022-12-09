@@ -52,6 +52,14 @@ public class Sound {
             mediaPlayer.stop();
         }
 
+        public static void pauseSound() {
+            mediaPlayer.pause();
+        }
+
+        public static void resumeSound() {
+            mediaPlayer.play();
+        }
+
 
         public static void menuMusic() {
             playSound("Kinetic-ambience.mp3");

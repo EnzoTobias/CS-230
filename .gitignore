@@ -25,3 +25,5 @@ replay_pid*
 .classpath
 .project
 bin/
+out/
+*.xml

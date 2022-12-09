@@ -753,7 +753,6 @@ public class Main extends Application {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-
 	}
 
 	public void switchToGameLevel(ActionEvent event) throws IOException {
@@ -948,6 +947,7 @@ public class Main extends Application {
 	}
 
 	public void logout(ActionEvent event) {
+		Sound.StaticSound.pauseSound();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
 		alert.setTitle("Logout");
@@ -959,6 +959,7 @@ public class Main extends Application {
 			System.out.println("GOOD JOB");
 			stage.close();
 		}
+		Sound.StaticSound.resumeSound();
 	}
 
 	public void buttonTextChange()
