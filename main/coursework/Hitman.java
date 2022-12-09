@@ -111,7 +111,12 @@ public class Hitman extends Thief {
 			}
 		}
 
-		
+		if (tileToMove == null) {
+			Direction randomDirection = directions[RANDOM.nextInt(directions.length)];
+			moveDirection = randomDirection;
+			tileToMove =  this.getLevelControl().nextValidTile(randomDirection,
+					this.getLevelControl().findTileByEntity(this));
+		}
 		
 		if (tileToMove == null) {
 			return false;
