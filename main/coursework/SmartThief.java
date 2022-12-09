@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SmartThief extends Thief {
-	private static final Random RANDOM = new Random();
+	private final Random RANDOM = new Random();
 	private final int ERROR_RETURN = -1;
 	private final int MAX_STEPS = 15;
 	private Tile lastTile;
@@ -123,9 +123,9 @@ public class SmartThief extends Thief {
 		
 		if (tileToMove == null) {
 			Direction randomDirection = directions[RANDOM.nextInt(directions.length)];
-			this.setDirection(randomDirection);
+			moveDirection = randomDirection;
 			tileToMove =  this.getLevelControl().nextValidTile(randomDirection,
-					this.getThisTile());
+					this.getLevelControl().findTileByEntity(this));
 		}
 		if (tileToMove == null) {
 			return false;
