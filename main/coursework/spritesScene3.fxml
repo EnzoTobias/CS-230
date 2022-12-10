@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
+<AnchorPane prefHeight="516.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
    <children>
       <ImageView layoutX="92.0" layoutY="83.0">
          <image>
@@ -19,7 +19,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="26.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you pick up clocks, additional time will be added to your current time, these can also be picked up by Thieves so you better hurry and pick them up!" wrappingWidth="224.85302734375" />
+      <Text layoutX="26.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The clock will add more time to the timer, helping you avoid losing due to the timer running out. Other entities can pick up clocks, preventing you from using them." wrappingWidth="224.85302734375" />
       <ImageView layoutX="355.0" layoutY="83.0">
          <image>
             <Image url="@Lever-Cyan.png" />
@@ -46,7 +46,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="20.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once the bomb is triggered, it counts down from 3 then explodes destroying everything horizontally and vertically, if a bomb hits another bomb, the other bomb explodes immediately causing chain of bombs!" wrappingWidth="237.85302734375" />
+      <Text layoutX="20.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once the bomb is triggered, it counts down from 3 then explodes destroying everything horizontally and vertically, if a bomb hits another bomb, the other bomb explodes immediately causing chain of bombs! It will not harm gates or doors." wrappingWidth="237.85302734375" />
       <ImageView layoutX="405.0" layoutY="245.0">
          <image>
             <Image url="@Door.png" />
@@ -57,12 +57,23 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="350.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once you complete the level, you can exit the map using the Door!" wrappingWidth="165.1328125" />
+      <Text layoutX="350.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Once you complete the level, you can exit the map using the Door and win! Watch out: thieves can also leave through the door once all loot is collected which leads to you losing!" wrappingWidth="165.1328125" />
       <Text layoutX="153.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions &amp; Tips">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="520.0" layoutY="355.0" mnemonicParsing="false" onAction="#switchToScene1" text="Menu" />
+      <Button layoutX="730.0" layoutY="465.0" mnemonicParsing="false" onAction="#switchToScene1" text="Menu" />
+      <ImageView layoutX="651.0" layoutY="91.0">
+         <image>
+            <Image url="@../Freezer.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="647.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Freezer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="569.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The freezer temporarily stops time, allowing you to collect loot without any competition! It will stop the timer from counting down and entites from moving (as well as freezing any bombs so they cannot explode or count down while time is frozen). Entities can pick this item up to prevent you from using it. You also cannot pick up a freezer while another one is active!" wrappingWidth="212.1328125" />
    </children>
 </AnchorPane>

@@ -14,14 +14,14 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <Text layoutX="30.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is you! you have to escape from the level by collecting as many loot as you can (Be careful! There are enemies)." wrappingWidth="173.8330078125" />
-      <Text layoutX="255.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity moves in a straight line, does not respect any rules and does not collect loot, if this entity touches you, you lose!" wrappingWidth="173.8330078125" />
+      <Text layoutX="30.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is you! you have to escape from the level by collecting as much loot as you can (Be careful! There are enemies)." wrappingWidth="173.8330078125" />
+      <Text layoutX="227.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity flies in a straight line, hovering over tiles and obstacles. It does not collect items but will kill you if you get in its way!" wrappingWidth="173.8330078125" />
       <Text layoutX="80.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="266.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flying Assassian">
+      <Text layoutX="258.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flying Assassian">
          <font>
             <Font size="18.0" />
          </font>
@@ -31,19 +31,19 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="515.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity follows the tiles color depending on its own color, following the left hand edge of the tile even in corners." wrappingWidth="150.54150390625" />
+      <Text layoutX="515.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity will follow a colour around the edges in a circular motion, picking up any items along the way." wrappingWidth="150.54150390625" />
       <Text layoutX="52.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Smart Thief">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="24.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is the Smartest Entity out there! And its trying to steal the loot, u better hurry and collect all loots before it does!" wrappingWidth="186.36328125" />
+      <Text layoutX="24.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This thief seeks out the closest loot and steals it! You better pick it all up before he does!" wrappingWidth="186.36328125" />
       <ImageView layoutX="78.0" layoutY="70.0">
          <image>
             <Image url="@Player.png" />
          </image>
       </ImageView>
-      <ImageView layoutX="305.0" layoutY="105.0">
+      <ImageView layoutX="280.0" layoutY="92.0">
          <image>
             <Image url="@FlyingAssassin.png" />
          </image>
@@ -68,18 +68,18 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="247.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity is called hitman, it chases you and is trying to kill you, it also moves FASTER! than other entities." wrappingWidth="165.892578125" />
-      <ImageView fitHeight="61.0" fitWidth="55.0" layoutX="563.0" layoutY="251.0">
+      <Text layoutX="248.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The hitman will chase you down! It will not rest until you are 15 feet underground! It moves fast and picks up loot along to way but its main goal is to kill you!" wrappingWidth="165.892578125" />
+      <ImageView fitHeight="61.0" fitWidth="55.0" layoutX="563.0" layoutY="235.0">
          <image>
             <Image url="@Gun.png" />
          </image>
       </ImageView>
-      <Text layoutX="574.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gun">
+      <Text layoutX="574.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gun">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="519.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This feature is called a Gun, when picked up by you, it kills the closest entity at that moment" wrappingWidth="155.671875" />
+      <Text layoutX="513.0" layoutY="302.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The gun will allow you to fight back! When you pick up the gun, the entity closest to you will be shot dead! Baam! Thieves and hitmen can pick up guns too but they don't know how to use them!" wrappingWidth="155.671875" />
       <ImageView layoutX="550.0" layoutY="363.0" onMouseClicked="#howToPlayScene2">
          <image>
             <Image url="@arrow-right (1).png" />
