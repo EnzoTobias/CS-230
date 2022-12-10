@@ -14,7 +14,7 @@
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#updateLoadedProfile" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
    <children>
       <Button fx:id="exitButton" layoutX="45.0" layoutY="321.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Exit" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="63.0" prefHeight="34.0" prefWidth="269.0" text="Jewel Thieves">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="63.0" prefHeight="34.0" prefWidth="269.0" text="Jewel Chase">
          <font>
             <Font name="Arial Black" size="24.0" />
          </font>
@@ -23,7 +23,7 @@
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
-      <Label layoutX="39.0" layoutY="82.0" text="Player Profile">
+      <Label layoutX="39.0" layoutY="82.0" text="Player Profile:">
          <font>
             <Font name="Arial Black" size="16.0" />
          </font>
@@ -33,11 +33,6 @@
             <Blend />
          </effect>
       </TextField>
-      <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="182.0" layoutY="255.0">
-         <image>
-            <Image url="@../../../start.png" />
-         </image>
-      </ImageView>
       <Button layoutX="446.0" layoutY="30.0" mnemonicParsing="false" onAction="#switchToScene2" prefHeight="43.0" prefWidth="123.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Scores" />
       <ImageView layoutX="185.0" layoutY="322.0">
          <image>
