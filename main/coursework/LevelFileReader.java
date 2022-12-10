@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 /**
  * Creates a tile grid with required components from a level definition text
- * file and reads size and time data
+ * file and reads size and time data.
  * 
  * @author Enzo Tobias 2117781
  */
@@ -15,7 +15,12 @@ public class LevelFileReader {
 	public LevelFileReader() {
 		// TODO Auto-generated constructor stub
 	}
-
+	/**
+	 * Create a level instance from a level definition file.
+	 * @param path The path to the level definition file.
+	 * @param control The level control instance this level will be assigned to.
+	 * @return The level created and returned.
+	 */
 	public static Level createFromFile(String path, LevelControl control) {
 		try {
 			File f = new File(path);
@@ -26,7 +31,12 @@ public class LevelFileReader {
 			return null;
 		}
 	}
-
+	/**
+	 * Process an individual line of the level definition file and deal with the contents.
+	 * @param in The scanner for reading from the file.
+	 * @param control The level control instance this level will be assigned to.
+	 * @return
+	 */
 	private static Level processLines(Scanner in, LevelControl control) {
 		Tile[][] tileGrid;
 		int tileX = 0;
@@ -85,7 +95,14 @@ public class LevelFileReader {
 		return level;
 
 	}
-
+	/**
+	 * Handles creating a tile from the given tile information.
+	 * @param info The information for tile creation.
+	 * @param control The level control instance this level will be assigned to.
+	 * @param x The X coordinate in the tilegrid of this tile;
+	 * @param y The Y coordinate in the tilegrid of this tile;
+	 * @return The tile created from the information.
+	 */
 	private static Tile createTile(String info, LevelControl control, int x,
 			int y) {
 		char chars[] = info.toCharArray();
@@ -123,7 +140,13 @@ public class LevelFileReader {
 		tile.setLevelControl(control);
 		return tile;
 	}
-
+	/**
+	 * Process the information of an entity.
+	 * @param contentDefinitions Array containing the information for the entity.
+	 * @param control The level control instance this level will be assigned to.
+	 * @param tile The tile this entity will be assigned to.
+	 * @return A boolean denoting if the entity was successfully created or not.
+	 */
 	private static boolean processEntity(String[] contentDefinitions, LevelControl control, Tile tile) {
 		int expectedDefSize = 0;
 		try {
@@ -277,7 +300,11 @@ public class LevelFileReader {
 	}
 	
 
-	
+	/**
+	 * Return a colour from a String defining the colour.
+	 * @param colour The string with colour information.
+	 * @return The returned colour.
+	 */
 	private static Colour getColour(String colour) {
 		switch (colour) {
 			case "R" :
@@ -299,7 +326,11 @@ public class LevelFileReader {
 
 		}
 	}
-
+	/**
+	 * Return a direction from a String defining the direction.
+	 * @param direction The string with direction information.
+	 * @return The returned direction.
+	 */
 	private static Direction getDirection(String direction) {
 		switch (direction) {
 			case "U" :
@@ -314,7 +345,11 @@ public class LevelFileReader {
 				return null;
 		}
 	}
-
+	/**
+	 *  Return a level as a string.
+	 * @param control The level control which will have its level returned as a string.
+	 * @return The level represented as a string, returned.
+	 */
 	public static String levelToString(LevelControl control) {
 		String output = "";
 		Level level = control.getLevel();
@@ -429,7 +464,11 @@ public class LevelFileReader {
 		output += control.getPlayer().getScore();
 		return output;
 	}
-
+	/**
+	 * Converts a direction to its string representation.
+	 * @param dir The direction being converted.
+	 * @return The string representation returned.
+	 */
 	private static String dirToString(Direction dir) {
 		switch (dir) {
 			case UP :
@@ -444,7 +483,11 @@ public class LevelFileReader {
 		return null;
 
 	}
-
+	/**
+	 * Converts a colour to its string representation.
+	 * @param col The colour being converted.
+	 * @return The string representation returned.
+	 */
 	private static String colToString(Colour col) {
 		switch (col) {
 			case RED :
