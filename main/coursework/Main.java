@@ -201,6 +201,7 @@ public class Main extends Application {
 	private Text unlockedLevel;
 	private boolean isPaused = false;
 	private boolean isFrozen = false;
+	private boolean isPausedMenu = false;
 	
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
@@ -679,7 +680,7 @@ public class Main extends Application {
 	 * move (by e.g., looping over them all and calling their own tick method).
 	 */
 	public void tick() {
-		if (isFrozen == true) {
+		if (isFrozen == true || isPausedMenu == true) {
 			isPaused = true;
 		} else {
 			isPaused = false;
@@ -1134,7 +1135,7 @@ public class Main extends Application {
 				ButtonType.CANCEL);
 		alert.setTitle("Quit?");
 		stage.setFullScreen(false);
-		isPaused = true;
+		isPausedMenu = true;
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == exitSave) {
 			this.saveCurrentGame();
@@ -1147,7 +1148,7 @@ public class Main extends Application {
 			this.tickTimeline.stop();
 		} else if (result.get() == ButtonType.CANCEL) {
 			stage.setFullScreen(true);
-			isPaused = false;
+			isPausedMenu = false;
 		}
 
 	}
