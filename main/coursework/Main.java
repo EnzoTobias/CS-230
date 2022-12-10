@@ -56,7 +56,7 @@ import javafx.util.Duration;
  * Do not build the whole application in one file. This file should probably
  * remain very small.
  *
- * @author Liam O'Reilly
+ * @author Liam O'Reilly, Freddie, Enzo Tobias 2117781, Bader Shalata
  */
 public class Main extends Application {
 	public boolean isFrozen() {

@@ -5,13 +5,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.ExecutionException;
-
+/**
+ * 
+ * @author Enzo Tobias 2117781, Marcus Siziba
+ *
+ */
 public class MessageOfTheDay {
 
 	
 	private static String decryptMessage = "";
 	
-	
+	/**
+	 * HTTP request requesting the puzzle.
+	 */
 	public static void connect() {
 		decryptMessage = "";
 		HttpClient client = HttpClient.newHttpClient();
@@ -34,7 +40,13 @@ public class MessageOfTheDay {
 				.join();
 
 	}
-
+	/**
+	 * Parsing the puzzle and requesting the message of the day with the parse puzzle solution.
+	 * @param responseBody The puzzle to parse.
+	 * @return The returned message of the day.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public static String parse(String responseBody) throws InterruptedException, ExecutionException {
 		String data = responseBody;// original
 		int charCount = 0;
