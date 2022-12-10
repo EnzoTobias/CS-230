@@ -7,19 +7,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="scenePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#updateLoadedProfile" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #54D8C4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
    <children>
-      <Button fx:id="exitButton" layoutX="45.0" layoutY="321.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Exit" />
+      <Button fx:id="exitButton" layoutX="12.0" layoutY="288.0" mnemonicParsing="false" onAction="#logout" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Exit" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="241.0" layoutY="85.0" prefHeight="34.0" prefWidth="269.0" text="Jewel Chase">
          <font>
             <Font name="Agency FB" size="48.0" />
          </font>
       </Label>
-      <Button fx:id="startToLevel" layoutX="45.0" layoutY="279.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Start">
+      <Button fx:id="startToLevel" layoutX="12.0" layoutY="247.0" mnemonicParsing="false" onAction="#switchToLevel" prefHeight="34.0" prefWidth="83.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Start">
          <font>
             <Font name="System Bold" size="13.0" />
          </font></Button>
@@ -48,16 +47,6 @@
             <Image url="@ranking.png" />
          </image>
       </ImageView>
-      <TextField fx:id="dayMessage" layoutX="338.0" layoutY="206.0" onMouseEntered="#textfieldDisplay" onMouseExited="#textfieldRemoveDisplay" prefHeight="172.0" prefWidth="231.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C6;" />
-      <Pane layoutX="338.0" layoutY="206.0" prefHeight="34.0" prefWidth="231.0" style="-fx-background-color: #000000;">
-         <children>
-            <Text fx:id="Title" fill="#54d8c4" layoutX="-3.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surprise Message!" textAlignment="CENTER" wrappingWidth="237.0">
-               <font>
-                  <Font name="Arial Black" size="20.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
       <Button fx:id="create" layoutX="21.0" layoutY="192.0" mnemonicParsing="false" onAction="#createProfile" prefHeight="28.0" prefWidth="65.0" style="-fx-background-color: #000000; -fx-text-fill: #54D8C4;" text="Create">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -93,5 +82,15 @@
             <Image url="@../Icon-Image-White-Circle-Background.png" />
          </image>
       </ImageView>
+      <Text fx:id="Title" layoutX="282.0" layoutY="258.0" onMouseEntered="#textfieldDisplay" onMouseExited="#textfieldRemoveDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Surprise Message!" textAlignment="CENTER" wrappingWidth="237.0">
+         <font>
+            <Font name="Arial Black" size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="dayMessage" layoutX="193.0" layoutY="277.0" onMouseEntered="#textfieldDisplay" onMouseExited="#textfieldRemoveDisplay" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="397.0">
+         <font>
+            <Font name="Arial Black" size="13.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

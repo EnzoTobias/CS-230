@@ -877,7 +877,7 @@ public class Main extends Application {
 	public void setControl(LevelControl control) {
 		this.control = control;
 	}
-
+	
 	public void switchToScene1(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
@@ -1169,10 +1169,10 @@ public class Main extends Application {
 	}
 
 	@FXML
-	private TextField dayMessage;
+	private Text dayMessage;
 	public void textfieldDisplay() throws IOException {
 		String message;
-		message = "Hello";
+		message = MessageOfTheDay.returnString();
 		dayMessage.setText(message);
 	}
 	public void textfieldRemoveDisplay() throws IOException {
