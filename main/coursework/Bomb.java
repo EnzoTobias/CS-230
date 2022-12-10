@@ -15,11 +15,11 @@ public class Bomb extends Item {
 	private int currentStage = EXPLOSION_STAGES;
 	private Timer timer;
 	private boolean aboutToKaboom;
-	
+
 	public int getCurrentStage() {
 		return currentStage;
 	}
-	
+
 	/**
 	 * Initiates the Bomb instance's countdown to explosion.
 	 * 
@@ -33,11 +33,9 @@ public class Bomb extends Item {
 	public void itemEffect(Tile tile, WalkingEntity entity) {
 		if (aboutToKaboom == false) {
 			timer = new Timer();
-			Sound.StaticSound.bombTick();
 			aboutToKaboom = true;
 			nextStage(tile);
 		}
-		
 
 	}
 	/**
@@ -54,29 +52,39 @@ public class Bomb extends Item {
 		} else {
 			TimerTask task = new TimerTask() {
 				public void run() {
-					Sound.StaticSound.bombTick();
+
 					nextStage(tile);
 				}
 			};
-			currentStage -= 1;
+			Platform.runLater(() -> {
+				if (!tile.getLevelControl().getMyMain().isPaused()) {
+					currentStage -= 1;
+					Sound.StaticSound.bombTick();
+				}
+			});
+
 			Platform.runLater(() -> {
 				tile.getLevelControl().getMyMain().drawGame();
 			});
-			if (tile.hasItem()) {
-				if (currentStage == 0) {
-					explode(tile);
-					timer.cancel();
+			Platform.runLater(() -> {
+				if (!tile.getLevelControl().getMyMain().isPaused()) {
+					if (tile.hasItem()) {
+						if (currentStage == 0) {
+							explode(tile);
+							timer.cancel();
+						} else {
+							timer.schedule(task, BOMB_DELAY);
+						}
+					}
 				} else {
 					timer.schedule(task, BOMB_DELAY);
 				}
-			}
-		}
-		
-		
-	
-		
+			});
 
+		}
+	
 	}
+
 	/**
 	 * Activates the Bomb instance's explosion, affecting tiles appropriately in
 	 * every direction.
@@ -89,7 +97,7 @@ public class Bomb extends Item {
 		Tile[][] tileGrid;
 		tileGrid = tile.getLevelControl().getTileGrid();
 		tile.setContainedItem(null);
-				
+
 		for (int i = tile.getX() + 1; i < tileGrid.length; i++) {
 			bombDestroy(tileGrid[i][tile.getY()]);
 		}
@@ -107,7 +115,6 @@ public class Bomb extends Item {
 		Platform.runLater(() -> {
 			tile.getLevelControl().getMyMain().drawGame();
 		});
-		
 
 	}
 	/**

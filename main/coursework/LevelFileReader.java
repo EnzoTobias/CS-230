@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
  */
 public class LevelFileReader {
 	private static String ERROR = "Malformed level file error";
-	private static String NO_FILE_ERROR = "error loading file or file not found";;
+	private static String NO_FILE_ERROR = "error loading file or file not found";
 	public LevelFileReader() {
 		// TODO Auto-generated constructor stub
 	}
@@ -220,6 +220,11 @@ public class LevelFileReader {
 					tile.setContainedItem(cl);
 					expectedDefSize = 1;
 					break;
+				case "FR" :
+					Freezer fr = new Freezer();
+					tile.setContainedItem(fr);
+					expectedDefSize = 1;
+					break;
 				case "G" :
 					if (getColour(contentDefinitions[1]) == null) {
 						System.out.println(ERROR);
@@ -408,6 +413,8 @@ public class LevelFileReader {
 							output += "GN";
 						} else if (item instanceof Clock) {
 							output += "CL";
+						} else if (item instanceof Freezer) {
+							output += "FR";
 						}
 						output += ")";
 					}
