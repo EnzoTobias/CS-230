@@ -1,14 +1,24 @@
 package coursework;
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * Implementation of the smart thief.
+ * @author Enzo Tobias 2117781
+ *
+ */
 public class SmartThief extends Thief {
 	private final Random RANDOM = new Random();
 	private final int ERROR_RETURN = -1;
 	private final int MAX_STEPS = 15;
 	private Tile lastTile;
 	private Tile tileToMoveCheat;
-
+	/**
+	 * Returns the length of the shortest path to the closest loot.
+	 * @param nextTile The tile to start the pathfinding from.
+	 * @param visitedTiles An array of every tile visited by this pathfinding chain.
+	 * @param searchLevel The depth of this search (through how many tiles).
+	 * @return The length of the shortest path to the closest loot.
+	 */
 	private int shortestPathLength(Tile nextTile, ArrayList<Tile> visitedTiles,
 			int searchLevel) {
 		if (visitedTiles.contains(nextTile)) {
@@ -95,7 +105,12 @@ public class SmartThief extends Thief {
 		return toReturn + 1;
 
 	}
-
+	/**
+	 * Choose the least value accounting for error returns.
+	 * @param toReturn First value to check against the other.
+	 * @param currentReturn Second value to check against the other.
+	 * @return The chosen least value accounting for error returns.
+	 */
 	private int chooseToReturn(int toReturn, int currentReturn) {
 		if (toReturn == ERROR_RETURN) {
 			return currentReturn;
@@ -105,7 +120,11 @@ public class SmartThief extends Thief {
 		}
 		return toReturn;
 	}
-
+	/**
+	 * Move to the next tile of the shortest path to the target (the closest loot).
+	 * @param tile The tile to move to.
+	 * @return If the move was successful.
+	 */
 	@Override
 	public boolean nextMove(Tile tile) {
 		this.tileToMoveCheat = null;

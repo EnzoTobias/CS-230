@@ -31,29 +31,51 @@ public class LevelControl {
 	private Main myMain;
 	private boolean playerExploded;
 	private boolean movementRound = false;
-
+	/**
+	 * Returns a boolean denoting if the current round is a movement round (entities that move normally will move).
+	 * @return A boolean denoting if the current round is a movement round.
+	 */
 	public boolean isMovementRound() {
 		return movementRound;
 	}
-
+	/**
+	 * Returns if all loot is collected.
+	 * @return Boolean denoting if all loot has been collected.
+	 */
 	public boolean isLootCollected() {
 		return isLootCollected;
 	}
+	/**
+	 * Set if all loot is collected.
+	 * @param isLootCollected Boolean to set.
+	 */
 	public void setLootCollected(boolean isLootCollected) {
 		this.isLootCollected = isLootCollected;
 	}
-
+	/**
+	 * Return the time left for the level.
+	 * @return Time left.
+	 */
 	public int getTimeLeft() {
 		return timeLeft;
 	}
+	/**
+	 * Set the timme left for the level.
+	 * @param timeLeft Time to set.
+	 */
 	public void setTimeLeft(int timeLeft) {
 		this.timeLeft = timeLeft;
 	}
-
+	/**
+	 * Output tilegrid as string
+	 */
 	public void displayGrid() {
 		System.out.println(LevelFileReader.levelToString(this));
 	}
-
+	/**
+	 * Return the level being controlled by this LevelControl instance.
+	 * @return The level returned.
+	 */
 	public Level getLevel() {
 		return level;
 	}
@@ -148,11 +170,17 @@ public class LevelControl {
 		}
 		return true;
 	}
-
+	/**
+	 * Called to update variable isLootCollected
+	 */
 	public void updateLootCollectedStatus() {
 		this.setLootCollected(isAllLootCollected());
 	}
-
+	/**
+	 * Closest entity to the given tile.
+	 * @param Tile The tile to check the closest to.
+	 * @return The closest entity to the given tile.
+	 */
 	public WalkingEntity closestEntityToTile(Tile tile) {
 		this.listEntities();
 		int distance = 0;
@@ -171,7 +199,9 @@ public class LevelControl {
 
 		return returnEntity;
 	}
-
+	/**
+	 * Triggers effects of a player win.
+	 */
 	public void playerWin() {
 		displayGrid();
 		this.isGameOver = true;
@@ -182,7 +212,9 @@ public class LevelControl {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Triggers effects of a player loss.
+	 */
 	public void playerLose() {
 		displayGrid();
 		System.out.println("you snooze you lose");
@@ -256,7 +288,17 @@ public class LevelControl {
 
 		return null;
 	}
-
+	/**
+	 * Returns the next valid tile that a hitman entity can move to in a given
+	 * direction.
+	 * 
+	 * @param direction
+	 *            The direction which the entity is attempting to move in.
+	 * @param tile
+	 *            The tile which the entity is currently on.
+	 * @return The first tile (if not null) which the entity can move to in the
+	 *         given direction.
+	 */
 	public Tile nextValidTileForHitman(Direction direction, Tile tile) {
 		Tile[][] tileGrid = this.getTileGrid();
 		switch (direction) {
@@ -481,30 +523,66 @@ public class LevelControl {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+	/**
+	 * Returns if the game is over.
+	 * @return Boolean denoting if the game is over.
+	 */
 	public boolean isGameOver() {
 		return isGameOver;
 	}
+	/**
+	 * Returns the current profile playing this level.
+	 * @return The player profile to return.
+	 */
 	public Profile getCurrentProfile() {
 		return currentProfile;
 	}
+	/**
+	 * Sets the current profile playing this level.
+	 * @param currentProfile The player profile to set.
+	 */
 	public void setCurrentProfile(Profile currentProfile) {
 		this.currentProfile = currentProfile;
 	}
+	/**
+	 * Return the level number of this current running level.
+	 * @return The level number of this current running level.
+	 */
 	public int getLevelNumber() {
 		return levelNumber;
 	}
+	/**
+	 * Return the level number of this current running level.
+	 * @param setLevelNumber The level number of this current running level.
+	 */
 	public void setLevelNumber(int levelNumber) {
 		this.levelNumber = levelNumber;
 	}
+	/**
+	 * Returns the javafx controller (and application) running this level.
+	 * @return The javafx controller (and application) running this level.
+	 */
 	public Main getMyMain() {
 		return myMain;
 	}
+	/**
+	 * Sets the javafx controller (and application) running this level.
+	 * @param myMain The javafx controller (and application) running this level to set.
+	 */
 	public void setMyMain(Main myMain) {
 		this.myMain = myMain;
 	}
+	/**
+	 * If the player has been exploded and has died.
+	 * @return A boolean denoting if the player has been exploded and has died.
+	 */
 	public boolean isPlayerExploded() {
 		return playerExploded;
 	}
+	/**
+	 * Sets the player has been exploded and has died.
+	 * @param playerExploded A boolean denoting if the player has been exploded and has died to set.
+	 */
 	public void setPlayerExploded(boolean playerExploded) {
 		this.playerExploded = playerExploded;
 	}

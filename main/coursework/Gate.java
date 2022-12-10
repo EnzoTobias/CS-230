@@ -1,4 +1,9 @@
 package coursework;
+/**
+ * Implementation of the gate item.
+ * @author Enzo Tobias 2117781.
+ *
+ */
 public class Gate extends Item {
 	private Colour colour;
 	/**

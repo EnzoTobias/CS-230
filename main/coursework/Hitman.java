@@ -1,14 +1,24 @@
 package coursework;
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * Implementation of the hitman extra entity which chases the player and kills it.
+ * @author Enzo Tobias 2117781
+ *
+ */
 public class Hitman extends Thief {
 	private static final Random RANDOM = new Random();
 	private final int ERROR_RETURN = -1;
 	private final int MAX_STEPS = 15;
 	private Tile lastTile;
 	private Tile tileToMoveCheat;
-	
+	/**
+	 * Returns the length of the shortest path to the player.
+	 * @param nextTile The tile to start the pathfinding from.
+	 * @param visitedTiles An array of every tile visited by this pathfinding chain.
+	 * @param searchLevel The depth of this search (through how many tiles).
+	 * @return The length of the shortest path to the player.
+	 */
 	private int shortestPathLength(Tile nextTile,
 			ArrayList<Tile> visitedTiles, int searchLevel) {
 		if (visitedTiles.contains(nextTile)) {
@@ -86,6 +96,12 @@ public class Hitman extends Thief {
 
 	}
 
+	/**
+	 * Choose the least value accounting for error returns.
+	 * @param toReturn First value to check against the other.
+	 * @param currentReturn Second value to check against the other.
+	 * @return The chosen least value accounting for error returns.
+	 */
 	private int chooseToReturn(int toReturn, int currentReturn) {
 		if (toReturn == ERROR_RETURN) {
 			return currentReturn;
@@ -96,7 +112,11 @@ public class Hitman extends Thief {
 		return toReturn;
 	}
 
-
+	/**
+	 * Move to the next tile of the shortest path to the target (the player).
+	 * @param tile The tile to move to.
+	 * @return If the move was successful.
+	 */
 	public boolean makeMove(Tile tile) {
 		this.tileToMoveCheat = null;
 		Tile tileToMove = null;
@@ -134,7 +154,11 @@ public class Hitman extends Thief {
 		}
 		
 	}
-	
+	/**
+	 * Move to the next tile of the shortest path to the target (the player).
+	 * @param tile The tile to move to.
+	 * @return If the move was successful.
+	 */
 	@Override
 	public boolean nextMove(Tile tile) {
 		
