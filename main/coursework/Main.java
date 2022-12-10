@@ -93,6 +93,8 @@ public class Main extends Application {
 	// Y axis and Xaxis
 	private int xAxis;
 	private int yAxis;
+	private Image borderY;
+    private Image borderX;
 
 	private int gameStart = 0;
 
@@ -271,6 +273,8 @@ public class Main extends Application {
 		leverTest = new Image("Lever-Red.png");
 		gun = new Image("Gun.png");
 		hitMan = new Image("HitMan.png");
+	    borderY= new Image("borderY.png");
+	    borderX= new Image("borderX.png");
 
 		profile = ProfileReader.getProfileStorage();
 		
@@ -471,6 +475,16 @@ public class Main extends Application {
 						counter = -1;
 					}
 					counter = counter + 1;
+					
+					gc.drawImage(borderY, 50 * i, 50 * j + 20,
+                            (1), (GRID_CELL_HEIGHT));
+                gc.drawImage(borderX, 50 * i, 50 * j + 20,
+                            (GRID_CELL_WIDTH), (1));
+                            gc.drawImage(borderY, 50 * i+49, 50 * j + 20,
+                            (1), (GRID_CELL_HEIGHT));
+                gc.drawImage(borderX, 50 * i, 50 * j+49 + 20,
+                            (GRID_CELL_WIDTH), (1));
+					
 				}
 				if (tileToHandle.hasEntity()) {
 					WalkingEntity entity = tileToHandle.getContainedEntity();
