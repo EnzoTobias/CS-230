@@ -59,6 +59,22 @@ import javafx.util.Duration;
  * @author Liam O'Reilly
  */
 public class Main extends Application {
+	public boolean isFrozen() {
+		return isFrozen;
+	}
+
+	public void setFrozen(boolean isFrozen) {
+		this.isFrozen = isFrozen;
+	}
+
+	public boolean isPaused() {
+		return isPaused;
+	}
+
+	public void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+
 	// The dimensions of the window
 	private static final int WINDOW_WIDTH = 800;
 	private static final int WINDOW_HEIGHT = 500;
@@ -123,6 +139,7 @@ public class Main extends Application {
 	private Image bomb3;
 	private Image bombExplode;
 	private Image clock;
+	private Image freezer;
 	private Image door;
 	private Image gateTest;
 	private Image leverTest;
@@ -183,7 +200,8 @@ public class Main extends Application {
 	@FXML
 	private Text unlockedLevel;
 	private boolean isPaused = false;
-
+	private boolean isFrozen = false;
+	
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
@@ -203,9 +221,9 @@ public class Main extends Application {
 	public void logout(Stage stage) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
-		alert.setTitle("Logout");
-		alert.setHeaderText("You're about to logout!");
-		alert.setContentText("Do you want to save before exiting? ");
+		alert.setTitle("Quit");
+		alert.setHeaderText("You're about to quit the game!");
+		alert.setContentText("Are you sure you want to quit?");
 
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			System.out.println("GOOD JOB");
@@ -246,6 +264,7 @@ public class Main extends Application {
 		bomb3 = new Image("Bomb3.png");
 		bomb = new Image("Bomb-Numberless.png");
 		clock = new Image("Clock.png");
+		freezer = new Image("Freezer.png");
 		door = new Image("Door.png");
 		gateTest = new Image("Gate-Red.png");
 		leverTest = new Image("Lever-Red.png");
@@ -593,6 +612,8 @@ public class Main extends Application {
 							itemTile = clock;
 						} else if (item instanceof Gun) {
 							itemTile = gun;
+						} else if (item instanceof Freezer) {
+							itemTile = freezer;
 						}
 						gc.drawImage(itemTile, (50 * i) + 10,
 								(50 * j) + 10 + 20, (GRID_CELL_WIDTH / 1.5),
@@ -658,7 +679,11 @@ public class Main extends Application {
 	 * move (by e.g., looping over them all and calling their own tick method).
 	 */
 	public void tick() {
-
+		if (isFrozen == true) {
+			isPaused = true;
+		} else {
+			isPaused = false;
+		}
 		if (control.isGameOver()) {
 			tickTimeline.stop();
 		} else if (isPaused == false) {
@@ -861,6 +886,32 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	public void howToPlayScene(ActionEvent event) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getResource(("spritesScene2.fxml")));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void howToPlayScene2(MouseEvent event) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getResource(("spritesScene3.fxml")));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToMenu(ActionEvent event) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getResource(("hello-view.fxml")));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+	
 
 	public void switchToGameLevel(ActionEvent event) throws IOException {
 		ButtonType newLevel = new ButtonType("Start New");
@@ -1132,9 +1183,9 @@ public class Main extends Application {
 		Sound.StaticSound.pauseSound();
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
-		alert.setTitle("Logout");
-		alert.setHeaderText("You're about to logout!");
-		alert.setContentText("Do you want to save before exiting? ");
+		alert.setTitle("Quit");
+		alert.setHeaderText("You're about to quit the game!");
+		alert.setContentText("Are you sure you want to quit?");
 
 		if (alert.showAndWait().get() == ButtonType.OK) {
 			stage = (Stage) scenePane.getScene().getWindow();

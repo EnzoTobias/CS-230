@@ -31,11 +31,11 @@ public class LevelControl {
 	private Main myMain;
 	private boolean playerExploded;
 	private boolean movementRound = false;
-	
+
 	public boolean isMovementRound() {
 		return movementRound;
 	}
-	
+
 	public boolean isLootCollected() {
 		return isLootCollected;
 	}
@@ -80,11 +80,11 @@ public class LevelControl {
 	 * One round of movement for all the entities.
 	 */
 	public void oneMovementRound() {
-		
+
 		this.listEntities();
 		if (!playerExploded && this.timeLeft > 0) {
 			this.updateLootCollectedStatus();
-			
+
 			for (WalkingEntity entity : entityList) {
 				if (!(entity instanceof Player) && movementRound == true) {
 					entity.nextMove(entity.getThisTile());
@@ -98,7 +98,7 @@ public class LevelControl {
 			} else {
 				movementRound = true;
 			}
-			
+
 			displayGrid();
 		} else {
 			this.playerLose();
@@ -137,8 +137,11 @@ public class LevelControl {
 			for (int j = 0; j < tileGrid[0].length; j++) {
 				if (tileGrid[i][j].hasItem() && (tileGrid[i][j]
 						.getContainedItem() instanceof Collectable
+						|| tileGrid[i][j].getContainedItem() instanceof Lever
+						|| tileGrid[i][j].getContainedItem() instanceof Clock
+						|| tileGrid[i][j].getContainedItem() instanceof Gun
 						|| tileGrid[i][j]
-								.getContainedItem() instanceof Lever)) {
+								.getContainedItem() instanceof Freezer)) {
 					return false;
 				}
 			}

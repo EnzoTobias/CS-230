@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="460.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="coursework.Main">
+   <children>
+      <Text layoutX="154.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions &amp; Tips" wrappingWidth="335.36328125">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="30.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is you! you have to escape from the level by collecting as many loot as you can (Be careful! There are enemies)." wrappingWidth="173.8330078125" />
+      <Text layoutX="255.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity moves in a straight line, does not respect any rules and does not collect loot, if this entity touches you, you lose!" wrappingWidth="173.8330078125" />
+      <Text layoutX="80.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="266.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flying Assassian">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="507.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Floor Following Thief">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="515.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity follows the tiles color depending on its own color, following the left hand edge of the tile even in corners." wrappingWidth="150.54150390625" />
+      <Text layoutX="52.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Smart Thief">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="24.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is the Smartest Entity out there! And its trying to steal the loot, u better hurry and collect all loots before it does!" wrappingWidth="186.36328125" />
+      <ImageView layoutX="78.0" layoutY="70.0">
+         <image>
+            <Image url="@Player.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="305.0" layoutY="105.0">
+         <image>
+            <Image url="@FlyingAssassin.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="565.0" layoutY="67.0">
+         <image>
+            <Image url="@FloorFollowingThief.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="72.0" layoutY="273.0">
+         <image>
+            <Image url="@SmartThief.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="305.0" layoutY="265.0">
+         <image>
+            <Image url="@HitMan.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="301.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hitman">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="247.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This entity is called hitman, it chases you and is trying to kill you, it also moves FASTER! than other entities." wrappingWidth="165.892578125" />
+      <ImageView fitHeight="61.0" fitWidth="55.0" layoutX="563.0" layoutY="251.0">
+         <image>
+            <Image url="@Gun.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="574.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gun">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="519.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This feature is called a Gun, when picked up by you, it kills the closest entity at that moment" wrappingWidth="155.671875" />
+      <ImageView layoutX="550.0" layoutY="363.0" onMouseClicked="#howToPlayScene2">
+         <image>
+            <Image url="@arrow-right (1).png" />
+         </image>
+      </ImageView>
+      <Button layoutX="583.0" layoutY="421.0" mnemonicParsing="false" onAction="#switchToScene1" text="Menu" />
+      <ImageView layoutX="641.0" layoutY="418.0" onMouseClicked="#howToPlayScene2">
+         <image>
+            <Image url="@arrow-right_1.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
