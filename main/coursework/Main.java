@@ -355,7 +355,9 @@ public class Main extends Application {
 		this.tickTimeline.play();
 
 	}
-
+	/**
+	 * Save the current game.
+	 */
 	public void saveCurrentGame() {
 		levelNumber = LevelSelection.getLevelNumberStorage();
 		try {
@@ -1383,7 +1385,9 @@ public class Main extends Application {
 		}
 		Sound.StaticSound.resumeSound();
 	}
-
+	/**
+	 * Change the text of the mute sound button.
+	 */
 	public void buttonTextChange() {
 		String mute = "Mute Sound";
 		String unmute = "Unmute Sound";
