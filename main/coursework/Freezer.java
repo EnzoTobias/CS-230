@@ -10,7 +10,7 @@ import javafx.application.Platform;
  *
  */
 public class Freezer extends Item {
-	private Timer timer = new Timer();
+	private Timer timer;
 	private final long FREEZE_TIME = 5000L;
 	/**
 	 * The effect of this item when being picked up.
@@ -24,9 +24,10 @@ public class Freezer extends Item {
 		if (tile.getLevelControl().isGameOver() || !(entity instanceof Player)
 				|| tile.getLevelControl().getMyMain().isFrozen()) {
 			if (!tile.getLevelControl().getMyMain().isFrozen()) {
-				timer.cancel();
+				//timer.cancel();
 			}
 		} else {
+			timer = new Timer();
 			Platform.runLater(() -> {
 				tile.getLevelControl().getMyMain().setFrozen(true);
 			});
