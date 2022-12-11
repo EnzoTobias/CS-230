@@ -1389,8 +1389,8 @@ public class Main extends Application {
 	 * Change the text of the mute sound button.
 	 */
 	public void buttonTextChange() {
-		String mute = "Mute Sound";
-		String unmute = "Unmute Sound";
+		String mute = "Mute Music";
+		String unmute = "Unmute Music";
 		if (soundButton.getText().equals(mute)) {
 			soundButton.setText(unmute);
 			Sound.StaticSound.muteSound(true);
