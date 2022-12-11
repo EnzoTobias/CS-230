@@ -28,6 +28,7 @@ public class Sound {
 		 */
 
 		private static final String pathToSound = "main/sounds/";
+
 		private static void playSound(String fileName) {
 			try {
 				Media media = new Media(
