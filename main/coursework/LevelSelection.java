@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 /**
  * Adds the scores of each level to a file
+ * 
  * @author Alex Rendell 211331
  */
 
@@ -15,10 +16,14 @@ public class LevelSelection {
 	private static int levelNumberStorage;
 
 	/**
-	 * Creates a new file or adds the score to previous level file
-	 * @param level Current player level
-	 * @param user Username of the player
-	 * @param score score achieved when level is complete
+	 * Creates a new file or adds the score to previous level file.
+	 * 
+	 * @param level
+	 *            Current player level.
+	 * @param user
+	 *            Username of the player.
+	 * @param score
+	 *            score achieved when level is complete.
 	 */
 	static public void score(int level, String user, int score)
 			throws IOException {
@@ -40,10 +45,14 @@ public class LevelSelection {
 	}
 
 	/**
-	 * Creates a new file and adds user score to it
-	 * @param level Current player level
-	 * @param user Username of the player
-	 * @param score score achieved when level is complete
+	 * Creates a new file and adds user score to it.
+	 * 
+	 * @param level
+	 *            Current player level.
+	 * @param user
+	 *            Username of the player.
+	 * @param score
+	 *            score achieved when level is complete.
 	 */
 	public static void newLevelFile(int level, String user, int score)
 			throws IOException {
@@ -53,10 +62,14 @@ public class LevelSelection {
 	}
 
 	/**
-	 * Adds username and score to the level file
-	 * @param level Current player level
-	 * @param user Username of the player
-	 * @param score score achieved when level is complete
+	 * Adds username and score to the level file.
+	 * 
+	 * @param level
+	 *            Current player level.
+	 * @param user
+	 *            Username of the player.
+	 * @param score
+	 *            score achieved when level is complete.
 	 */
 	static public void addScore(int level, String user, int score) {
 		try {
@@ -69,8 +82,10 @@ public class LevelSelection {
 		}
 	}
 	/**
-	 * Reads the score inside the level .txt file
-	 * @param level The level scoreboard wanting to be displayed
+	 * Reads the score inside the level .txt file.
+	 * 
+	 * @param level
+	 *            The level scoreboard wanting to be displayed.
 	 */
 	static public void readScore(int level) {
 
@@ -91,8 +106,10 @@ public class LevelSelection {
 	}
 
 	/**
-	 * Sorts all user score into an array list
-	 * @param level The level wanting to be sorted
+	 * Sorts all user score into an array list.
+	 * 
+	 * @param level
+	 *            The level wanting to be sorted.
 	 */
 	static public ArrayList<ScoreEntry> readScoreList(int level) {
 		ArrayList<ScoreEntry> scoreList = new ArrayList<ScoreEntry>();
@@ -119,7 +136,6 @@ public class LevelSelection {
 		return scoreList;
 	}
 
-
 	public static void main(String args[]) throws IOException {
 
 		LevelSelection l = new LevelSelection();
@@ -133,16 +149,19 @@ public class LevelSelection {
 	}
 
 	/**
-	 * Gets the level in storage
-	 * @return return the level in storage
+	 * Gets the level in storage.
+	 * 
+	 * @return return the level in storage.
 	 */
 	public static int getLevelNumberStorage() {
 		return levelNumberStorage;
 	}
 
 	/**
-	 * Set the current level in storage
-	 * @param levelNumberStorage New number in storage
+	 * Set the current level in storage.
+	 * 
+	 * @param levelNumberStorage
+	 *            New number in storage.
 	 */
 	public static void setLevelNumberStorage(int levelNumberStorage) {
 		LevelSelection.levelNumberStorage = levelNumberStorage;
