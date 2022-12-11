@@ -1,6 +1,7 @@
 package coursework;
 /**
  * Type of collectable and its value.
+ * 
  * @author Enzo Tobias 2117781
  */
 public enum CollectableType {
@@ -9,13 +10,16 @@ public enum CollectableType {
 	private int value;
 	/**
 	 * Set type of collectable.
-	 * @param value The value of the type.
+	 * 
+	 * @param value
+	 *            The value of the type.
 	 */
 	CollectableType(int value) {
 		this.value = value;
 	}
 	/**
 	 * Return type of collectable.
+	 * 
 	 * @return value The value of the type.
 	 */
 	public int getValue() {

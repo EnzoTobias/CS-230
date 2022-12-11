@@ -59,18 +59,37 @@ import javafx.util.Duration;
  * @author Liam O'Reilly, Freddie, Enzo Tobias 2117781, Bader Shalata
  */
 public class Main extends Application {
+	/**
+	 * Returns if time is frozen by the freezer item.
+	 * 
+	 * @return A boolean denoting if time is frozen.
+	 */
 	public boolean isFrozen() {
 		return isFrozen;
 	}
-
+	/**
+	 * Set if time is frozen.
+	 * 
+	 * @param isFrozen
+	 *            The boolean to set if time is frozen.
+	 */
 	public void setFrozen(boolean isFrozen) {
 		this.isFrozen = isFrozen;
 	}
-
+	/**
+	 * Returns if the game is paused.
+	 * 
+	 * @return A boolean denoting if the game is paused.
+	 */
 	public boolean isPaused() {
 		return isPaused;
 	}
-
+	/**
+	 * Set if the game is paused.
+	 * 
+	 * @param isPaused
+	 *            A boolean denoting if the game is paused.
+	 */
 	public void setPaused(boolean isPaused) {
 		this.isPaused = isPaused;
 	}
@@ -94,7 +113,7 @@ public class Main extends Application {
 	private int xAxis;
 	private int yAxis;
 	private Image borderY;
-    private Image borderX;
+	private Image borderX;
 
 	private int gameStart = 0;
 
@@ -204,7 +223,12 @@ public class Main extends Application {
 	private boolean isPaused = false;
 	private boolean isFrozen = false;
 	private boolean isPausedMenu = false;
-	
+	/**
+	 * Launch the main menu of the application.
+	 * 
+	 * @param stage
+	 *            The stage.
+	 */
 	public void start(Stage stage) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
@@ -220,7 +244,12 @@ public class Main extends Application {
 		});
 
 	}
-
+	/**
+	 * Event handling exit request.
+	 * 
+	 * @param stage
+	 *            The stage.
+	 */
 	public void logout(Stage stage) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 
@@ -273,12 +302,11 @@ public class Main extends Application {
 		leverTest = new Image("Lever-Red.png");
 		gun = new Image("Gun.png");
 		hitMan = new Image("HitMan.png");
-	    borderY= new Image("borderY.png");
-	    borderX= new Image("borderX.png");
+		borderY = new Image("borderY.png");
+		borderX = new Image("borderX.png");
 
 		profile = ProfileReader.getProfileStorage();
-		
-		
+
 		Sound.StaticSound.stopSound();
 		Sound.StaticSound.playInGameMusic();
 
@@ -398,9 +426,7 @@ public class Main extends Application {
 	 * Draw the game on the canvas.
 	 */
 	public void drawGame() {
-		
 
-		
 		// Get the Graphic Context of the canvas. This is what we draw on.
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		GraphicsContext gc1 = canvas.getGraphicsContext2D();
@@ -418,11 +444,12 @@ public class Main extends Application {
 
 		String gridTile = LevelFileReader.levelToString(control);
 		int counter = 0;
-		
+
 		if (gameStart == 0) {
-			gc.drawImage(new Image("stars.png"), 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+			gc.drawImage(new Image("stars.png"), 0, 0, CANVAS_WIDTH,
+					CANVAS_HEIGHT);
 		}
-		
+
 		Tile[][] Tilegrid = control.getTileGrid();
 		gc.setFill(Color.GRAY);
 		gc.fillRect(0, 20, Tilegrid.length, Tilegrid[0].length);
@@ -475,32 +502,32 @@ public class Main extends Application {
 						counter = -1;
 					}
 					counter = counter + 1;
-					
-					gc.drawImage(borderY, 50 * i, 50 * j + 20,
-                            (1), (GRID_CELL_HEIGHT));
-                gc.drawImage(borderX, 50 * i, 50 * j + 20,
-                            (GRID_CELL_WIDTH), (1));
-                            gc.drawImage(borderY, 50 * i+49, 50 * j + 20,
-                            (1), (GRID_CELL_HEIGHT));
-                gc.drawImage(borderX, 50 * i, 50 * j+49 + 20,
-                            (GRID_CELL_WIDTH), (1));
-					
+
+					gc.drawImage(borderY, 50 * i, 50 * j + 20, (1),
+							(GRID_CELL_HEIGHT));
+					gc.drawImage(borderX, 50 * i, 50 * j + 20,
+							(GRID_CELL_WIDTH), (1));
+					gc.drawImage(borderY, 50 * i + 49, 50 * j + 20, (1),
+							(GRID_CELL_HEIGHT));
+					gc.drawImage(borderX, 50 * i, 50 * j + 49 + 20,
+							(GRID_CELL_WIDTH), (1));
+
 				}
 				if (tileToHandle.hasEntity()) {
 					WalkingEntity entity = tileToHandle.getContainedEntity();
 					String entityDirection = null;
 					String entityName = null;
 					switch (entity.getDirection()) {
-						case RIGHT:
+						case RIGHT :
 							entityDirection = "Right";
 							break;
-						case LEFT:
+						case LEFT :
 							entityDirection = "Left";
 							break;
-						case DOWN:
+						case DOWN :
 							entityDirection = "Down";
 							break;
-						case UP:
+						case UP :
 							entityDirection = "";
 							break;
 					}
@@ -517,18 +544,17 @@ public class Main extends Application {
 
 					} else if (entity instanceof FloorFollowingThief) {
 						entityName = "FloorFollowingThief";
-						
+
 					} else if (entity instanceof Hitman) {
 						entityName = "Hitman";
 					}
-					
+
 					if (!(entity instanceof Player)) {
-						entityTile =  new Image(entityName + entityDirection + ".png");
+						entityTile = new Image(
+								entityName + entityDirection + ".png");
 						gc.drawImage(entityTile, (50 * i), (50 * j) + 20,
 								(GRID_CELL_WIDTH), (GRID_CELL_HEIGHT));
 					}
-					
-
 
 				} else {
 					if (tileToHandle.hasItem()) {
@@ -551,72 +577,72 @@ public class Main extends Application {
 						} else if (item instanceof Gate) {
 							String itemColour = null;
 							switch (((Gate) item).getColour()) {
-								case RED:
+								case RED :
 									itemColour = "-Red";
 									break;
-								case BLUE:
+								case BLUE :
 									itemColour = "-Blue";
 									break;
-								case GREEN:
+								case GREEN :
 									itemColour = "-Green";
 									break;
-								case MAGENTA:
+								case MAGENTA :
 									itemColour = "-Magenta";
 									break;
-								case CYAN:
+								case CYAN :
 									itemColour = "-Cyan";
 									break;
-								case YELLOW:
+								case YELLOW :
 									itemColour = "-Yellow";
 									break;
 							}
-							itemTile = new Image("Gate" + itemColour  + ".png");
+							itemTile = new Image("Gate" + itemColour + ".png");
 
 						} else if (item instanceof Lever) {
 							String itemColour = null;
 							switch (((Lever) item).getColour()) {
-								case RED:
+								case RED :
 									itemColour = "-Red";
 									break;
-								case BLUE:
+								case BLUE :
 									itemColour = "-Blue";
 									break;
-								case GREEN:
+								case GREEN :
 									itemColour = "-Green";
 									break;
-								case MAGENTA:
+								case MAGENTA :
 									itemColour = "-Magenta";
 									break;
-								case CYAN:
+								case CYAN :
 									itemColour = "-Cyan";
 									break;
-								case YELLOW:
+								case YELLOW :
 									itemColour = "-Yellow";
 									break;
 							}
-							itemTile = new Image("Lever" + itemColour  + ".png");
+							itemTile = new Image("Lever" + itemColour + ".png");
 
 						} else if (item instanceof Bomb) {
-							
+
 							String bombStage = null;
-							
+
 							switch (((Bomb) item).getCurrentStage()) {
-								case 1:
+								case 1 :
 									bombStage = "1";
 									break;
-								case 2:
+								case 2 :
 									bombStage = "2";
 									break;
-								case 3:
+								case 3 :
 									bombStage = "3";
 									break;
-								case 4:
+								case 4 :
 									bombStage = "-Numberless";
 									break;
-								default:
+								default :
 									bombStage = "-Numberless";
 									break;
-								
+
 							}
 							itemTile = new Image("Bomb" + bombStage + ".png");
 
@@ -658,8 +684,7 @@ public class Main extends Application {
 						(playerY * GRID_CELL_HEIGHT) + 20);
 				break;
 		}
-		
-		
+
 		gc1.setFill(Color.BLACK);
 		gc1.fillRect(0, 0, Tilegrid.length * 50, 20);
 		gc1.setFill(Color.WHITE);
@@ -706,7 +731,7 @@ public class Main extends Application {
 			if (control.isMovementRound()) {
 				control.setTimeLeft(control.getTimeLeft() - 1);
 			}
-			
+
 		}
 
 		// We then redraw the whole canvas.
@@ -756,7 +781,7 @@ public class Main extends Application {
 		HBox toolbar = new HBox();
 		toolbar.setSpacing(10);
 		toolbar.setPadding(new Insets(10, 10, 10, 10));
-		//root.setTop(toolbar);
+		// root.setTop(toolbar);
 
 		// Create the toolbar content
 
@@ -879,20 +904,40 @@ public class Main extends Application {
 		// Finally, return the border pane we built up.
 		return root;
 	}
-
+	/**
+	 * Main method launching game.
+	 * 
+	 * @param args
+	 *            Main method args.
+	 */
 	public static void main(String[] args) {
 		launch(args);
 
 	}
-
+	/**
+	 * Return the level control of the running game.
+	 * 
+	 * @return The level control.
+	 */
 	public LevelControl getControl() {
 		return control;
 	}
-
+	/**
+	 * Set the level control of the running game.
+	 * 
+	 * @param control
+	 *            The level control.
+	 */
 	public void setControl(LevelControl control) {
 		this.control = control;
 	}
-	
+	/**
+	 * Switch to the main menu scene.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void switchToScene1(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("actionMenu.fxml"));
@@ -901,33 +946,59 @@ public class Main extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-	public void howToPlayScene(ActionEvent event) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(("spritesScene2.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void howToPlayScene2(MouseEvent event) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(("spritesScene3.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void switchToMenu(ActionEvent event) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(("hello-view.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-	
+	/**
+	 * Switch to the how to play scene.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
+	public void howToPlayScene(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader
+				.load(getClass().getResource(("spritesScene2.fxml")));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	/**
+	 * Switch to the second page of the how to play scene.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
+	public void howToPlayScene2(MouseEvent event) throws IOException {
+		Parent root = FXMLLoader
+				.load(getClass().getResource(("spritesScene3.fxml")));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	/**
+	 * Switch to the menu scene.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
+	public void switchToMenu(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader
+				.load(getClass().getResource(("hello-view.fxml")));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 
+	/**
+	 * Launch a game level into play.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void switchToGameLevel(ActionEvent event) throws IOException {
 		ButtonType newLevel = new ButtonType("Start New");
 		ButtonType loadLevel = new ButtonType("Load");
@@ -972,7 +1043,13 @@ public class Main extends Application {
 		}
 
 	}
-
+	/**
+	 * Create a new player profile.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void createProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
 		this.profile = ProfileReader.createProfile(profileName);
@@ -989,7 +1066,13 @@ public class Main extends Application {
 		}
 		ProfileReader.setProfileStorage(profile);
 	}
-
+	/**
+	 * Load a player profile.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void loadProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
 		this.profile = ProfileReader.loadProfile(profileName);
@@ -1007,6 +1090,13 @@ public class Main extends Application {
 		}
 		ProfileReader.setProfileStorage(profile);
 	}
+	/**
+	 * Delete a player profile.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void deleteProfile(ActionEvent event) throws IOException {
 		String profileName = nameField.getText();
 		if (ProfileReader.deleteProfile(profileName) == false) {
@@ -1024,14 +1114,21 @@ public class Main extends Application {
 		ProfileReader.setProfileStorage(profile);
 
 	}
-
+	/**
+	 * Processes the end of the game.
+	 * 
+	 * @param didPlayerWin
+	 *            A boolean denoting if the player won.
+	 * @throws IOException
+	 */
 	public void processGameEnd(boolean didPlayerWin) throws IOException {
 		Sound.StaticSound.stopSound();
 		levelNumber = LevelSelection.getLevelNumberStorage();
 		stage.setFullScreen(false);
 		if (didPlayerWin == true) {
 			Sound.StaticSound.winSound();
-			playerScore = control.getPlayer().getScore() + control.getTimeLeft();
+			playerScore = control.getPlayer().getScore()
+					+ control.getTimeLeft();
 			Alert win = new Alert(AlertType.INFORMATION,
 					"You won with " + playerScore + " points!");
 			win.show();
@@ -1050,7 +1147,9 @@ public class Main extends Application {
 		this.start(stage);
 		this.tickTimeline.stop();
 	}
-
+	/**
+	 * Update the displayed profile.
+	 */
 	@FXML
 	public void updateLoadedProfile() {
 		profile = ProfileReader.getProfileStorage();
@@ -1069,42 +1168,90 @@ public class Main extends Application {
 					+ Integer.toString(profile.getCurrentLevel()));
 		}
 	}
-
+	/**
+	 * Launch level 1.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level1(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(1);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 2.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level2(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(2);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 3.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level3(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(3);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 4.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level4(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(4);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 5.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level5(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(5);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 6.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level6(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(6);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Launch level 7.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void level7(ActionEvent event) throws IOException {
 		LevelSelection.setLevelNumberStorage(7);
 		switchToGameLevel(event);
 	}
-
+	/**
+	 * Switch to the scoreboard scene.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void switchToScene2(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader
 				.load(getClass().getResource("scoreBoard.fxml"));
@@ -1114,7 +1261,9 @@ public class Main extends Application {
 		stage.show();
 
 	}
-
+	/**
+	 * Populate the display of the scoreboard scene.
+	 */
 	@FXML
 	public void populateScore() {
 		ArrayList<ScoreEntry> scoreList = LevelSelection
@@ -1140,7 +1289,11 @@ public class Main extends Application {
 			}
 		}
 	}
-
+	/**
+	 * Handles choices upon attempting to close an ongoing game.
+	 * 
+	 * @throws IOException
+	 */
 	public void quitChoices() throws IOException {
 		ButtonType exitSave = new ButtonType("Save");
 		ButtonType exitNoSave = new ButtonType("Quit without saving");
@@ -1166,7 +1319,13 @@ public class Main extends Application {
 		}
 
 	}
-
+	/**
+	 * Switch to the level selection menu.
+	 * 
+	 * @param event
+	 *            The event.
+	 * @throws IOException
+	 */
 	public void switchToLevel(ActionEvent event) throws IOException {
 		if (profile != null) {
 			Parent root = FXMLLoader
@@ -1185,15 +1344,30 @@ public class Main extends Application {
 
 	@FXML
 	private Text dayMessage;
+	/**
+	 * Display message of the day text.
+	 * 
+	 * @throws IOException
+	 */
 	public void textfieldDisplay() throws IOException {
 		String message;
 		message = MessageOfTheDay.returnString();
 		dayMessage.setText(message);
 	}
+	/**
+	 * Hide message of the day text.
+	 * 
+	 * @throws IOException
+	 */
 	public void textfieldRemoveDisplay() throws IOException {
 		dayMessage.setText("");
 	}
-
+	/**
+	 * Event handling exit request.
+	 * 
+	 * @param stage
+	 *            The stage.
+	 */
 	public void logout(ActionEvent event) {
 		Sound.StaticSound.pauseSound();
 		Alert alert = new Alert(AlertType.CONFIRMATION);

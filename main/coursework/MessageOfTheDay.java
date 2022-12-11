@@ -12,9 +12,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class MessageOfTheDay {
 
-	
 	private static String decryptMessage = "";
-	
+
 	/**
 	 * HTTP request requesting the puzzle.
 	 */
@@ -36,18 +35,21 @@ public class MessageOfTheDay {
 						e.printStackTrace();
 					}
 					return t;
-				})
-				.join();
+				}).join();
 
 	}
 	/**
-	 * Parsing the puzzle and requesting the message of the day with the parse puzzle solution.
-	 * @param responseBody The puzzle to parse.
+	 * Parsing the puzzle and requesting the message of the day with the parse
+	 * puzzle solution.
+	 * 
+	 * @param responseBody
+	 *            The puzzle to parse.
 	 * @return The returned message of the day.
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public static String parse(String responseBody) throws InterruptedException, ExecutionException {
+	public static String parse(String responseBody)
+			throws InterruptedException, ExecutionException {
 		String data = responseBody;// original
 		int charCount = 0;
 		boolean backwards = true;
@@ -73,9 +75,10 @@ public class MessageOfTheDay {
 						"http://cswebcat.swansea.ac.uk/message?solution="
 								+ decryptMessage))
 				.build();
-		decryptMessage = clientTwo.sendAsync(requestTwo, HttpResponse.BodyHandlers.ofString())
+		decryptMessage = clientTwo
+				.sendAsync(requestTwo, HttpResponse.BodyHandlers.ofString())
 				.thenApply(HttpResponse::body).get();
-				//.join();
+		// .join();
 
 		return decryptMessage;
 	}
@@ -90,11 +93,11 @@ public class MessageOfTheDay {
 
 		for (int i = 0; i <= amount; i++) {
 			if (asciiChar == (int) 'Z') {
-				asciiChar  = (int) 'A';
+				asciiChar = (int) 'A';
 			} else {
 				asciiChar += 1;
 			}
-			
+
 		}
 		return (char) asciiChar;
 	}

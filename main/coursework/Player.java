@@ -1,9 +1,11 @@
 package coursework;
-import java.awt.event.*;   
+import java.awt.event.*;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 /**
- * Implementation of the player entity, the actual entity that will be controlled by the user.
+ * Implementation of the player entity, the actual entity that will be
+ * controlled by the user.
+ * 
  * @author Enzo Tobias 2117781
  *
  */
@@ -20,7 +22,9 @@ public class Player extends WalkingEntity {
 	};
 	/**
 	 * Move in a given direction.
-	 * @param direction The direction to move in.
+	 * 
+	 * @param direction
+	 *            The direction to move in.
 	 */
 	public void moveInDirection(Direction direction) {
 		if (dead == false) {
@@ -32,16 +36,15 @@ public class Player extends WalkingEntity {
 			}
 			this.setDirection(direction);
 		}
-		
-		
-		
+
 	}
 	/**
-	 * The player entity has no automatic movement therefore nextMove does nothing for player.
+	 * The player entity has no automatic movement therefore nextMove does
+	 * nothing for player.
 	 */
 	@Override
 	public boolean nextMove(Tile tile) {
-		//no automatic movement for player
+		// no automatic movement for player
 		return false;
 	}
 

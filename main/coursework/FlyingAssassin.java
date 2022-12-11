@@ -1,18 +1,22 @@
 package coursework;
 /**
  * Implementation of the flying assassin.
+ * 
  * @author Enzo Tobias 2117781
  *
  */
 public class FlyingAssassin extends WalkingEntity {
 	/**
-	 * Processes the movement logic for this instance and returns a tile as the next move. 
-	 * @param currentTile The current tile this entity is on.
+	 * Processes the movement logic for this instance and returns a tile as the
+	 * next move.
+	 * 
+	 * @param currentTile
+	 *            The current tile this entity is on.
 	 * @return The tile to move to.
 	 */
 	private Tile movementLogic(Tile currentTile) {
 		Tile tileToMove = tileInDirection(currentTile, this.getDirection());
-		if(tileToMove == null)  {
+		if (tileToMove == null) {
 			Direction newDirection = null;
 			switch (this.getDirection()) {
 				case UP :
@@ -35,8 +39,11 @@ public class FlyingAssassin extends WalkingEntity {
 	}
 	/**
 	 * Returns the first tile in a direction.
-	 * @param tile The current tile.
-	 * @param direction The direction.
+	 * 
+	 * @param tile
+	 *            The current tile.
+	 * @param direction
+	 *            The direction.
 	 * @return The first tile in that direction.
 	 */
 	private Tile tileInDirection(Tile tile, Direction direction) {
@@ -55,13 +62,16 @@ public class FlyingAssassin extends WalkingEntity {
 	}
 	/**
 	 * Trigger this entity's next move
-	 * @param tile The tile this entity is currently on.
+	 * 
+	 * @param tile
+	 *            The tile this entity is currently on.
 	 * @return Boolean denoting if the move succeeded.
 	 */
 	@Override
 	public boolean nextMove(Tile tile) {
 		Tile tileToMove = movementLogic(tile);
-		this.getLevelControl().flyingMove(tileToMove.getX(), tileToMove.getY(), this);
+		this.getLevelControl().flyingMove(tileToMove.getX(), tileToMove.getY(),
+				this);
 		return false;
 	}
 

@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 /**
  * Reads and writes player profiles.
+ * 
  * @author Enzo Tobias 2117781
  *
  */
@@ -20,14 +21,16 @@ public class ProfileReader {
 			f.createNewFile();
 			PrintWriter out = new PrintWriter(f);
 			out.write("1");
-			Profile profile = new Profile(userName,1);
+			Profile profile = new Profile(userName, 1);
 			out.close();
 			return profile;
 		}
 	}
 	/**
 	 * Delete a profile from the game data.
-	 * @param userName The name of the profile to delete.
+	 * 
+	 * @param userName
+	 *            The name of the profile to delete.
 	 * @return A boolean denoting if the deletion was successful.
 	 * @throws IOException
 	 */
@@ -43,7 +46,9 @@ public class ProfileReader {
 	}
 	/**
 	 * Load a profile from the game data.
-	 * @param userName The name of the profile to load.
+	 * 
+	 * @param userName
+	 *            The name of the profile to load.
 	 * @return The loaded profile, null if the load did not succeed.
 	 * @throws IOException
 	 */
@@ -54,15 +59,17 @@ public class ProfileReader {
 			Scanner in = new Scanner(f);
 			int lvl = in.nextInt();
 			in.close();
-			return new Profile(userName,lvl);
+			return new Profile(userName, lvl);
 		} else {
 			return null;
 		}
-		
+
 	}
 	/**
 	 * Save a profile to the game data.
-	 * @param profile The profile to save to game data.
+	 * 
+	 * @param profile
+	 *            The profile to save to game data.
 	 * @return A boolean denoting if the saving was successful.
 	 * @throws IOException
 	 */
@@ -82,6 +89,7 @@ public class ProfileReader {
 	}
 	/**
 	 * Returns the stored profile.
+	 * 
 	 * @return The stored profile to return.
 	 */
 	public static Profile getProfileStorage() {
@@ -92,7 +100,9 @@ public class ProfileReader {
 	}
 	/**
 	 * Store a profile.
-	 * @param profileStorage Profile to store.
+	 * 
+	 * @param profileStorage
+	 *            Profile to store.
 	 */
 	public static void setProfileStorage(Profile profileStorage) {
 		ProfileReader.profileStorage = profileStorage;

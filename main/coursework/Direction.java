@@ -1,6 +1,7 @@
 package coursework;
 /**
  * Direction.
+ * 
  * @author Enzo Tobias 2117781
  *
  */

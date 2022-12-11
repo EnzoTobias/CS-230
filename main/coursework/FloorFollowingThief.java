@@ -175,9 +175,13 @@ public class FloorFollowingThief extends Thief {
 	}
 	/**
 	 * If this floor following thief instance can move to the given coordinate.
-	 * @param x X coordinate of tile being checked.
-	 * @param y Y coordinate of tile being checked.
-	 * @param entity The entity checking for the move.
+	 * 
+	 * @param x
+	 *            X coordinate of tile being checked.
+	 * @param y
+	 *            Y coordinate of tile being checked.
+	 * @param entity
+	 *            The entity checking for the move.
 	 * @return
 	 */
 	public boolean canMoveToTileFloorFollowing(int x, int y,
